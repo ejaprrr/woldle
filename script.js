@@ -1,156 +1,185 @@
+// k pracování s barvy
+const root = getComputedStyle(document.body);
+
+// funkce s oknem nastavení, otevření a zavření
 function settingsWindow(func) {
+    // získávání potřebných elementů
     const windowWrapper = document.getElementById("window-wrapper");
     const window = document.getElementById("window");
 
-    const backgroundColor = getComputedStyle(document.body).getPropertyValue('--dark');
-
+    // na základě operace (otevření, zavření) provedeme úpravy stylu
     switch (func) {
-        case "open":
-            windowWrapper.classList.add("show");
-            window.style.backgroundColor = backgroundColor;
+        case "open": // otevření
+            windowWrapper.classList.add("show"); // animace zobrazení .show
+        
+            window.style.backgroundColor = root.getPropertyValue('--secondary'); // získání primární barvy pro pozadí a zobrazení kontentu
             window.style.contentVisibility = "visible";
             break;
-        case "close":
-            windowWrapper.classList.remove("show");
-            window.style.backgroundColor = "transparent";
+        case "close": // zavření
+            windowWrapper.classList.remove("show"); // odebrat animaci zobrazení .show
+
+            window.style.backgroundColor = "transparent"; // zneviditelnění pozadí a kontentu
             window.style.contentVisibility = "hidden";
             break;
     };
 };
 
+// hra
 class Game {
-    constructor (secret) {
-        this.wrapper = document.getElementById("main");
-        this.tries = 6;
-        this.length = secret.length;
+    static wrapper = document.getElementById("main");
+    static tries = 6;
+
+    constructor (secret) { // inicializace
+        // získání pracovního prostředí (#main) a definování základních pojmů
+
+        this.word = secret;
+
         this.row = 0;
         this.letter = 0;
-        this.word = secret;
         this.end = false;
 
-        fetch("files/dictionary.json")
-        .then(response => response.json())
-        .then(content => {
-            this.dictionary = content;
-        });
+        this.rows = [];
 
-        for (let y = 0; y < this.tries; y++) {
+        // načíst slovník, kde se nachází slova, která jsou validní -> this.dictionary
+        this.#fetchDictionary();
+
+        // vytvoření herního prostředí
+        this.#createEnvironment();
+        
+    };
+
+    async #fetchDictionary() {
+        const dictionary = await fetch("files/dictionary.json");
+        this.dictionary = await dictionary.json();
+    }
+
+    #createEnvironment() {
+        for (let y = 0; y < Game.tries; y++) { // osa y (řádky)
             const row = document.createElement("div");
-            row.classList.add("row");
+            row.classList.add("row"); // .row
 
-            for (let x = 0; x < this.length; x++) {
+            for (let x = 0; x < this.word.length; x++) { // osa x (písmena)
                 const letter = document.createElement("div");
+                letter.classList.add("letter"); // .letter
 
-                letter.classList.add("letter");
                 row.appendChild(letter);
-            }
+            };
 
-            this.wrapper.appendChild(row);
+            Game.wrapper.appendChild(row);
+            this.rows.push(row);
         };
     };
 
-    write(letter) {
-        const row = this.wrapper.getElementsByClassName("row")[this.row];
-        const ltr = row.getElementsByClassName("letter")[this.letter];
 
-        if (this.letter < this.length) {
-            ltr.textContent = letter;
+    // zápis písmene do hry
+    write(letter) {
+        if (this.letter < this.word.length && !this.end) { // psát je možné jen pokud uživatel doposud nedosáhl poslední pozice (délky slova) a samozřejmě pokud neskončila hra
+            const row = this.rows[this.row]; // současná řada
+            const letterElement = row.children[this.letter]; // současné písmeno
+
+            // animace zadávání písmen
+            letterElement.style.transform = "scale(80%)";
+            setTimeout(() => {
+                letterElement.style.transform = "scale(100%)";
+            }, 250);
+
+            letterElement.textContent = letter;
             this.letter++;
         };
 
     };
 
+    // odebrání písmene ze hry
     back() {
-        if (!this.end) {
-            if (this.letter > 0) {
-                this.letter--;
-            } else {
-                return; // No letters to erase
-            }
-    
-            const row = this.wrapper.getElementsByClassName("row")[this.row];
-            const ltr = row.getElementsByClassName("letter")[this.letter];
-            ltr.textContent = '';
-        }
+        if (!this.end && this.letter > 0) {  // nelze mazat písmena z již potvrzené řádky
+            const row = this.rows[this.row];
+
+            this.letter--; // nastavení současné pozice na předchozí
+            row.children[this.letter].textContent = "";
+        };
     };
 
+    // potvrzení řady
     confirm() {
-        if (this.letter == this.length) {
-            const row = this.wrapper.getElementsByClassName("row")[this.row];
-            let word = "";
-            const letters = row.getElementsByClassName("letter");
-            for (let ltr of letters) {
-                let char = ltr.textContent.toLowerCase();
-                word += char;
-            }
+        if (!this.end) {
+            const row = this.rows[this.row];
+            const word = Array.from(row.children).map(x => x.textContent.toLowerCase()).join(""); // slovo zadané (písmena složena dohromady)
 
-            const red = getComputedStyle(document.body).getPropertyValue('--red');
-            const green = getComputedStyle(document.body).getPropertyValue('--green');
-            const orange = getComputedStyle(document.body).getPropertyValue('--orange');
-            const blue = getComputedStyle(document.body).getPropertyValue('--darkblue');
-            if (this.word == word) {
-                for (let ltr of row.getElementsByClassName("letter")) {
-                    ltr.style.outline = `solid ${green}`;
-                }
-                this.end = true;
-            } else if (this.dictionary.includes(word)) {
-                for (let i = 0; i < this.word.length; i++) {
-                    console.log(i);
-                    if (this.word[i] == word[i]) {
-                        letters[i].style.outline = `solid ${green}`;
-                    } else if (this.word.includes(word[i]))  {
-                        letters[i].style.outline = `solid ${orange}`;
-                    } else {
-                        letters[i].style.outline = `none`;
-                    }
-                } /*need to fix duplicates! letters */
+            // barvy
+            const red = root.getPropertyValue('--wrong');
+            const green = root.getPropertyValue('--right');
+            const orange = root.getPropertyValue('--displacement');
+            const blue = root.getPropertyValue('--secondary');
+            
+            if (this.word.length == this.letter && this.dictionary.includes(word)) { // lze validovat pouze pokud je uživatel na konci řádky a zároveň je slovo validní (obsahuje ho slovník)
+                for (let i = 0; i < word.length; i++) { // index pro obě slova pro porovnávání
+                    if (word[i] == this.word[i]) { // pokud se shodují indexy a písmena, jde o shodu
+                        row.children[i].style.outline = `solid ${green}`;
+                    } else if (this.word.includes(word[i])) { // pokud slovo obsahuje stejné písmeno, označí se první co najde (z důvodu duplikátů)
+                        Array.from(row.children).find((x) => x.textContent.toLowerCase() == word[i]).style.outline = `solid ${orange}`;
+                    };
+                };
+
+                // animace potvrzení
+                row.style.gap = "20px";
+                setTimeout(() => {
+                    row.style.gap = "15px";
+                }, 500);
+
+                // přejetí na další řádku
                 this.row++;
                 this.letter = 0;
-            } else {
-                for (let ltr of row.getElementsByClassName("letter")) {
-                    ltr.style.outline = `solid ${red}`;
+            } else { // pokud není input validní
+                for (let letter of row.children) {
+                    // spustí se animace červeného zvýraznění
+                    letter.style.outline = `solid ${red}`;
+                    setTimeout(() => {
+                        letter.style.outline = `solid ${blue}`;
+                    }, 250);
                 }
-                setTimeout(() => {
-                    // Remove fade-out class after animation
-                    for (let ltr of row.getElementsByClassName("letter")) {
-                        ltr.style.outline = `solid ${blue}`;
-                    }
-                }, 1000); // 1000ms = 1 second
-            }
-        }
+            };
 
-    }
+            // pokud se slovo shoduje, končí tím hra, to samé platí pro poslední pokus
+            if (this.word == word || this.row == Game.tries) {
+                this.end = true;
+            }
+        };
+    };
 };
 
 let game;
 
-fetch("files/targets.json")
-.then(response => response.json())
-.then(content => {
-    content = content.filter((x) => x.length == 5)
-    const index = Math.floor(Math.random() * content.length);
-    console.log(content[index])
-    let word = content[index];
-    game = new Game(word);
+// zajištění toho, že se kód spustí po loadingu a parsingu HTML
+document.addEventListener("DOMContentLoaded", async () => {
+    const targets = await fetch("files/targets.json");
+    const words = await targets.json();
+    const secret = words[Math.floor(Math.random() * words.length)];
+    game = new Game(secret);
+    console.log(secret);
 });
 
-document.getElementById("settings").addEventListener("click", () => settingsWindow("open"));
-document.getElementById("close").addEventListener("click", () => settingsWindow("close"));
+// na stisknutí tlačítka
 document.addEventListener("keydown", (event) => {
+    // filtr pro českou klávesnici (proti použití jiných znaků, ale také kláves např. F12, CTRL)
+    const czech = /[AÁBCČDĎEÉĚFGHIIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYZÝZŽ]/g;
     const key = event.key.toUpperCase();
-    console.log(key);
+
     switch (key) {
         case "BACKSPACE":
-            console.log("b");
             game.back();
             break;
+
         case "ENTER":
             game.confirm();
             break;
+
         default:
-            if (key.length == 1 && key.match(/[AÁBCČDĎEÉĚFGHIIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYZÝZŽ]/g)) {
+            if (key.length == 1 && key.match(czech)) { // jen pro písmena (délka 1, tím se vyvarujeme například TAB) a filtr české klávesnice
                 game.write(key);
-                break;
             };
+            break;
     };
 });
+
+document.getElementById("settings").addEventListener("click", () => settingsWindow("open")); // otevření okna na kliknutí
+document.getElementById("close").addEventListener("click", () => settingsWindow("close")); // zavření okna na kliknutí
