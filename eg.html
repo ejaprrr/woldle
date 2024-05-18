@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clickable SVG</title>
+    <style>
+        svg {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <svg width="200" height="200">
+        <circle cx="100" cy="100" r="50" fill="blue" id="myCircle"/>
+    </svg>
+
+    <script>
+        // Function to be called when the SVG element is clicked
+        function handleClick() {
+            document.write("hello");
+        }
+
+        // Adding the event listener to the SVG element
+        document.getElementById('myCircle').addEventListener('click', handleClick);
+    </script>
+</body>
+</html>
