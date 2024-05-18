@@ -46,7 +46,13 @@ nav * {
 main {
     height: calc(100vh - 120px);
     display: flex;
+    flex-direction: column;
+}
+
+#game-wrapper, #keyboard-wrapper {
     /* centrování */
+    display: flex;
+    flex: 1;
     justify-content: center;
     align-items: center;
 }
@@ -111,7 +117,7 @@ svg {
     transition: background-color 0.3s ease, content-visibility 0.3s ease;
 }
 
-#main {
+#game {
     height: 400px;
 }
 
@@ -120,6 +126,7 @@ svg {
     gap: 15px;
     margin-block: var(--margin);
     display: flex;
+    justify-content: center;
     transition: gap 0.5s ease;
 }
 
@@ -132,4 +139,38 @@ svg {
     font-size: 30px;
     text-align: center;
     transition: outline .25s ease-out, transform 0.25s ease;
+}
+
+#keyboard {
+    min-width: 600px;
+}
+
+.line {
+    display: flex;
+    gap: 10px;
+    margin-block: 10px;
+    height: 40px;
+}
+
+.key {
+    line-height: 40px;
+    outline: solid var(--secondary);
+    border-radius: 10px;
+    text-align: center;
+    flex: 1;
+    backdrop-filter: brightness(80%);
+    transition: transform 0.25s ease;
+}
+
+#backspace, #enter {
+    flex: 2;
+}
+
+.index {
+    position: absolute;
+    margin: 4px;
+    line-height: 15px;
+    font-size: 15px;
+    bottom: 0px;
+    right: 0px;
 }
