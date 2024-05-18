@@ -1,3 +1,4 @@
+/* definice barev, základních poměrů */
 :root {
     --primary: #181818;
     --secondary: #002652;
@@ -10,11 +11,13 @@
     --padding: 10px;
 }
 
+/* platí vždy */
 * {
     margin: 0;
     font-family: sans-serif;
     font-weight: bold;
     color: var(--tertiary);
+    /* pro vertikální centrování textu */
     line-height: 50px;
     text-decoration: none;
 }
@@ -39,9 +42,11 @@ nav * {
     margin-right: var(--margin);
 }
 
+
 main {
     height: calc(100vh - 120px);
     display: flex;
+    /* centrování */
     justify-content: center;
     align-items: center;
 }
@@ -58,6 +63,7 @@ svg {
 
 #time {
     position: absolute;
+    /* doplňkový, kvůli roku v pozadí */
     overflow: hidden;
 }
 
@@ -65,6 +71,7 @@ svg {
     position: absolute;
     font-size: 35px;
     filter: opacity(25%);
+    /* záporný margin */
     margin: calc(-1 * var(--margin)) calc(-1 * var(--margin));
 }
 
@@ -76,9 +83,11 @@ svg {
     position: absolute;
     width: 100vw;
     height: 100vh;
+    /* centrování */
     display: flex;
     justify-content: center;
     align-items: center;
+    /* aby se dalo klikat na věci za tím */
     pointer-events: none;
     top: 0;
     left: 0;
@@ -95,7 +104,9 @@ svg {
     height: 400px;
     padding: var(--padding);
     border-radius: 10px;
+    /* neukazovat obsah dokud se nerozklikne (JS) */
     content-visibility: hidden;
+    /* kvůli wrapperu */
     pointer-events: all;
     transition: background-color 0.3s ease, content-visibility 0.3s ease;
 }
