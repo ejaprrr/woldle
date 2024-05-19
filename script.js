@@ -145,28 +145,44 @@ class Game {
                         if (count > 1 && this.#remainingDuplicates(word[i], word, this.word)) {
                             const countE = document.createElement("div");
                             countE.classList.add("index");
-                            countE.textContent = count;
+                            countE.textContent = this.word.split(word[i]).length - word.split(word[i]).length + 1;
+                            row.children[i].appendChild(countE);
+                        }
+                        
+                        row.children[i].processed = true;
+                    };
+                };
+
+                // Step 2: Process inexact matches
+                for (let i = 0; i < word.length; i++) {
+                    if (!row.children[i].processed && this.word.includes(word[i])) {
+                        console.log(word[i])
+                        const letterKeyboard = Array.from(keys).find(x => x.textContent.toLowerCase() == word[i]);
+                        const remainingInTarget = this.word.split('').filter((letter, idx) => letter == word[i] && !row.children[idx].processed).length;
+                        const remainingInGuess = word.split('').filter((letter, idx) => letter == word[i] && !row.children[idx].processed).length;
+                        console.log(remainingInGuess, remainingInTarget);
+                        if (remainingInTarget >= 0 && remainingInGuess >= 0) {
+                            // Highlight the letter only if it's the first remaining occurrence in the guessed word
+                            const firstRemainingIndex = word.indexOf(word[i]);
+                            if (i === firstRemainingIndex || word.split(word[i]).length - 1 <= this.word.split(word[i]).length - 1) {
+                                row.children[i].style.outline = `solid ${orange}`;
+                                if (letterKeyboard) letterKeyboard.style.outline = `solid ${orange}`;
+                            }
+                            row.children[i].processed = true;
+                        }
+
+                        const count = this.word.split(word[i]).length - 1;
+                        if (count > 1 && this.#remainingDuplicates(word[i], word, this.word)) {
+                            const countE = document.createElement("div");
+                            countE.classList.add("index");
+                            countE.textContent = this.word.split(word[i]).length - word.split(word[i]).length + 1;
                             row.children[i].appendChild(countE);
                         }
                         
                         row.children[i].processed = true;
                     }
                 }
-
-                // Step 2: Process inexact matches
-                for (let i = 0; i < word.length; i++) {
-                    if (!row.children[i].processed && this.word.includes(word[i])) {
-                        const letterKeyboard = Array.from(keys).find(x => x.textContent.toLowerCase() == word[i]);
-                        const remainingInTarget = this.word.split('').filter((letter, idx) => letter == word[i] && !row.children[idx].processed).length;
-                        const remainingInGuess = word.split('').filter((letter, idx) => letter == word[i] && !row.children[idx].processed).length;
-
-                        if (remainingInTarget > 0 && remainingInGuess > 0) {
-                            row.children[i].style.outline = `solid ${orange}`;
-                            if (letterKeyboard) letterKeyboard.style.outline = `solid ${orange}`;
-                            row.children[i].processed = true;
-                        }
-                    }
-                }
+                
 
                 // Step 3: Process incorrect letters
                 for (let letter of row.children) {
@@ -174,8 +190,8 @@ class Game {
                         const letterKeyboard = Array.from(keys).find(x => x.textContent == letter.textContent);
                         letter.style.outline = "none";
                         if (letterKeyboard) letterKeyboard.style.outline = `solid ${red}`;
-                    }
-                }
+                    };
+                };
 
                 // Animate row confirmation
                 row.style.gap = "20px";
@@ -217,7 +233,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     words = Array.from(words).filter((x) => x.length == 11);
     console.log(words);
     let secret = words[Math.floor(Math.random() * words.length)];
-    secret = "flexibilita";
+    secret = "olše";
     console.log(secret);
     game = new Game(secret);
     console.log(secret);
