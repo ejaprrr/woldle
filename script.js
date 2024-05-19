@@ -173,8 +173,8 @@ class Game {
                     if (!current.processed && this.word.includes(currentGuess)) {
                         const remainingInTarget = this.#count(this.word, currentGuess);
                         const remainingInGuess = this.#count(guess, currentGuess);
-
-                        if (remainingInGuess <= remainingInTarget) {
+                        console.log(remainingInGuess, remainingInTarget, currentGuess);
+                        if (remainingInGuess <= remainingInTarget || i == guess.split("").findIndex((x) => x == currentGuess)) {
                             this.#changeOutline(current, displacement);
                             this.#changeOutline(key, displacement);
 
@@ -251,7 +251,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     words = Array.from(words).filter((x) => x.length == 11);
     console.log(words);
     let secret = words[Math.floor(Math.random() * words.length)];
-    secret = "koordinátor";
+    secret = "supermarket";
     console.log(secret);
     game = new Game(secret);
     console.log(secret);
