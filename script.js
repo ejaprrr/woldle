@@ -173,7 +173,6 @@ class Game {
                     if (!current.processed && this.word.includes(currentGuess)) {
                         const remainingInTarget = this.#count(this.word, currentGuess);
                         const remainingInGuess = this.#count(guess, currentGuess);
-                        console.log(remainingInGuess, remainingInTarget, currentGuess);
                         if (remainingInGuess <= remainingInTarget || i == guess.split("").findIndex((x) => x == currentGuess)) {
                             this.#changeOutline(current, displacement);
                             this.#changeOutline(key, displacement);
@@ -203,7 +202,6 @@ class Game {
                     const inTarget = this.#count(this.word, letter.textContent.toLowerCase());
                     const inGuess = this.#count(guess, letter.textContent.toLowerCase());
                     if (countTarget > 1 && !letter.exact && inTarget != inGuess) {
-                        console.log(inTarget, inGuess);
                         countTarget -= inGuess - 1
                         countTarget -= Array.from(row.children).filter((x) => x.exact && x.textContent == letter.textContent).length;
                         const countIndex = document.createElement("div");
@@ -248,11 +246,8 @@ let game;
 document.addEventListener("DOMContentLoaded", async () => {
     const targets = await fetch("files/targets.json");
     let words = await targets.json();
-    words = Array.from(words).filter((x) => x.length == 11);
-    console.log(words);
+    words = Array.from(words).filter((x) => x.length == 5);
     let secret = words[Math.floor(Math.random() * words.length)];
-    secret = "supermarket";
-    console.log(secret);
     game = new Game(secret);
     console.log(secret);
 });
