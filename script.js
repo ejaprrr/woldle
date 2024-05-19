@@ -115,88 +115,97 @@ class Game {
     };
 
     // potvrzení řady
+    
     confirm() {
         const enter = document.getElementById("enter");
-        
         enter.style.transform = "scale(80%)";
         setTimeout(() => {
             enter.style.transform = "scale(100%)";
         }, 250);
 
         if (!this.end) {
-            const keys = document.getElementsByClassName("key"); // všechna písmena na klávesnici
-            
+            const keys = document.getElementsByClassName("key");
             const row = this.rows[this.row];
-            const word = Array.from(row.children).map(x => x.textContent.toLowerCase()).join(""); // slovo zadané (písmena složena dohromady)
+            const word = Array.from(row.children).map(x => x.textContent.toLowerCase()).join("");
 
-            // barvy
             const red = root.getPropertyValue('--wrong');
             const green = root.getPropertyValue('--right');
             const orange = root.getPropertyValue('--displacement');
             const blue = root.getPropertyValue('--secondary');
-            
-            if (this.word.length == this.letter && this.dictionary.includes(word)) { // lze validovat pouze pokud je uživatel na konci řádky a zároveň je slovo validní (obsahuje ho slovník)
-                for (let i = 0; i < word.length; i++) { // index pro obě slova pro porovnávání
-                    const letterKeyboard = Array.from(keys).find((x) => x.textContent.toLowerCase() == word[i]); // zmáčklé písmeno
 
-                    // animace barvení písmen
-                    if (word[i] == this.word[i]) { // pokud se shodují indexy a písmena, jde o shodu
+            if (this.word.length == this.letter && this.dictionary.includes(word)) {
+                // Step 1: Process exact matches
+                for (let i = 0; i < word.length; i++) {
+                    if (word[i] == this.word[i]) {
                         row.children[i].style.outline = `solid ${green}`;
-                        letterKeyboard.style.outline = `solid ${green}`;
-                        const count = this.word.split(word[i]).length - 1; // počet
-                        if (count > 1 && this.word != word && !((word.split(word[i]).length - 1) == count)) {
+                        const letterKeyboard = Array.from(keys).find(x => x.textContent.toLowerCase() == word[i]);
+                        if (letterKeyboard) letterKeyboard.style.outline = `solid ${green}`;
+                        
+                        const count = this.word.split(word[i]).length - 1;
+                        if (count > 1 && this.#remainingDuplicates(word[i], word, this.word)) {
                             const countE = document.createElement("div");
                             countE.classList.add("index");
                             countE.textContent = count;
                             row.children[i].appendChild(countE);
-                        };
-                        row.children[i].processed = true;
-                    } else if (this.word.includes(word[i])) { // pokud slovo obsahuje stejné písmeno, označí se první co najde (z důvodu duplikátů)
-                        console.log(this.word.split(word[i]).length - 1);
-                        if ((this.word.split(word[i]).length - 1) > 1) {
-                            Array.from(row.children).find((x) => x.textContent.toLowerCase() == word[i] && !x.processed).style.outline = `solid ${orange}`;
-                            letterKeyboard.style.outline = `solid ${orange}`;
                         }
-                        row.children[i].processed = true;
-                    };
-                };
-
-                for (let letter of row.children) {
-                    if (!letter.processed) {
-                        const letterKeyboard = Array.from(keys).find((x) => x.textContent == letter.textContent); // zmáčklé písmeno
-
-                        letter.style.outline = "none";
-                        letterKeyboard.style.outline = `solid ${red}`;
                         
+                        row.children[i].processed = true;
                     }
                 }
 
-                // animace potvrzení
+                // Step 2: Process inexact matches
+                for (let i = 0; i < word.length; i++) {
+                    if (!row.children[i].processed && this.word.includes(word[i])) {
+                        const letterKeyboard = Array.from(keys).find(x => x.textContent.toLowerCase() == word[i]);
+                        const remainingInTarget = this.word.split('').filter((letter, idx) => letter == word[i] && !row.children[idx].processed).length;
+                        const remainingInGuess = word.split('').filter((letter, idx) => letter == word[i] && !row.children[idx].processed).length;
+
+                        if (remainingInTarget > 0 && remainingInGuess > 0) {
+                            row.children[i].style.outline = `solid ${orange}`;
+                            if (letterKeyboard) letterKeyboard.style.outline = `solid ${orange}`;
+                            row.children[i].processed = true;
+                        }
+                    }
+                }
+
+                // Step 3: Process incorrect letters
+                for (let letter of row.children) {
+                    if (!letter.processed) {
+                        const letterKeyboard = Array.from(keys).find(x => x.textContent == letter.textContent);
+                        letter.style.outline = "none";
+                        if (letterKeyboard) letterKeyboard.style.outline = `solid ${red}`;
+                    }
+                }
+
+                // Animate row confirmation
                 row.style.gap = "20px";
                 setTimeout(() => {
                     row.style.gap = "15px";
                 }, 500);
 
-                // přejetí na další řádku
+                // Move to next row
                 this.row++;
                 this.letter = 0;
-            } else { // pokud není input validní
+
+                if (this.word == word || this.row == Game.tries) {
+                    this.end = true;
+                }
+            } else {
                 for (let letter of row.children) {
-                    // spustí se animace červeného zvýraznění
                     letter.style.outline = `solid ${red}`;
                     setTimeout(() => {
                         letter.style.outline = `solid ${blue}`;
                     }, 250);
                 }
-            };
-
-
-            // pokud se slovo shoduje, končí tím hra, to samé platí pro poslední pokus
-            if (this.word == word || this.row == Game.tries) {
-                this.end = true;
             }
-        };
-    };
+        }
+    }
+
+    #remainingDuplicates(letter, guessWord, targetWord) {
+        const correctCount = targetWord.split('').filter((char, idx) => char === letter && guessWord[idx] === letter).length;
+        const totalCount = targetWord.split(letter).length - 1;
+        return totalCount > correctCount;
+    }
 };
 
 let game;
@@ -204,9 +213,12 @@ let game;
 // zajištění toho, že se kód spustí po loadingu a parsingu HTML
 document.addEventListener("DOMContentLoaded", async () => {
     const targets = await fetch("files/targets.json");
-    const words = await targets.json();
+    let words = await targets.json();
+    words = Array.from(words).filter((x) => x.length == 11);
+    console.log(words);
     let secret = words[Math.floor(Math.random() * words.length)];
-    secret = "kolo";
+    secret = "flexibilita";
+    console.log(secret);
     game = new Game(secret);
     console.log(secret);
 });
