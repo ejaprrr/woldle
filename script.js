@@ -28,6 +28,10 @@ function settingsWindow(func) {
 class Game {
     static wrapper = document.getElementById("game");
     static tries = 6;
+    static keys = document.getElementsByClassName("key");
+
+    static backspace = document.getElementById("backspace");
+    static enter = document.getElementById("enter");
 
     constructor (secret) { // inicializace
         // získání pracovního prostředí (#main) a definování základních pojmů
@@ -70,158 +74,172 @@ class Game {
         };
     };
 
+    #animateElement(element, property, value, target, duration) {
+        element.style[property] = value;
+        setTimeout(() => element.style[property] = target, duration);
+    };
+
+    #getCurrentLeter(position = this.letter) {
+        const currentRow = this.rows[this.row];
+        return currentRow.children[position];
+    };
+
+    #findKey(key) {
+        return Array.from(Game.keys).find((x) => x.textContent.toLowerCase() == key);
+    };
+
+    #getCurrentGuess() {
+        const row = this.rows[this.row];
+
+        return Array.from(row.children).map((x) => x.textContent.toLowerCase()).join("");
+    };
+
+    #getProperty(name) {
+        return root.getPropertyValue(`--${name}`);
+    };
+
+    #changeOutline(element, color) {
+        element.style.outline = `solid ${color}`;
+    };
+
+    #count(x, y) {
+        return x.split(y).length - 1;
+    };
 
     // zápis písmene do hry
     write(letter) {
         if (this.letter < this.word.length && !this.end) { // psát je možné jen pokud uživatel doposud nedosáhl poslední pozice (délky slova) a samozřejmě pokud neskončila hra
-            const row = this.rows[this.row]; // současná řada
-            const letterElement = row.children[this.letter]; // současné písmeno
-
-            // animace zadávání písmen
-            letterElement.style.transform = "scale(80%)";
-            setTimeout(() => {
-                letterElement.style.transform = "scale(100%)";
-            }, 250);
-
+            const letterElement = this.#getCurrentLeter(); // současné písmeno
+            this.#animateElement(letterElement, "transform", "scale(80%)", "scale(100%)", 250); // animace zadávání písmen
+            
             letterElement.textContent = letter;
             this.letter++;
         };
+        const key = this.#findKey(letter.toLowerCase());
 
-        const keys = document.getElementsByClassName("key"); // všechna písmena na klávesnici
-        const letterKeyboard = Array.from(keys).find((x) => x.textContent == letter); // zmáčklé písmeno
-
-        // animace zadávání písmen
-        letterKeyboard.style.transform = "scale(80%)";
-        setTimeout(() => {
-            letterKeyboard.style.transform = "scale(100%)";
-        }, 250);
+        this.#animateElement(key, "transform", "scale(80%)", "scale(100%)", 250); // animace zadávání písmen
     };
 
     // odebrání písmene ze hry
     back() {
-        const backspace = document.getElementById("backspace"); // backspace klávesnice
-
-        backspace.style.transform = "scale(80%)";
-        setTimeout(() => {
-            backspace.style.transform = "scale(100%)";
-        }, 250);
+        this.#animateElement(Game.backspace, "transform", "scale(80%)", "scale(100%)", 250);
 
         if (!this.end && this.letter > 0) {  // nelze mazat písmena z již potvrzené řádky
-            const row = this.rows[this.row];
-
             this.letter--; // nastavení současné pozice na předchozí
-            row.children[this.letter].textContent = "";
+
+            const letter = this.#getCurrentLeter();
+            letter.textContent = "";
         };
     };
 
     // potvrzení řady
-    
     confirm() {
-        const enter = document.getElementById("enter");
-        enter.style.transform = "scale(80%)";
-        setTimeout(() => {
-            enter.style.transform = "scale(100%)";
-        }, 250);
+        this.#animateElement(Game.enter, "transform", "scale(80%)", "scale(100%)", 250);
 
         if (!this.end) {
-            const keys = document.getElementsByClassName("key");
             const row = this.rows[this.row];
-            const word = Array.from(row.children).map(x => x.textContent.toLowerCase()).join("");
+            const guess = this.#getCurrentGuess();
 
-            const red = root.getPropertyValue('--wrong');
-            const green = root.getPropertyValue('--right');
-            const orange = root.getPropertyValue('--displacement');
-            const blue = root.getPropertyValue('--secondary');
+            const wrong = this.#getProperty("wrong");
+            const right = this.#getProperty("right");
+            const displacement = this.#getProperty("displacement");
+            const secondary = this.#getProperty("secondary");
 
-            if (this.word.length == this.letter && this.dictionary.includes(word)) {
+            if (this.word.length == this.letter && this.dictionary.includes(guess)) {
                 // Step 1: Process exact matches
-                for (let i = 0; i < word.length; i++) {
-                    if (word[i] == this.word[i]) {
-                        row.children[i].style.outline = `solid ${green}`;
-                        const letterKeyboard = Array.from(keys).find(x => x.textContent.toLowerCase() == word[i]);
-                        if (letterKeyboard) letterKeyboard.style.outline = `solid ${green}`;
-                        
-                        const count = this.word.split(word[i]).length - 1;
-                        if (count > 1 && this.#remainingDuplicates(word[i], word, this.word)) {
-                            const countE = document.createElement("div");
-                            countE.classList.add("index");
-                            countE.textContent = this.word.split(word[i]).length - word.split(word[i]).length + 1;
-                            row.children[i].appendChild(countE);
-                        }
-                        
-                        row.children[i].processed = true;
+                for (let i = 0; i < this.word.length; i++) {
+                    const currentGuess = guess[i];
+                    const currentTarget = this.word[i];
+                    const current = row.children[i];
+
+                    const key = this.#findKey(currentGuess);
+    
+                    if (currentGuess == currentTarget) {
+                        this.#changeOutline(current, right);
+                        this.#changeOutline(key, right);
+
+                        current.processed = true;
+                        current.exact = true;
                     };
                 };
 
                 // Step 2: Process inexact matches
-                for (let i = 0; i < word.length; i++) {
-                    if (!row.children[i].processed && this.word.includes(word[i])) {
-                        console.log(word[i])
-                        const letterKeyboard = Array.from(keys).find(x => x.textContent.toLowerCase() == word[i]);
-                        const remainingInTarget = this.word.split('').filter((letter, idx) => letter == word[i] && !row.children[idx].processed).length;
-                        const remainingInGuess = word.split('').filter((letter, idx) => letter == word[i] && !row.children[idx].processed).length;
-                        console.log(remainingInGuess, remainingInTarget);
-                        if (remainingInTarget >= 0 && remainingInGuess >= 0) {
-                            // Highlight the letter only if it's the first remaining occurrence in the guessed word
-                            const firstRemainingIndex = word.indexOf(word[i]);
-                            if (i === firstRemainingIndex || word.split(word[i]).length - 1 <= this.word.split(word[i]).length - 1) {
-                                row.children[i].style.outline = `solid ${orange}`;
-                                if (letterKeyboard) letterKeyboard.style.outline = `solid ${orange}`;
-                            }
-                            row.children[i].processed = true;
-                        }
+                for (let i = 0; i < this.word.length; i++) {
+                    const currentGuess = guess[i];
+                    const current = row.children[i];
 
-                        const count = this.word.split(word[i]).length - 1;
-                        if (count > 1 && this.#remainingDuplicates(word[i], word, this.word)) {
-                            const countE = document.createElement("div");
-                            countE.classList.add("index");
-                            countE.textContent = this.word.split(word[i]).length - word.split(word[i]).length + 1;
-                            row.children[i].appendChild(countE);
-                        }
-                        
-                        row.children[i].processed = true;
-                    }
-                }
-                
+                    const key = this.#findKey(currentGuess);
+
+                    if (!current.processed && this.word.includes(currentGuess)) {
+                        const remainingInTarget = this.#count(this.word, currentGuess);
+                        const remainingInGuess = this.#count(guess, currentGuess);
+
+                        if (remainingInGuess <= remainingInTarget) {
+                            this.#changeOutline(current, displacement);
+                            this.#changeOutline(key, displacement);
+
+                            current.exact = false;
+                        } else {
+                            current.exact = null;
+                        };
+
+                        current.processed = true;
+                    };
+                };
 
                 // Step 3: Process incorrect letters
                 for (let letter of row.children) {
                     if (!letter.processed) {
-                        const letterKeyboard = Array.from(keys).find(x => x.textContent == letter.textContent);
-                        letter.style.outline = "none";
-                        if (letterKeyboard) letterKeyboard.style.outline = `solid ${red}`;
+                        const key = this.#findKey(letter.textContent.toLowerCase());
+                        this.#changeOutline(letter, "transparent");
+                        this.#changeOutline(key, wrong);
+                        letter.exact = null;
+                    };
+                };
+
+                // N - remaining letter duplicates to guess
+                for (let letter of row.children) {
+                    let countTarget = this.#count(this.word, letter.textContent.toLowerCase());
+                    const inTarget = this.#count(this.word, letter.textContent.toLowerCase());
+                    const inGuess = this.#count(guess, letter.textContent.toLowerCase());
+                    if (countTarget > 1 && !letter.exact && inTarget != inGuess) {
+                        console.log(inTarget, inGuess);
+                        countTarget -= inGuess - 1
+                        countTarget -= Array.from(row.children).filter((x) => x.exact && x.textContent == letter.textContent).length;
+                        const countIndex = document.createElement("div");
+                        countIndex.classList.add("index");
+                        countIndex.textContent = countTarget;
+                        letter.appendChild(countIndex);
+                    } else if (countTarget > 1 && letter.exact && inTarget != inGuess) {
+                        const well = Array.from(row.children).filter((x) => !x.exact && x.textContent == letter.textContent).length;
+                        if (well > 0) {
+                            countTarget -= inGuess - 1
+                            countTarget -= Array.from(row.children).filter((x) => x.exact && x.textContent == letter.textContent).length;
+                        }
+                        const countIndex = document.createElement("div");
+                        countIndex.classList.add("index");
+                        countIndex.textContent = countTarget;
+                        letter.appendChild(countIndex);
                     };
                 };
 
                 // Animate row confirmation
-                row.style.gap = "20px";
-                setTimeout(() => {
-                    row.style.gap = "15px";
-                }, 500);
+                this.#animateElement(row, "gap", "20px", "15px", 500);
 
                 // Move to next row
                 this.row++;
                 this.letter = 0;
 
-                if (this.word == word || this.row == Game.tries) {
+                if (this.word == guess || this.row == Game.tries) {
                     this.end = true;
-                }
+                };
             } else {
                 for (let letter of row.children) {
-                    letter.style.outline = `solid ${red}`;
-                    setTimeout(() => {
-                        letter.style.outline = `solid ${blue}`;
-                    }, 250);
-                }
-            }
-        }
-    }
-
-    #remainingDuplicates(letter, guessWord, targetWord) {
-        const correctCount = targetWord.split('').filter((char, idx) => char === letter && guessWord[idx] === letter).length;
-        const totalCount = targetWord.split(letter).length - 1;
-        return totalCount > correctCount;
-    }
+                    this.#animateElement(letter, "outline", `solid ${wrong}`, `solid ${secondary}`, 250);
+                };
+            };
+        };
+    };
 };
 
 let game;
@@ -233,7 +251,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     words = Array.from(words).filter((x) => x.length == 11);
     console.log(words);
     let secret = words[Math.floor(Math.random() * words.length)];
-    secret = "olše";
+    secret = "koordinátor";
     console.log(secret);
     game = new Game(secret);
     console.log(secret);
