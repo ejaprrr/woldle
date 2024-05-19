@@ -159,7 +159,7 @@ svg {
     text-align: center;
     flex: 1;
     backdrop-filter: brightness(80%);
-    transition: transform 0.25s ease;
+    transition: transform 0.25s ease, outline 0.25s ease;
 }
 
 #backspace, #enter {
