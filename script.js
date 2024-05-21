@@ -33,7 +33,9 @@ class Game {
         this.letter = 0;
         this.end = false;
         this.rows = [];
+
         this.init();
+
     }
 
     async init() {
@@ -50,9 +52,11 @@ class Game {
         for (let y = 0; y < Game.tries; y++) {
             const row = document.createElement("div");
             row.classList.add("row");
+
             for (let x = 0; x < this.word.length; x++) {
                 const letter = document.createElement("div");
                 letter.classList.add("letter");
+
                 row.appendChild(letter);
             }
             Game.wrapper.appendChild(row);
@@ -70,11 +74,11 @@ class Game {
     }
 
     findKeyElement(key) {
-        return Game.keys.find(x => x.textContent.toLowerCase() === key);
+        return Game.keys.find(x => x.textContent === key);
     }
 
     getCurrentGuess() {
-        return Array.from(this.rows[this.row].children).map(x => x.textContent.toLowerCase()).join("");
+        return Array.from(this.rows[this.row].children).map(x => x.textContent).join("");
     }
 
     changeOutline(element, color) {
@@ -92,7 +96,7 @@ class Game {
             this.animateElement(letterElement, "transform", "scale(80%)", "scale(100%)", 250);
             letterElement.textContent = letter;
             this.letter++;
-            const key = this.findKeyElement(letter.toLowerCase());
+            const key = this.findKeyElement(letter);
             this.animateElement(key, "transform", "scale(80%)", "scale(100%)", 250);
         }
     }
@@ -122,13 +126,20 @@ class Game {
             if (this.word.length === this.letter && this.dictionary.includes(guess)) {
                 this.processExactMatches(row, guess, rightColor);
                 this.processInexactMatches(row, guess, displacementColor);
-                this.processIncorrectLetters(row, guess, wrongColor);
+                this.processIncorrectLetters(row, wrongColor);
                 this.updateDuplicateLetters(row, guess);
                 this.animateElement(row, "gap", "20px", "15px", 500);
                 this.moveToNextRow(guess);
             } else {
                 this.animateInvalidGuess(row, wrongColor, secondaryColor);
             }
+        }
+    }
+
+    processKeyHighlight(key, color) {
+        if (!key.processed) {
+            this.changeOutline(key, color);
+            key.processed = true;
         }
     }
 
@@ -141,7 +152,7 @@ class Game {
 
             if (currentGuess === currentTarget) {
                 this.changeOutline(current, rightColor);
-                if (!key.processed) this.changeOutline(key, rightColor);
+                this.processKeyHighlight(key, rightColor);
                 key.processed = true;
                 current.processed = true;
                 current.exact = true;
@@ -157,10 +168,10 @@ class Game {
             const key = this.findKeyElement(currentGuess);
 
             if (!current.processed && this.word.includes(currentGuess)) {
-                const processed = Array.from(row.children).filter((x) => x.processed && x.textContent.toLowerCase() == currentGuess).length;
+                const processed = Array.from(row.children).filter((x) => x.processed && x.textContent == currentGuess).length;
                 if (processed < this.countOccurrences(this.word, currentGuess)) {
                     this.changeOutline(current, displacementColor);
-                    if (!key.processed) this.changeOutline(key, displacementColor);
+                    this.processKeyHighlight(key, displacementColor);
                     key.processed = true;
                 }
 
@@ -170,12 +181,12 @@ class Game {
         };
     }
 
-    processIncorrectLetters(row, guess, wrongColor) {
+    processIncorrectLetters(row, wrongColor) {
         for (let letter of row.children) {
             if (!letter.processed) {
-                const key = this.findKeyElement(letter.textContent.toLowerCase());
+                const key = this.findKeyElement(letter.textContent);
                 this.changeOutline(letter, "transparent");
-                if (!key.processed) this.changeOutline(key, wrongColor);
+                this.processKeyHighlight(key, wrongColor);
                 key.processed = true;
                 letter.exact = null;
             }
@@ -184,9 +195,9 @@ class Game {
 
     updateDuplicateLetters(row, guess) {
         for (let letter of row.children) {
-            let countTarget = this.countOccurrences(this.word, letter.textContent.toLowerCase());
-            const inTarget = this.countOccurrences(this.word, letter.textContent.toLowerCase());
-            const inGuess = this.countOccurrences(guess, letter.textContent.toLowerCase());
+            let countTarget = this.countOccurrences(this.word, letter.textContent);
+            const inTarget = this.countOccurrences(this.word, letter.textContent);
+            const inGuess = this.countOccurrences(guess, letter.textContent);
 
             if (inTarget > 1 && inGuess > 1) {
                 if (letter.exact) {
@@ -207,20 +218,12 @@ class Game {
         letter.appendChild(countIndex);
     }
 
-    removeSingleCountIndices(row) {
-        for (let letter of row.children) {
-            const indexElement = letter.querySelector(".index");
-            if (indexElement && indexElement.textContent == "1") {
-                letter.removeChild(indexElement);
-            }
-        }
-    }
-
     moveToNextRow(guess) {
-        this.row++;
-        this.letter = 0;
         if (this.word === guess || this.row === Game.tries) {
             this.end = true;
+        } else {
+            this.row++;
+            this.letter = 0;
         }
     }
 
@@ -244,14 +247,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 document.addEventListener("keydown", (event) => {
-    const czechLetters = /[AÁBCČDĎEÉĚFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYZÝZŽ]/g;
     const key = event.key.toUpperCase();
 
-    if (key === "BACKSPACE") {
-        game.back();
-    } else if (key === "ENTER") {
-        game.confirm();
-    } else if (key.length === 1 && key.match(czechLetters)) {
+    switch (key) {
+        case "BACKSPACE":
+            game.back();
+            break;
+        
+        case "ENTER":
+            game.confirm();
+            break;
+    }
+});
+
+document.addEventListener("keypress", (event) => {
+    const czechLetters = /[AÁBCČDĎEÉĚFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYZÝZŽ]/g;
+    const key = event.key;
+
+    if (key.length === 1 && key.toUpperCase().match(czechLetters)) {
         game.write(key);
     }
 });
