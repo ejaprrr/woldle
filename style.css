@@ -176,3 +176,16 @@ svg {
     bottom: 0px;
     right: 0px;
 }
+
+#themes {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+
+.theme {
+    outline: var(--tertiary) solid;
+    height: 100px;
+    flex: 1;
+    border-radius: 10px;
+}
