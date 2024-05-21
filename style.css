@@ -43,7 +43,7 @@ nav * {
 }
 
 
-main {
+body > main {
     height: calc(100vh - 120px);
     display: flex;
     flex-direction: column;
@@ -110,13 +110,32 @@ svg {
 #window {
     width: 600px;
     height: 400px;
-    padding: var(--padding);
     border-radius: 10px;
     /* neukazovat obsah dokud se nerozklikne (JS) */
     content-visibility: hidden;
     /* kvůli wrapperu */
     pointer-events: all;
     transition: background-color 0.3s ease, content-visibility 0.3s ease;
+}
+
+#window nav {
+    width: 100%;
+    height: 40px;
+    padding: 0;
+    background-color: rgba(0, 0, 0, .25);
+}
+
+#close {
+   margin: 5px;
+}
+
+#window > main {
+    top: 40px;
+    padding: var(--padding);
+}
+
+#window > main > * {
+    margin-top: var(--margin);
 }
 
 #game {
@@ -203,4 +222,8 @@ svg {
 }
 #keyboard, #game {
     text-transform: uppercase;
+}
+
+.number, .theme {
+    cursor: pointer;
 }
