@@ -11,25 +11,47 @@ class Game {
     static enter = document.getElementById("enter");
 
     // inicializace a interní definice
-    constructor(secret) {
-        this.word = secret; // slovo
+    constructor() {
         this.currentRow = 0;
         this.currentLetter = 0;
         this.gameEnd = false;
-        this.rows = []; //
+        this.rows = [];
+        this.length = 5;
 
         this.init();
     }
 
     async init() {
         await this.loadDictionary();
+        await this.loadTargets();
+
+        this.word = this.getSecret();
+
         this.createGameEnvironment();
+    }
+
+    changeLength(length) {
+        Game.wrapper.innerHTML = "";
+        this.length = length;
+        this.word = this.getSecret();
+        this.createGameEnvironment();
+    }
+
+    getSecret() {
+        const filteredWords = Array.from(this.targets).filter((x) => x.length == this.length);
+        const secret = filteredWords[Math.floor(Math.random() * filteredWords.length)];
+        return secret;
     }
 
     // loading slovníku
     async loadDictionary() {
         const response = await fetch("files/dictionary.json");
         this.dictionary = await response.json();
+    }
+
+    async loadTargets() {
+        const response = await fetch("files/targets.json");
+        this.targets = await response.json();
     }
 
     // vytvoření herního prostředí

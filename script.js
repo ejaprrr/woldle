@@ -42,12 +42,24 @@ let game;
 
 document.addEventListener("DOMContentLoaded", async () => {
     const response = await fetch("files/targets.json");
-    let words = await response.json();
-    words = words.filter(word => word.length === 4);
-    let secret = words[Math.floor(Math.random() * words.length)];
-    secret = "kláda";
-    game = new Game(secret);
-    console.log(secret);
+    const words = await response.json();
+    const lengths = words.map((x) => x.length);
+    const lengthSelection = document.getElementById("length");
+
+    for (let lengthNum = Math.min(...lengths); lengthNum <= Math.max(...lengths); lengthNum++) {
+        const lengthOption = document.createElement("div");
+        lengthOption.classList.add("number");
+        lengthOption.textContent = lengthNum;
+
+        lengthOption.onclick = () => {
+            const length = parseInt(lengthOption.textContent);
+            game.changeLength(length);
+        }
+
+        lengthSelection.appendChild(lengthOption);
+    };
+
+    game = new Game();
 });
 
 document.addEventListener("keydown", (event) => {
@@ -79,11 +91,10 @@ document.getElementById("close").addEventListener("click", () => toggleSettingsW
 function date() {
     let date = new Date()
     let month = date.getMonth();
-    let day = date.getDate();
-
+    let day = date.getDate()
     let months = ["ledna", "února", "března", "dubna", "května", "června", "července", "srpna", "září", "října", "listopadu", "prosince"];
     month = months[month];
-
+    let todayDate = day + ". " + month;
     document.getElementById("year").textContent = date.getFullYear();
     document.getElementById("date").textContent = todayDate;
 };
