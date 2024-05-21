@@ -189,3 +189,15 @@ svg {
     flex: 1;
     border-radius: 10px;
 }
+#length {
+    display: flex;
+    gap: 15px;
+}
+
+.number {
+    flex: 1;
+    text-align: center;
+    outline: var(--tertiary) solid;
+    border-radius: 10px;
+    font-size: 26px;
+}
