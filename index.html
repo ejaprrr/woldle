@@ -35,55 +35,55 @@
         <div id="keyboard-wrapper">
             <div id="keyboard">
                 <div class="line">
-                    <div class="key">Q</div>
-                    <div class="key">W</div>
-                    <div class="key">E</div>
-                    <div class="key">R</div>
-                    <div class="key">T</div>
-                    <div class="key">Y</div>
-                    <div class="key">U</div>
-                    <div class="key">I</div>
-                    <div class="key">O</div>
-                    <div class="key">P</div>
+                    <div class="key">q</div>
+                    <div class="key">w</div>
+                    <div class="key">e</div>
+                    <div class="key">r</div>
+                    <div class="key">t</div>
+                    <div class="key">y</div>
+                    <div class="key">u</div>
+                    <div class="key">i</div>
+                    <div class="key">o</div>
+                    <div class="key">p</div>
                 </div>
                 <div class="line">
-                    <div class="key">A</div>
-                    <div class="key">S</div>
-                    <div class="key">D</div>
-                    <div class="key">F</div>
-                    <div class="key">G</div>
-                    <div class="key">H</div>
-                    <div class="key">J</div>
-                    <div class="key">K</div>
-                    <div class="key">L</div>
+                    <div class="key">a</div>
+                    <div class="key">s</div>
+                    <div class="key">d</div>
+                    <div class="key">f</div>
+                    <div class="key">g</div>
+                    <div class="key">h</div>
+                    <div class="key">j</div>
+                    <div class="key">k</div>
+                    <div class="key">l</div>
                 </div>
                 <div class="line">
                     <div class="key" id="backspace">←</div>
-                    <div class="key">Z</div>
-                    <div class="key">X</div>
-                    <div class="key">C</div>
-                    <div class="key">V</div>
-                    <div class="key">B</div>
-                    <div class="key">N</div>
-                    <div class="key">M</div>
+                    <div class="key">z</div>
+                    <div class="key">x</div>
+                    <div class="key">c</div>
+                    <div class="key">v</div>
+                    <div class="key">b</div>
+                    <div class="key">n</div>
+                    <div class="key">m</div>
                     <div class="key" id="enter">↵</div>
                 </div>
                 <div class="line">
-                    <div class="key">Á</div>
-                    <div class="key">Č</div>
-                    <div class="key">Ď</div>
-                    <div class="key">É</div>
-                    <div class="key">Ě</div>
-                    <div class="key">Í</div>
-                    <div class="key">Ň</div>
-                    <div class="key">Ó</div>
-                    <div class="key">Ř</div>
-                    <div class="key">Š</div>
-                    <div class="key">Ť</div>
-                    <div class="key">Ú</div>
-                    <div class="key">Ů</div>
-                    <div class="key">Ý</div>
-                    <div class="key">Ž</div>
+                    <div class="key">á</div>
+                    <div class="key">č</div>
+                    <div class="key">ď</div>
+                    <div class="key">é</div>
+                    <div class="key">ě</div>
+                    <div class="key">í</div>
+                    <div class="key">ň</div>
+                    <div class="key">ó</div>
+                    <div class="key">ř</div>
+                    <div class="key">š</div>
+                    <div class="key">ť</div>
+                    <div class="key">ú</div>
+                    <div class="key">ů</div>
+                    <div class="key">ý</div>
+                    <div class="key">ž</div>
                     
                 </div>
             </div>
@@ -97,10 +97,10 @@
             </svg>
             <h1>Themes</h1>
             <div id="themes">
-                <div class="theme"></div>
-                <div class="theme"></div>
-                <div class="theme"></div>
-                <div class="theme"></div>
+                <div class="theme dark blue" onclick="changeTheme('dark', 'blue')"></div>
+                <div class="theme dark yellow" onclick="changeTheme('dark', 'yellow')"></div>
+                <div class="theme light blue" onclick="changeTheme('light', 'blue')"></div>
+                <div class="theme light yellow" onclick="changeTheme('light', 'yellow')"></div>
             </div>
             <h1>Number of letters</H1>
             <div id="length">
@@ -122,11 +122,11 @@
     </div>
     <footer>
         <div id="time">
-            <span id="year">2024</span>
-            <span id="date">18. května</span> 
+            <span id="year"></span>
+            <span id="date"></span> 
         </div>
     </footer>
-    
+
     <script src="game.js"></script>
     <script src="script.js"></script>
 </body>

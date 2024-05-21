@@ -3,6 +3,10 @@ function getRootStyleProperty(property) {
     return getComputedStyle(document.body).getPropertyValue(`--${property}`);
 }
 
+function changeRootStyleProperty(property, value) {
+    getComputedStyle(document.body).setProperty(`--${property}`, value);
+}
+
 // Function to show or hide the settings window
 function toggleSettingsWindow(action) {
     const windowWrapper = document.getElementById("window-wrapper");
@@ -19,6 +23,21 @@ function toggleSettingsWindow(action) {
     }
 }
 
+function changeTheme(lightness, color) {
+    switch (lightness) {
+        case "dark":
+            changeRootStyleProperty("primary", "#181818");
+            changeRootStyleProperty("secondary", "#002652");
+            changeRootStyleProperty("tertiary", "#D6D6D6");
+            break;
+        case "light":
+            changeRootStyleProperty("primary", "#D6D6D6");
+            changeRootStyleProperty("secondary", "#002652");
+            changeRootStyleProperty("tertiary", "#181818");
+            break;
+    }
+};
+
 let game;
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -32,14 +51,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 document.addEventListener("keydown", (event) => {
-    const czechLetters = /[AÁBCČDĎEÉĚFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYZÝZŽ]/g;
     const key = event.key.toUpperCase();
 
-    if (key === "BACKSPACE") {
-        game.back();
-    } else if (key === "ENTER") {
-        game.confirm();
-    } else if (key.length === 1 && key.match(czechLetters)) {
+    switch (key) {
+        case "BACKSPACE":
+            game.back();
+            break;
+        
+        case "ENTER":
+            game.confirm();
+            break;
+    }
+});
+
+document.addEventListener("keypress", (event) => {
+    const czechLetters = /[AÁBCČDĎEÉĚFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYZÝZŽ]/g;
+    const key = event.key;
+
+    if (key.length === 1 && key.toUpperCase().match(czechLetters)) {
         game.write(key);
     }
 });
@@ -48,7 +77,7 @@ document.getElementById("settings").addEventListener("click", () => toggleSettin
 document.getElementById("close").addEventListener("click", () => toggleSettingsWindow("close"));
 
 function date() {
-    let date = new Date();
+    let date = new Date()
     let month = date.getMonth();
     let day = date.getDate();
 
@@ -56,6 +85,7 @@ function date() {
     month = months[month];
 
     document.getElementById("year").textContent = date.getFullYear();
-    document.getElementById("date").textContent = day + ". " + month;
+    document.getElementById("date").textContent = todayDate;
 };
-date()
+
+date();

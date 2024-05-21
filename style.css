@@ -201,3 +201,6 @@ svg {
     border-radius: 10px;
     font-size: 26px;
 }
+#keyboard, #game {
+    text-transform: uppercase;
+}
