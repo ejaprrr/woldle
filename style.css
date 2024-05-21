@@ -189,3 +189,7 @@ svg {
     flex: 1;
     border-radius: 10px;
 }
+
+#keyboard, #game {
+    text-transform: uppercase;
+}
