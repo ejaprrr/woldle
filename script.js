@@ -89,14 +89,15 @@ document.getElementById("settings").addEventListener("click", () => toggleSettin
 document.getElementById("close").addEventListener("click", () => toggleSettingsWindow("close"));
 
 function date() {
-    let date = new Date()
-    let month = date.getMonth();
-    let day = date.getDate()
-    let months = ["ledna", "února", "března", "dubna", "května", "června", "července", "srpna", "září", "října", "listopadu", "prosince"];
-    month = months[month];
-    let todayDate = day + ". " + month;
+    const date = new Date()
+    const month = date.getMonth();
+    const day = date.getDate()
+
+    const months = ["ledna", "února", "března", "dubna", "května", "června", "července", "srpna", "září", "října", "listopadu", "prosince"];
+    
+    const today = day + ". " + months[month];
     document.getElementById("year").textContent = date.getFullYear();
-    document.getElementById("date").textContent = todayDate;
+    document.getElementById("date").textContent = today;
 };
 
 date();
