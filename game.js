@@ -44,7 +44,7 @@ class Game {
 
                 row.appendChild(letter);
             }
-            
+
             Game.wrapper.appendChild(row);
             this.rows.push(row);
         }
@@ -120,7 +120,9 @@ class Game {
                 this.processInexactMatches(row, guess, displacementColor);
                 this.processIncorrectLetters(row, guess, wrongColor);
                 this.updateDuplicateLetters(row, guess);
+
                 this.animateElement(row, "gap", "20px", "15px", 500);
+
                 this.moveToNextRow(guess);
             } else {
                 this.animateInvalidGuess(row, wrongColor, secondaryColor);
@@ -138,6 +140,7 @@ class Game {
             if (currentGuess === currentTarget) {
                 this.changeOutline(current, rightColor);
                 if (!key.processed) this.changeOutline(key, rightColor);
+                
                 key.processed = true;
                 current.processed = true;
                 current.exact = true;
