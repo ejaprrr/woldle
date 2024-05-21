@@ -3,6 +3,10 @@ function getRootStyleProperty(property) {
     return getComputedStyle(document.body).getPropertyValue(`--${property}`);
 }
 
+function changeRootStyleProperty(property, value) {
+    getComputedStyle(document.body).setProperty(`--${property}`, value);
+}
+
 // Function to show or hide the settings window
 function toggleSettingsWindow(action) {
     const windowWrapper = document.getElementById("window-wrapper");
@@ -57,6 +61,21 @@ function date() {
 
     document.getElementById("year").textContent = date.getFullYear();
     document.getElementById("date").textContent = day + ". " + month;
+};
+
+function changeTheme(lightness, color) {
+    switch (lightness) {
+        case "dark":
+            changeRootStyleProperty("primary", "#181818");
+            changeRootStyleProperty("secondary", "#002652");
+            changeRootStyleProperty("tertiary", "#D6D6D6");
+            break;
+        case "light":
+            changeRootStyleProperty("primary", "#D6D6D6");
+            changeRootStyleProperty("secondary", "#002652");
+            changeRootStyleProperty("tertiary", "#181818");
+            break;
+    }
 };
 
 date();
