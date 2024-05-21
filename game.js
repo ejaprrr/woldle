@@ -31,6 +31,11 @@ class Game {
     }
 
     changeLength(length) {
+        this.currentRow = 0;
+        this.currentLetter = 0;
+        this.gameEnd = false;
+        this.rows = [];
+        
         Game.wrapper.innerHTML = "";
         this.length = length;
         this.word = this.getSecret();
