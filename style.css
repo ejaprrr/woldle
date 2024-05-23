@@ -114,8 +114,12 @@ svg {
     /* neukazovat obsah dokud se nerozklikne (JS) */
     content-visibility: hidden;
     /* kvůli wrapperu */
-    pointer-events: all;
+    pointer-events: none;
     transition: background-color 0.3s ease, content-visibility 0.3s ease;
+}
+
+#window .show {
+    pointer-events: all;
 }
 
 #window nav {
@@ -226,4 +230,8 @@ svg {
 
 .number, .theme {
     cursor: pointer;
+}
+
+.key {
+    z-index: 1;
 }

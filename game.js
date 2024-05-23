@@ -28,6 +28,23 @@ class Game {
         this.word = this.getSecret();
 
         this.createGameEnvironment();
+
+        Game.keys.forEach((key) => {
+            key.onclick = (event) => {
+
+                switch (key.textContent) {
+                    case "↵":
+                        this.confirm();
+                        break;
+                    case "←":
+                        this.back();
+                        break;
+                    default:
+                        this.write(key.textContent);
+                        break;
+                }
+            }
+        })
     }
 
     changeLength(length) {

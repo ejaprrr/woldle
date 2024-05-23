@@ -13,10 +13,12 @@ function toggleSettingsWindow(action) {
     const window = document.getElementById("window");
 
     if (action === "open") {
+        window.style.pointerEvents = "all";
         windowWrapper.classList.add("show");
         window.style.backgroundColor = getRootStyleProperty('secondary');
         window.style.contentVisibility = "visible";
     } else if (action === "close") {
+        window.style.pointerEvents = "none";
         windowWrapper.classList.remove("show");
         window.style.backgroundColor = "transparent";
         window.style.contentVisibility = "hidden";
