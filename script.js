@@ -79,10 +79,9 @@ document.addEventListener("keydown", (event) => {
 });
 
 document.addEventListener("keypress", (event) => {
-    const czechLetters = /[AÁBCČDĎEÉĚFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYÝZŽ]/g;
     const key = event.key;
 
-    if (key.length === 1 && key.toUpperCase().match(czechLetters)) {
+    if (key.length === 1 && key.toUpperCase().match(Game.keysRegex)) {
         game.write(key);
     };
 });

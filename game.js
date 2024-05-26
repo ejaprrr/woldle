@@ -4,6 +4,7 @@ class Game {
     // základní elementy a definice
 
     static tries = 6;
+    static keysRegex = /[AÁBCČDĎEÉĚFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYÝZŽ]/g;
 
     static wrapper = document.getElementById("game");
     static keys = Array.from(document.getElementsByClassName("key"));

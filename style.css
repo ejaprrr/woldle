@@ -135,11 +135,16 @@ svg {
 
 #window > main {
     top: 40px;
-    padding: var(--padding);
+    padding: calc(2 * var(--margin));
 }
 
 #window > main > * {
     margin-top: var(--margin);
+}
+#window h1 {
+    text-transform: uppercase;
+    font-style: italic;
+    filter: opacity(75%);
 }
 
 #game {
@@ -167,18 +172,18 @@ svg {
 }
 
 #keyboard {
-    min-width: 600px;
+    width: 80vw;
+    min-width: 400px;
 }
 
 .line {
     display: flex;
-    gap: 10px;
+    gap: 7px;
     margin-block: 10px;
-    height: 40px;
 }
 
 .key {
-    line-height: 40px;
+    line-height: 5vh;
     outline: solid var(--secondary);
     border-radius: 10px;
     text-align: center;
@@ -203,15 +208,9 @@ svg {
 #themes {
     display: flex;
     width: 100%;
-    gap: 10px;
+    gap: 15px;
 }
 
-.theme {
-    outline: var(--tertiary) solid;
-    height: 100px;
-    flex: 1;
-    border-radius: 10px;
-}
 #length {
     display: flex;
     gap: 15px;
@@ -220,16 +219,34 @@ svg {
 .number {
     flex: 1;
     text-align: center;
-    outline: var(--tertiary) solid;
-    border-radius: 10px;
     font-size: 26px;
 }
+
+.theme {
+    flex: 1;
+    width: 50px;
+    height: 50px;
+}
+
+
+.theme:hover, .number:hover {
+    transform: scale(1.1);
+}
+
+.theme {
+    filter: drop-shadow(2px 4px 6px var(--primary));
+}
+
 #keyboard, #game {
     text-transform: uppercase;
 }
 
 .number, .theme {
     cursor: pointer;
+    outline: var(--tertiary) solid;
+    border-radius: 10px;
+    transition: transform 0.5s ease;
+
 }
 
 .key {
