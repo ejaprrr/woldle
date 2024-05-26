@@ -15,27 +15,33 @@ function toggleSettingsWindow(action) {
     if (action === "open") {
         window.style.pointerEvents = "all";
         windowWrapper.classList.add("show");
-        window.style.backgroundColor = getRootStyleProperty('secondary');
+        window.classList.add("show");
         window.style.contentVisibility = "visible";
     } else if (action === "close") {
         window.style.pointerEvents = "none";
         windowWrapper.classList.remove("show");
-        window.style.backgroundColor = "transparent";
+        window.classList.remove("show");
         window.style.contentVisibility = "hidden";
     };
 };
 
-function changeTheme(lightness, color) {
-    switch (lightness) {
-        case "dark":
-            changeRootStyleProperty("primary", "#181818");
-            changeRootStyleProperty("secondary", "#002652");
-            changeRootStyleProperty("tertiary", "#D6D6D6");
+function changeTheme(theme) {
+    switch (theme) {
+        case "dark-blue":
+            document.body.classList = {};
+            document.body.classList.add("dark", "dark-blue");
             break;
-        case "light":
-            changeRootStyleProperty("primary", "#D6D6D6");
-            changeRootStyleProperty("secondary", "#002652");
-            changeRootStyleProperty("tertiary", "#181818");
+        case "dark-yellow":
+            document.body.classList = {};
+            document.body.classList.add("dark", "dark-yellow");
+            break;
+        case "light-blue":
+            document.body.classList = {};
+            document.body.classList.add("light", "light-blue");
+            break;
+        case "light-yellow":
+            document.body.classList = {};
+            document.body.classList.add("light", "light-yellow");
             break;
     };
 };

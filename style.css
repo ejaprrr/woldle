@@ -3,12 +3,36 @@
     --primary: #181818;
     --secondary: #002652;
     --tertiary: #D6D6D6;
+    --overlay: rgba(0, 0, 0, .25);
+    --brightness: brightness(80%);
     --wrong: #FF5151;
     --displacement: #FFAF51;
     --right: #51FF77;
 
     --margin: 15px;
     --padding: 10px;
+}
+
+.dark {
+    --primary: #181818;
+    --tertiary: #D6D6D6;
+    --overlay: rgba(0, 0, 0, .25);
+    --brightness: brightness(80%);
+}
+
+.light {
+    --primary: #D6D6D6;
+    --tertiary: #181818;
+    --overlay: rgba(255, 255, 255, .25);
+    --brightness: brightness(120%);
+}
+
+.light-blue {
+    --secondary: #ADD3FF;
+}
+
+.dark-blue {
+    --secondary: #002652;
 }
 
 /* platí vždy */
@@ -29,7 +53,7 @@ body {
 header {
     height: 50px;
     padding: var(--padding);
-    background-color: rgba(0, 0, 0, .25);
+    background-color: var(--overlay);
 }
 
 nav {
@@ -59,7 +83,7 @@ body > main {
 
 footer {
     height: 50px;
-    background-color: rgba(0, 0, 0, .25);
+    background-color: var(--overlay);
 }
 
 svg {
@@ -115,18 +139,21 @@ svg {
     content-visibility: hidden;
     /* kvůli wrapperu */
     pointer-events: none;
+    background-color: transparent;
     transition: background-color 0.3s ease, content-visibility 0.3s ease;
+    overflow: hidden;
 }
 
-#window .show {
+#window.show {
     pointer-events: all;
+    background-color: var(--secondary);
 }
 
 #window nav {
     width: 100%;
     height: 40px;
     padding: 0;
-    background-color: rgba(0, 0, 0, .25);
+    background-color: var(--overlay);
 }
 
 #close {
@@ -144,7 +171,11 @@ svg {
 #window h1 {
     text-transform: uppercase;
     font-style: italic;
-    filter: opacity(75%);
+    filter: opacity(75%) drop-shadow(0px 0px 6px color-mix(in srgb, var(--tertiary) 40%, transparent));
+}
+
+.light #window h1 {
+    filter: opacity(75%) drop-shadow(0px 0px 6px color-mix(in srgb, var(--tertiary) 80%, transparent));
 }
 
 #game {
@@ -165,7 +196,7 @@ svg {
     width: 50px;
     outline: solid var(--secondary);
     border-radius: 10px;
-    backdrop-filter: brightness(80%);
+    backdrop-filter: var(--brightness);
     font-size: 30px;
     text-align: center;
     transition: outline .25s ease-out, transform 0.25s ease;
@@ -188,7 +219,7 @@ svg {
     border-radius: 10px;
     text-align: center;
     flex: 1;
-    backdrop-filter: brightness(80%);
+    backdrop-filter: var(--brightness);
     transition: transform 0.25s ease, outline 0.25s ease;
 }
 
@@ -234,7 +265,11 @@ svg {
 }
 
 .theme {
-    filter: drop-shadow(2px 4px 6px var(--primary));
+    filter: drop-shadow(0px 0px 6px color-mix(in srgb, var(--tertiary) 40%, transparent));
+}
+
+.light .theme {
+    filter: drop-shadow(0px 0px 6px color-mix(in srgb, var(--tertiary) 80%, transparent));
 }
 
 #keyboard, #game {
@@ -251,4 +286,34 @@ svg {
 
 .key {
     z-index: 1;
+}
+
+.wrong {
+    outline: solid var(--wrong);
+    filter: drop-shadow(2px 4px 6px color-mix(in srgb, var(--wrong) 40%, transparent));
+}
+
+.light .wrong {
+    outline: solid var(--wrong);
+    filter: drop-shadow(2px 4px 6px color-mix(in srgb, var(--wrong) 80%, transparent));
+}
+
+.displacement {
+    outline: solid var(--displacement);
+    filter: drop-shadow(2px 4px 6px color-mix(in srgb, var(--displacement) 40%, transparent));
+}
+
+.light .displacement {
+    outline: solid var(--displacement);
+    filter: drop-shadow(2px 4px 6px color-mix(in srgb, var(--displacement) 80%, transparent));
+}
+
+.right {
+    outline: solid var(--right);
+    filter: drop-shadow(2px 4px 6px color-mix(in srgb, var(--right) 40%, transparent));
+}
+
+.light .right {
+    outline: solid var(--right);
+    filter: drop-shadow(2px 4px 6px color-mix(in srgb, var(--right) 80%, transparent));
 }

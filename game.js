@@ -118,7 +118,7 @@ class Game {
 
     // změnit outline
     changeOutline(element, color) {
-        element.style.outline = `solid ${color}`;
+        element.classList.add(`${color}`);
     }
 
     // počet výskytů
@@ -155,10 +155,9 @@ class Game {
             const row = this.rows[this.currentRow];
             const guess = this.getCurrentGuess();
 
-            const wrongColor = getRootStyleProperty("wrong");
-            const rightColor = getRootStyleProperty("right");
-            const displacementColor = getRootStyleProperty("displacement");
-            const secondaryColor = getRootStyleProperty("secondary");
+            const wrongColor = "wrong";
+            const rightColor = "right";
+            const displacementColor = "displacement";
 
             if (this.word.length === this.currentLetter && this.dictionary.includes(guess)) {
                 this.processExactMatches(row, guess, rightColor);
@@ -170,7 +169,7 @@ class Game {
 
                 this.moveToNextRow(guess);
             } else {
-                this.animateInvalidGuess(row, wrongColor, secondaryColor);
+                this.animateInvalidGuess(row, wrongColor);
             }
         }
     }
@@ -205,7 +204,7 @@ class Game {
                 if (processed < this.countOccurrences(this.word, currentGuess)) {
                     this.changeOutline(current, displacementColor);
                     if (!key.processed) this.changeOutline(key, displacementColor);
-                    key.processed = true;
+                    key.processed = false;
                 }
 
                 current.exact = false;
@@ -268,9 +267,10 @@ class Game {
         }
     }
 
-    animateInvalidGuess(row, wrongColor, secondaryColor) {
+    animateInvalidGuess(row, wrongColor) {
         for (let letter of row.children) {
-            this.animateElement(letter, "outline", `solid ${wrongColor}`, `solid ${secondaryColor}`, 250);
+            letter.classList.add(wrongColor);
+            setTimeout(() => letter.classList.remove(wrongColor), 250);
         }
     }
 }
