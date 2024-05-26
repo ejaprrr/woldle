@@ -164,8 +164,8 @@ class Game {
                 this.processInexactMatches(row, guess, displacementColor);
                 this.processIncorrectLetters(row, guess, wrongColor);
                 this.updateDuplicateLetters(row, guess);
-
-                this.animateElement(row, "gap", "20px", "15px", 500);
+                const x = row.style.gap;
+                this.animateElement(row, "gap", "15px", x, 500);
 
                 this.moveToNextRow(guess);
             } else {

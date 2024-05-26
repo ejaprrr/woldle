@@ -5,6 +5,7 @@
     --tertiary: #D6D6D6;
     --overlay: rgba(0, 0, 0, .25);
     --brightness: brightness(80%);
+    --outline: rgba(255, 255, 255, .25);
     --wrong: #FF5151;
     --displacement: #FFAF51;
     --right: #51FF77;
@@ -17,6 +18,7 @@
     --primary: #181818;
     --tertiary: #D6D6D6;
     --overlay: rgba(0, 0, 0, .25);
+    --outline: rgba(255, 255, 255, .25);
     --brightness: brightness(80%);
 }
 
@@ -24,6 +26,7 @@
     --primary: #D6D6D6;
     --tertiary: #181818;
     --overlay: rgba(255, 255, 255, .25);
+    --outline: rgba(0, 0, 0, .25);
     --brightness: brightness(120%);
 }
 
@@ -76,9 +79,16 @@ body > main {
 #game-wrapper, #keyboard-wrapper {
     /* centrování */
     display: flex;
-    flex: 1;
     justify-content: center;
     align-items: center;
+}
+
+#keyboard-wrapper {
+    flex: 2;
+}
+
+#game-wrapper {
+    flex: 3;
 }
 
 footer {
@@ -132,8 +142,8 @@ svg {
 }
 
 #window {
-    width: 600px;
-    height: 400px;
+    max-width: 600px;
+    width: 80vw;
     border-radius: 10px;
     /* neukazovat obsah dokud se nerozklikne (JS) */
     content-visibility: hidden;
@@ -169,6 +179,7 @@ svg {
     margin-top: var(--margin);
 }
 #window h1 {
+    font-size: 1.5em;
     text-transform: uppercase;
     font-style: italic;
     filter: opacity(75%) drop-shadow(0px 0px 6px color-mix(in srgb, var(--tertiary) 40%, transparent));
@@ -179,48 +190,48 @@ svg {
 }
 
 #game {
-    height: 400px;
+    max-width: 95vw;
 }
 
 .row {
     height: 50px;
-    gap: 15px;
-    margin-block: var(--margin);
+    gap: min(10px, 2vw);
+    margin-block: min(10px, 2vw);
     display: flex;
     justify-content: center;
     transition: gap 0.5s ease;
+    width: 100%;
 }
 
 .letter {
-    height: 50px;
     width: 50px;
     outline: solid var(--secondary);
     border-radius: 10px;
     backdrop-filter: var(--brightness);
-    font-size: 30px;
+    font-size: min(28px, 10vw);
     text-align: center;
     transition: outline .25s ease-out, transform 0.25s ease;
 }
 
 #keyboard {
-    width: 80vw;
-    min-width: 400px;
+    width: 600px;
+    max-width: 95vw;
 }
 
 .line {
     display: flex;
-    gap: 7px;
+    gap: min(10px, 2vw);
     margin-block: 10px;
 }
 
 .key {
-    line-height: 5vh;
     outline: solid var(--secondary);
-    border-radius: 10px;
+    border-radius: 5px;
     text-align: center;
     flex: 1;
     backdrop-filter: var(--brightness);
     transition: transform 0.25s ease, outline 0.25s ease;
+    cursor: pointer;
 }
 
 #backspace, #enter {
@@ -238,19 +249,18 @@ svg {
 
 #themes {
     display: flex;
-    width: 100%;
-    gap: 15px;
+    gap: min(10px, 2.5vw);
 }
 
 #length {
     display: flex;
-    gap: 15px;
+    gap: min(10px, 2.5vw);
 }
 
 .number {
     flex: 1;
     text-align: center;
-    font-size: 26px;
+    font-size: min(28px, 10vw);
 }
 
 .theme {
@@ -278,10 +288,9 @@ svg {
 
 .number, .theme {
     cursor: pointer;
-    outline: var(--tertiary) solid;
+    outline: var(--outline) solid;
     border-radius: 10px;
     transition: transform 0.5s ease;
-
 }
 
 .key {
