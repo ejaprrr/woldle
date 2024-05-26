@@ -190,7 +190,7 @@ svg {
 }
 
 #game {
-    max-width: 95vw;
+    max-width: 97vw;
 }
 
 .row {
@@ -203,10 +203,14 @@ svg {
     width: 100%;
 }
 
+@media (max-width: 767px) {
+    /*use this*/
+}
+
 .letter {
     width: 50px;
     outline: solid var(--secondary);
-    border-radius: 10px;
+    border-radius: min(10px, 1.5vw);
     backdrop-filter: var(--brightness);
     font-size: min(28px, 10vw);
     text-align: center;
@@ -214,7 +218,7 @@ svg {
 }
 
 #keyboard {
-    width: 600px;
+    width: 650px;
     max-width: 95vw;
 }
 
@@ -249,12 +253,12 @@ svg {
 
 #themes {
     display: flex;
-    gap: min(10px, 2.5vw);
+    gap: 20px;
 }
 
 #length {
     display: flex;
-    gap: min(10px, 2.5vw);
+    gap: min(10px,3vw);
 }
 
 .number {
@@ -271,7 +275,7 @@ svg {
 
 
 .theme:hover, .number:hover {
-    transform: scale(1.1);
+    transform: scale(110%);
 }
 
 .theme {
