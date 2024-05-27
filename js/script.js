@@ -40,6 +40,7 @@ async function toggleWindow(action, content) {
 };
 
 function changeTheme(theme) {
+    localStorage.setItem("theme", theme);
     switch (theme) {
         case "dark-blue":
             document.body.classList = {};
@@ -51,56 +52,6 @@ function changeTheme(theme) {
             break;
     };
 };
-
-let game;
-
-document.addEventListener("DOMContentLoaded", async () => {
-    const response = await fetch("files/targets.json");
-    const words = await response.json();
-    const lengths = words.map((x) => x.length);
-    const lengthSelection = document.getElementById("length");
-
-    for (let lengthNum = Math.min(...lengths); lengthNum <= Math.max(...lengths); lengthNum++) {
-        const lengthOption = document.createElement("div");
-        lengthOption.classList.add("number");
-        lengthOption.textContent = lengthNum;
-
-        lengthOption.onclick = () => {
-            const length = parseInt(lengthOption.textContent);
-            game.changeLength(length);
-        };
-        
-        lengthSelection.appendChild(lengthOption);
-    };
-
-    game = new Game();
-});
-
-document.addEventListener("keydown", (event) => {
-    const key = event.key.toUpperCase();
-
-    switch (key) {
-        case "BACKSPACE":
-            game.back();
-            break;
-        
-        case "ENTER":
-            game.confirm();
-            break;
-    };
-});
-
-document.addEventListener("keypress", (event) => {
-    const key = event.key;
-
-    if (key.length === 1 && key.toUpperCase().match(Game.keysRegex)) {
-        game.write(key);
-    };
-});
-
-document.getElementById("refresh").addEventListener("click", () => game.changeLength(game.length));
-document.getElementById("settings").addEventListener("click", () => toggleWindow("open", "settings"));
-document.getElementById("close").addEventListener("click", () => toggleWindow("close", windowState));
 
 function date() {
     const date = new Date();
@@ -115,3 +66,8 @@ function date() {
 };
 
 date();
+
+const theme = localStorage.getItem("theme");
+if (theme) {
+    changeTheme(theme);
+};

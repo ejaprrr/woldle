@@ -144,6 +144,57 @@
 
     <script src="js/game.js"></script>
     <script src="js/script.js"></script>
+    <script>
+        document.getElementById("settings").addEventListener("click", () => toggleWindow("open", "settings"));
+        document.getElementById("refresh").addEventListener("click", () => game.changeLength(game.length));
+        document.getElementById("close").addEventListener("click", () => toggleWindow("close", windowState));
+
+        let game;
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const response = await fetch("files/targets.json");
+            const words = await response.json();
+            const lengths = words.map((x) => x.length);
+            const lengthSelection = document.getElementById("length");
+
+            for (let lengthNum = Math.min(...lengths); lengthNum <= Math.max(...lengths); lengthNum++) {
+                const lengthOption = document.createElement("div");
+                lengthOption.classList.add("number");
+                lengthOption.textContent = lengthNum;
+
+                lengthOption.onclick = () => {
+                    const length = parseInt(lengthOption.textContent);
+                    game.changeLength(length);
+                };
+                
+                lengthSelection.appendChild(lengthOption);
+            };
+
+            game = new Game();
+        });
+
+        document.addEventListener("keydown", (event) => {
+            const key = event.key.toUpperCase();
+
+            switch (key) {
+                case "BACKSPACE":
+                    game.back();
+                    break;
+                
+                case "ENTER":
+                    game.confirm();
+                    break;
+            };
+        });
+
+        document.addEventListener("keypress", (event) => {
+            const key = event.key;
+
+            if (key.length === 1 && key.toUpperCase().match(Game.keysRegex)) {
+                game.write(key);
+            };
+        });
+    </script>
 </body>
 
 </html>
