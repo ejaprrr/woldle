@@ -92,6 +92,7 @@ document.addEventListener("keypress", (event) => {
     };
 });
 
+document.getElementById("refresh").addEventListener("click", () => game.changeLength(game.length));
 document.getElementById("settings").addEventListener("click", () => toggleSettingsWindow("open"));
 document.getElementById("close").addEventListener("click", () => toggleSettingsWindow("close"));
 

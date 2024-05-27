@@ -53,6 +53,12 @@ class Game {
         this.currentLetter = 0;
         this.gameEnd = false;
         this.rows = [];
+
+        for (let key of Game.keys) {
+            key.classList.remove("right");
+            key.classList.remove("wrong");
+            key.classList.remove("displacement");
+        }
         
         Game.wrapper.innerHTML = "";
         this.length = length;
