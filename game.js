@@ -58,6 +58,7 @@ class Game {
             key.classList.remove("right");
             key.classList.remove("wrong");
             key.classList.remove("displacement");
+            delete key.processed;
         }
         
         Game.wrapper.innerHTML = "";
