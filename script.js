@@ -19,10 +19,10 @@ function playSound(sound) {
 function toggleWindow(action, content) {
     const windowWrapper = document.getElementById("window-wrapper");
     const window = document.getElementById("window");
+
     if (action === "open") {
         windowState = content;
         const main = document.getElementById(`window-${windowState}`);
-        window.style.pointerEvents = "all";
         windowWrapper.classList.add("show");
         window.classList.add("show");
         main.classList.add("show");
@@ -32,7 +32,6 @@ function toggleWindow(action, content) {
         }
     } else if (action === "close") {
         const main = document.getElementById(`window-${windowState}`);
-        window.style.pointerEvents = "none";
         windowWrapper.classList.remove("show");
         window.classList.remove("show");
         main.classList.remove("show");
@@ -44,19 +43,11 @@ function changeTheme(theme) {
     switch (theme) {
         case "dark-blue":
             document.body.classList = {};
-            document.body.classList.add("dark", "dark-blue");
-            break;
-        case "dark-yellow":
-            document.body.classList = {};
-            document.body.classList.add("dark", "dark-yellow");
+            document.body.classList.add("dark");
             break;
         case "light-blue":
             document.body.classList = {};
-            document.body.classList.add("light", "light-blue");
-            break;
-        case "light-yellow":
-            document.body.classList = {};
-            document.body.classList.add("light", "light-yellow");
+            document.body.classList.add("light");
             break;
     };
 };

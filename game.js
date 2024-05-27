@@ -55,9 +55,7 @@ class Game {
         this.rows = [];
 
         for (let key of Game.keys) {
-            key.classList.remove("right");
-            key.classList.remove("wrong");
-            key.classList.remove("displacement");
+            key.classList.remove("incorrect", "inexact", "exact");
             delete key.processed;
         }
         
@@ -163,9 +161,9 @@ class Game {
             const row = this.rows[this.currentRow];
             const guess = this.getCurrentGuess();
 
-            const wrongColor = "wrong";
-            const rightColor = "right";
-            const displacementColor = "displacement";
+            const wrongColor = "incorrect";
+            const rightColor = "exact";
+            const displacementColor = "inexact";
 
             if (this.word.length === this.currentLetter && this.dictionary.includes(guess)) {
                 this.processExactMatches(row, guess, rightColor);

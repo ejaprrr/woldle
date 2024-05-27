@@ -1,14 +1,8 @@
 /* definice barev, základních poměrů */
 :root {
-    --primary: #181818;
-    --secondary: #002652;
-    --tertiary: #D6D6D6;
-    --overlay: rgba(0, 0, 0, .25);
-    --brightness: brightness(80%);
-    --outline: rgba(255, 255, 255, .25);
-    --wrong: #FF5151;
-    --displacement: #FFAF51;
-    --right: #51FF77;
+    --incorrect: #FF5151;
+    --inexact: #FFAF51;
+    --exact: #51FF77;
 
     --margin: 15px;
     --padding: 10px;
@@ -16,26 +10,30 @@
 
 .dark {
     --primary: #181818;
+    --secondary: #002652;
     --tertiary: #D6D6D6;
     --overlay: rgba(0, 0, 0, .25);
     --outline: rgba(255, 255, 255, .25);
     --brightness: brightness(80%);
+
+    --glow-incorrect: drop-shadow(2px 4px 6px color-mix(in srgb, var(--incorrect) 40%, transparent));
+    --glow-inexact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--inexact) 40%, transparent));
+    --glow-exact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--exact) 40%, transparent));
+    --shadow: opacity(75%) drop-shadow(0px 0px 6px color-mix(in srgb, var(--tertiary) 40%, transparent));
 }
 
 .light {
     --primary: #D6D6D6;
+    --secondary: #ADD3FF;
     --tertiary: #181818;
     --overlay: rgba(255, 255, 255, .25);
     --outline: rgba(0, 0, 0, .25);
     --brightness: brightness(120%);
-}
 
-.light-blue {
-    --secondary: #ADD3FF;
-}
-
-.dark-blue {
-    --secondary: #002652;
+    --glow-incorrect: drop-shadow(2px 4px 6px color-mix(in srgb, var(--incorrect) 80%, transparent));
+    --glow-inexact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--inexact) 80%, transparent));
+    --glow-exact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--exact) 80%, transparent));
+    --shadow: opacity(75%) drop-shadow(0px 0px 6px color-mix(in srgb, var(--tertiary) 80%, transparent));
 }
 
 /* platí vždy */
@@ -49,10 +47,17 @@
     text-decoration: none;
 }
 
+svg {
+    fill: var(--tertiary);
+    cursor: pointer;
+}
+
 body {
     background: linear-gradient(-45deg, var(--primary), var(--secondary));
     height: 100dvh;
 }
+
+/* header */
 
 header {
     height: 50px;
@@ -61,18 +66,30 @@ header {
 }
 
 nav {
-    height: 30px;
-    padding-block: var(--padding);
     float: right;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: 10px;
 }
 
 nav > * {
-    margin-right: var(--margin);
+    height: 30px;
 }
 
+/* main */
 
 body > main {
-    height: calc(100dvh - 120px);
+    height: calc(100dvh - 70px - 50px);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+#wrapper {
+    width: 95%;
+    max-width: 600px;
     display: flex;
     flex-direction: column;
 }
@@ -84,22 +101,19 @@ body > main {
     align-items: center;
 }
 
-#keyboard-wrapper {
-    flex: 2;
+#game-wrapper {
+    flex: 5;
 }
 
-#game-wrapper {
+#keyboard-wrapper {
     flex: 3;
 }
+
+/* footer */
 
 footer {
     height: 50px;
     background-color: var(--overlay);
-}
-
-svg {
-    fill: var(--tertiary);
-    cursor: pointer;
 }
 
 #time {
@@ -113,30 +127,34 @@ svg {
     font-size: 35px;
     filter: opacity(25%);
     /* záporný margin */
-    margin: calc(-1 * var(--margin)) calc(-1 * var(--margin));
+    margin: calc(-1 * var(--margin));
 }
 
 #date {
-    margin-left: var(--margin);
+    margin: var(--margin);
 }
 
 #window-wrapper {
     position: absolute;
-    width: 100vw;
-    height: 100dvh;
+    top: 0;
+    width: 100%;
+    height: 100%;
     /* centrování */
     display: flex;
     justify-content: center;
     align-items: center;
     /* aby se dalo klikat na věci za tím */
     pointer-events: none;
-    top: 0;
-    left: 0;
-    transition: background-color 0.5s ease, backdrop-filter 0.5s ease;
-    /*kvůli #date*/
+    /* kvůli #date */
     z-index: 1;
+    /* animace ztmavení a rozmazání pozadí */
+    transition: background-color 0.5s ease, backdrop-filter 0.5s ease;
+    background-color: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
 }
 
+/* animace */
 #window-wrapper.show {
     background-color: rgba(0, 0, 0, 0.5);
     -webkit-backdrop-filter: blur(2px);
@@ -145,13 +163,11 @@ svg {
 
 #window {
     max-width: 600px;
-    width: 90vw;
+    width: 90%;
     border-radius: 10px;
-    /* neukazovat obsah dokud se nerozklikne (JS) */
-    /* kvůli wrapperu */
-    pointer-events: none;
+    transition: background-color 0.25s ease, display 0.25s ease;
     background-color: transparent;
-    transition: background-color 0.3s ease, display 0.3s ease;
+    /* kvůli background-color a border-radius */
     overflow: hidden;
 }
 
@@ -159,15 +175,7 @@ svg {
     display: none;
 }
 
-.show #window > nav {
-    display: block;
-}
-
-#window > main.show {
-    display: none;
-}
-
-#window > main.show {
+#window.show > nav, #window.show > main.show {
     display: block;
 }
 
@@ -179,7 +187,6 @@ svg {
 #window nav {
     width: 100%;
     height: 40px;
-    padding: 0;
     background-color: var(--overlay);
 }
 
@@ -188,68 +195,59 @@ svg {
 }
 
 #window > main {
-    top: 40px;
     padding: calc(2 * var(--margin));
 }
 
 #window > main > * {
     margin-top: var(--margin);
 }
-#window h1 {
+
+h1 {
     font-size: 1.5em;
     text-transform: uppercase;
     font-style: italic;
-    filter: opacity(75%) drop-shadow(0px 0px 6px color-mix(in srgb, var(--tertiary) 40%, transparent));
-}
-
-.light #window h1 {
-    filter: opacity(75%) drop-shadow(0px 0px 6px color-mix(in srgb, var(--tertiary) 80%, transparent));
+    filter: var(--shadow);
 }
 
 #game {
-    max-width: 97vw;
+    max-width: 100%;
 }
 
 .row {
-    height: 40px;
-    gap: min(10px, 2vw);
-    margin-block: min(10px, 2vw);
+    height: 48px;
+    gap: 10px;
+    margin-block: 10px;
     display: flex;
     justify-content: center;
     transition: gap 0.5s ease;
     width: 100%;
 }
 
-@media (max-width: 767px) {
-    /*use this*/
-}
-
 .letter {
-    line-height: 40px;
-    width: 40px;
+    line-height: 48px;
+    width: 48px;
     outline: solid var(--secondary);
-    border-radius: min(10px, 1.5vw);
+    border-radius: 10px;
     -webkit-backdrop-filter: var(--brightness);
     backdrop-filter: var(--brightness);
-    font-size: min(28px, 10vw);
+    font-size: 28px;
     text-align: center;
     transition: outline .25s ease-out, transform 0.25s ease;
 }
 
 #keyboard {
-    width: 650px;
-    max-width: 95vw;
+    width: 100%;
 }
 
 .line {
     display: flex;
     gap: min(10px, 2vw);
     margin-block: 10px;
+    height: 40px;
 }
 
 .key {
-    line-height: 30px;
-    height: 30px;
+    line-height: 40px;
     outline: solid var(--secondary);
     border-radius: 5px;
     text-align: center;
@@ -260,17 +258,65 @@ svg {
     cursor: pointer;
 }
 
-#backspace, #enter {
-    flex: 2;
-}
-
 .index {
     position: absolute;
     margin: 4px;
     line-height: 15px;
     font-size: 15px;
-    bottom: 0px;
     right: 0px;
+    top: 0px;
+}
+
+@media (max-width: 320px) {
+    html {
+        display: none;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 440px) {
+    .row {
+        height: 42px;
+        gap: 7px;
+        margin-block: 7px;
+    }
+    .letter {
+        width: 42px;
+    }
+    .index {
+        line-height: 12px;
+        font-size: 12px;
+        margin: 2px;
+    }
+}
+
+@media (min-width: 440px) and (max-width: 720px) {
+    .row {
+        height: 46px;
+        gap: 9px;
+        margin-block: 9px;
+    }
+    .letter {
+        width: 46px;
+    }
+}
+
+@media (min-width: 720px) {
+    .row {
+        height: 52px;
+        gap: 11px;
+        margin-block: 11px;
+    }
+    .letter {
+        width: 52px;
+    }
+    #wrapper {
+        max-width: 800px;
+    }
+    
+}
+
+#backspace, #enter {
+    flex: 2;
 }
 
 #themes {
@@ -323,34 +369,19 @@ svg {
     z-index: 1;
 }
 
-.wrong {
-    outline: solid var(--wrong);
-    filter: drop-shadow(2px 4px 6px color-mix(in srgb, var(--wrong) 40%, transparent));
+.incorrect {
+    outline: solid var(--incorrect);
+    filter: var(--glow-incorrect);
 }
 
-.light .wrong {
-    outline: solid var(--wrong);
-    filter: drop-shadow(2px 4px 6px color-mix(in srgb, var(--wrong) 80%, transparent));
+.inexact {
+    outline: solid var(--inexact);
+    filter: var(--glow-inexact);
 }
 
-.displacement {
-    outline: solid var(--displacement);
-    filter: drop-shadow(2px 4px 6px color-mix(in srgb, var(--displacement) 40%, transparent));
-}
-
-.light .displacement {
-    outline: solid var(--displacement);
-    filter: drop-shadow(2px 4px 6px color-mix(in srgb, var(--displacement) 80%, transparent));
-}
-
-.right {
-    outline: solid var(--right);
-    filter: drop-shadow(2px 4px 6px color-mix(in srgb, var(--right) 40%, transparent));
-}
-
-.light .right {
-    outline: solid var(--right);
-    filter: drop-shadow(2px 4px 6px color-mix(in srgb, var(--right) 80%, transparent));
+.exact {
+    outline: solid var(--exact);
+    filter: var(--glow-exact);
 }
 
 #window-win {
