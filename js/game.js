@@ -17,7 +17,8 @@ class Game {
         this.currentLetter = 0;
         this.gameEnd = false;
         this.rows = [];
-        this.length = 5;
+        this.length = parseInt(localStorage.getItem("length")) || 5;
+        console.log(this.length)
 
         this.init();
     }
@@ -49,6 +50,7 @@ class Game {
     }
 
     changeLength(length) {
+        localStorage.setItem("length", length);
         this.currentRow = 0;
         this.currentLetter = 0;
         this.gameEnd = false;
