@@ -7,22 +7,37 @@ function changeRootStyleProperty(property, value) {
     getComputedStyle(document.body).setProperty(`--${property}`, value);
 }
 
+let windowState = "";
+
+function playSound(sound) {
+    for (let i = 0; i < (Math.random() + 1) * 5; i++) {
+        setTimeout(() => { new Audio(sound).play() }, Math.random() * 2000);
+    }
+}
+
 // Function to show or hide the settings window
-function toggleSettingsWindow(action) {
+function toggleWindow(action, content) {
     const windowWrapper = document.getElementById("window-wrapper");
     const window = document.getElementById("window");
-
     if (action === "open") {
+        windowState = content;
+        const main = document.getElementById(`window-${windowState}`);
         window.style.pointerEvents = "all";
         windowWrapper.classList.add("show");
         window.classList.add("show");
-        window.style.contentVisibility = "visible";
+        main.classList.add("show");
+
+        if (windowState === "win") {
+            playSound("files/yippie.mp3");
+        }
     } else if (action === "close") {
+        const main = document.getElementById(`window-${windowState}`);
         window.style.pointerEvents = "none";
         windowWrapper.classList.remove("show");
         window.classList.remove("show");
-        window.style.contentVisibility = "hidden";
+        main.classList.remove("show");
     };
+    console.log(windowState);
 };
 
 function changeTheme(theme) {
@@ -93,8 +108,8 @@ document.addEventListener("keypress", (event) => {
 });
 
 document.getElementById("refresh").addEventListener("click", () => game.changeLength(game.length));
-document.getElementById("settings").addEventListener("click", () => toggleSettingsWindow("open"));
-document.getElementById("close").addEventListener("click", () => toggleSettingsWindow("close"));
+document.getElementById("settings").addEventListener("click", () => toggleWindow("open", "settings"));
+document.getElementById("close").addEventListener("click", () => toggleWindow("close", windowState));
 
 function date() {
     const date = new Date();

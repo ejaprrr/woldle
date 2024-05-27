@@ -69,6 +69,7 @@ class Game {
     getSecret() {
         const filteredWords = Array.from(this.targets).filter((x) => x.length == this.length);
         const secret = filteredWords[Math.floor(Math.random() * filteredWords.length)];
+        console.log(secret);
         return secret;
     }
 
@@ -270,6 +271,7 @@ class Game {
         this.currentLetter = 0;
         if (this.word === guess || this.currentRow === Game.tries) {
             this.gameEnd = true;
+            toggleWindow("open", this.word === guess ? "win" : "lose");
         }
     }
 
