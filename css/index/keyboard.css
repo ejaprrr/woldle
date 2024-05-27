@@ -1,0 +1,26 @@
+#keyboard {
+    width: 100%;
+}
+
+.line {
+    display: flex;
+    gap: min(10px, 2vw);
+    margin-block: 10px;
+    height: 40px;
+}
+
+.key {
+    line-height: 40px;
+    outline: solid var(--secondary);
+    border-radius: 5px;
+    text-align: center;
+    flex: 1;
+    -webkit-backdrop-filter: var(--brightness);
+    backdrop-filter: var(--brightness);
+    transition: transform 0.25s ease, outline 0.25s ease;
+    cursor: pointer;
+}
+
+#backspace, #enter {
+    flex: 2;
+}

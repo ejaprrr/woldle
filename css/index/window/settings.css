@@ -1,0 +1,56 @@
+#themes {
+    display: flex;
+    gap: 20px;
+}
+
+.theme {
+    flex: 1;
+    width: 50px;
+    height: 50px;
+}
+
+#length {
+    display: flex;
+    gap: min(10px,3vw);
+}
+
+.number {
+    flex: 1;
+    text-align: center;
+    font-size: min(28px, 10vw);
+}
+
+
+.theme:hover, .number:hover {
+    transform: scale(110%);
+}
+
+.theme {
+    filter: var(--shadow);
+}
+
+#keyboard, #game {
+    text-transform: uppercase;
+}
+
+.number, .theme {
+    cursor: pointer;
+    outline: var(--outline) solid;
+    border-radius: 10px;
+    transition: transform 0.5s ease;
+}
+
+.incorrect {
+    outline: solid var(--incorrect);
+    filter: var(--glow-incorrect);
+}
+
+.inexact {
+    outline: solid var(--inexact);
+    filter: var(--glow-inexact);
+}
+
+.exact {
+    outline: solid var(--exact);
+    filter: var(--glow-exact);
+}

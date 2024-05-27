@@ -1,0 +1,82 @@
+/* platí vždy */
+* {
+    margin: 0;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: var(--tertiary);
+    /* pro vertikální centrování textu */
+    line-height: 50px;
+    text-decoration: none;
+}
+
+body {
+    background: linear-gradient(-45deg, var(--primary), var(--secondary));
+    height: 100dvh;
+}
+
+svg {
+    fill: var(--tertiary);
+    cursor: pointer;
+}
+
+h1 {
+    font-size: 1.5em;
+    text-transform: uppercase;
+    font-style: italic;
+    filter: var(--shadow);
+}
+
+/* header */
+
+header {
+    height: 50px;
+    padding: var(--padding);
+    background-color: var(--overlay);
+}
+
+nav {
+    float: right;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: 10px;
+}
+
+nav > * {
+    height: 30px;
+}
+
+/* main */
+
+body > main {
+    height: calc(100dvh - 70px - 50px);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+/* footer */
+
+footer {
+    height: 50px;
+    background-color: var(--overlay);
+}
+
+#time {
+    position: absolute;
+    /* doplňkový, kvůli roku v pozadí */
+    overflow: hidden;
+}
+
+#year {
+    position: absolute;
+    font-size: 35px;
+    filter: opacity(25%);
+    /* záporný margin */
+    margin: calc(-1 * var(--margin));
+}
+
+#date {
+    margin: var(--margin);
+}

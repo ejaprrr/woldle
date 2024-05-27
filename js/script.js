@@ -9,14 +9,14 @@ function changeRootStyleProperty(property, value) {
 
 let windowState = "";
 
-function playSound(sound) {
+async function playSound(sound) {
     for (let i = 0; i < (Math.random() + 1) * 5; i++) {
-        setTimeout(() => { new Audio(sound).play() }, Math.random() * 2000);
+        await setTimeout(() => { new Audio(sound).play() }, Math.random() * 2000);
     }
 }
 
 // Function to show or hide the settings window
-function toggleWindow(action, content) {
+async function toggleWindow(action, content) {
     const windowWrapper = document.getElementById("window-wrapper");
     const window = document.getElementById("window");
 
@@ -28,7 +28,7 @@ function toggleWindow(action, content) {
         main.classList.add("show");
 
         if (windowState === "win") {
-            playSound("files/yippie.mp3");
+            await playSound("files/yippie.mp3");
         }
     } else if (action === "close") {
         const main = document.getElementById(`window-${windowState}`);

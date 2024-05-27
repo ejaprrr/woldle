@@ -1,0 +1,34 @@
+#game {
+    max-width: 100%;
+}
+
+.row {
+    height: 48px;
+    gap: 10px;
+    margin-block: 10px;
+    display: flex;
+    justify-content: center;
+    transition: gap 0.5s ease;
+    width: 100%;
+}
+
+.letter {
+    line-height: 48px;
+    width: 48px;
+    outline: solid var(--secondary);
+    border-radius: 10px;
+    -webkit-backdrop-filter: var(--brightness);
+    backdrop-filter: var(--brightness);
+    font-size: 28px;
+    text-align: center;
+    transition: outline .25s ease-out, transform 0.25s ease;
+}
+
+.index {
+    position: absolute;
+    margin: 4px;
+    line-height: 15px;
+    font-size: 15px;
+    right: 0px;
+    top: 0px;
+}

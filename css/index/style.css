@@ -1,0 +1,47 @@
+@media (max-width: 320px) {
+    html {
+        display: none;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 440px) {
+    .row {
+        height: 42px;
+        gap: 7px;
+        margin-block: 7px;
+    }
+    .letter {
+        width: 42px;
+    }
+    .index {
+        line-height: 12px;
+        font-size: 12px;
+        margin: 2px;
+    }
+}
+
+@media (min-width: 440px) and (max-width: 720px) {
+    .row {
+        height: 46px;
+        gap: 9px;
+        margin-block: 9px;
+    }
+    .letter {
+        width: 46px;
+    }
+}
+
+@media (min-width: 720px) {
+    .row {
+        height: 52px;
+        gap: 11px;
+        margin-block: 11px;
+    }
+    .letter {
+        width: 52px;
+    }
+    #wrapper {
+        max-width: 800px;
+    }
+    
+}

@@ -1,0 +1,37 @@
+/* definice barev, základních poměrů */
+:root {
+    --incorrect: #FF5151;
+    --inexact: #FFAF51;
+    --exact: #51FF77;
+
+    --margin: 15px;
+    --padding: 10px;
+}
+
+.dark {
+    --primary: #181818;
+    --secondary: #002652;
+    --tertiary: #D6D6D6;
+    --overlay: rgba(0, 0, 0, .25);
+    --outline: rgba(255, 255, 255, .25);
+    --brightness: brightness(80%);
+
+    --glow-incorrect: drop-shadow(2px 4px 6px color-mix(in srgb, var(--incorrect) 40%, transparent));
+    --glow-inexact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--inexact) 40%, transparent));
+    --glow-exact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--exact) 40%, transparent));
+    --shadow: opacity(75%) drop-shadow(0px 0px 6px color-mix(in srgb, var(--tertiary) 40%, transparent));
+}
+
+.light {
+    --primary: #D6D6D6;
+    --secondary: #ADD3FF;
+    --tertiary: #181818;
+    --overlay: rgba(255, 255, 255, .25);
+    --outline: rgba(0, 0, 0, .25);
+    --brightness: brightness(120%);
+
+    --glow-incorrect: drop-shadow(2px 4px 6px color-mix(in srgb, var(--incorrect) 80%, transparent));
+    --glow-inexact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--inexact) 80%, transparent));
+    --glow-exact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--exact) 80%, transparent));
+    --shadow: opacity(75%) drop-shadow(0px 0px 6px color-mix(in srgb, var(--tertiary) 80%, transparent));
+}
