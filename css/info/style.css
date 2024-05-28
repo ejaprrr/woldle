@@ -1,0 +1,19 @@
+#home {
+    fill: var(--tertiary);
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+}
+
+main *, main {
+    display:block;
+    margin-left: 10px;
+}
+main span {
+    font-weight: bold;
+    font-size: 22px;
+}
+ul {
+    font-size: 16px;
+    height: 40;
+}

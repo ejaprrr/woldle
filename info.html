@@ -11,17 +11,21 @@
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/info/style.css">
+    <link rel="stylesheet" href="css/win.css">
+    <link rel="stylesheet" href="css/settings.css">
 
-    <title>woldle</title>
+    <title>Info</title>
 </head>
 
 <body class="dark">
     <header>
         <img src="/images/icon.png" width="50" alt="woldle">
+        <img id="slideshow" src="https://autorskesperky.com/img/ybc_blog/post/trees-3294681_1920.jpg" alt="les" height="50">
         <nav>
             <a href="/index.html">
-                <svg viewBox="0 0 48 48" width="30" height="30">
-                    <path d="M39.5,43h-9c-1.381,0-2.5-1.119-2.5-2.5v-9c0-1.105-0.895-2-2-2h-4c-1.105,0-2,0.895-2,2v9c0,1.381-1.119,2.5-2.5,2.5h-9	C7.119,43,6,41.881,6,40.5V21.413c0-2.299,1.054-4.471,2.859-5.893L23.071,4.321c0.545-0.428,1.313-0.428,1.857,0L39.142,15.52	C40.947,16.942,42,19.113,42,21.411V40.5C42,41.881,40.881,43,39.5,43z"/>
+                <svg id="home" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="48px" height="48px">
+                    <path d="M 12 2 A 1 1 0 0 0 11.289062 2.296875 L 1.203125 11.097656 A 0.5 0.5 0 0 0 1 11.5 A 0.5 0.5 0 0 0 1.5 12 L 4 12 L 4 20 C 4 20.552 4.448 21 5 21 L 9 21 C 9.552 21 10 20.552 10 20 L 10 14 L 14 14 L 14 20 C 14 20.552 14.448 21 15 21 L 19 21 C 19.552 21 20 20.552 20 20 L 20 12 L 22.5 12 A 0.5 0.5 0 0 0 23 11.5 A 0.5 0.5 0 0 0 22.796875 11.097656 L 12.716797 2.3027344 A 1 1 0 0 0 12.710938 2.296875 A 1 1 0 0 0 12 2 z"/>
                 </svg>
             </a>
             <svg id="settings" viewBox="0 0 24 24" width="30" height="30">
@@ -30,7 +34,21 @@
         </nav>
     </header>
     <main>
-
+        <h2>co je woldle?</h2>
+        <p>woldle je zábávná hádací hra inspirovaná hrou wordle, váš úkol je uhádnou slovo pomocí hádání jiných slov.</p>
+        <h2>jak hrát</h2>
+        <span>uhádněte slovo na 6 pokusů</span>
+        <ul>
+            <li>každé slovo musí být validní</li>
+            <li>barva políček se změní a ukáže jak blízko jste k uhádnutí slova</li>
+        </ul>
+        <span>barvy</span>
+        <ul>
+            <li>pokud bude políčko zelené tak máte písmenko na správném místě</li>
+            <li>pokud bude oranžové tak slovo obsahuje písmenko ale je na jiné pozici</li>
+            <li>pokud se políčko nezbarví tak slovo písmenko neobsahuje</li>
+        </ul>
+        <p>pokud je ve slově více stejných písmen tak se vám u písmena zobrazí číslo kolikrát se ve slově nachází</p>
     </main>
     <footer>
         <div id="time">
