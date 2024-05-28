@@ -75,3 +75,20 @@
 #window > main > * {
     margin-top: var(--margin);
 }
+
+.svg-container {
+    background-color: var(--overlay);
+    border-radius: 5px;
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    margin: auto;
+}
+
+.svg-container > svg {
+    width: 30px;
+}
+
+main > p {
+    filter: var(--shadow);
+}

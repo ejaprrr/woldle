@@ -176,18 +176,6 @@ class Game {
         }
     }
 
-    moveToNextRow(guess) {
-        this.position.row++;
-        this.position.letter = 0;
-        if (this.word === guess || this.position.row === Game.tries) {
-            this.end = true;
-            toggleWindow("open", this.word === guess ? "win" : "lose");
-            for (let i = 0; i < (Math.random() * (5 + 1)); i++) {
-                setTimeout(() => { new Audio("files/yippie.mp3").play() }, Math.random() * 2000);
-            }
-        }
-    }
-
     // implementace enteru (potvrzení)
     confirm() {
         this.animatePress(Game.enter);
@@ -197,7 +185,10 @@ class Game {
             const guess = this.getCurrentGuess();
 
             if (this.length === this.position.letter && this.dictionary.includes(guess)) {
-                this.processGuess(row, guess);
+                this.processExactMatches(row, guess);
+                this.processInexactMatches(row, guess);
+                this.processIncorrectLetters(row, guess);
+                this.updateDuplicateLetters(row, guess);
 
                 this.animateValidGuess(row);
 
@@ -207,15 +198,7 @@ class Game {
             }
         }
     }
-
-    addCountIndex(letter, count) {
-        const countIndex = document.createElement("div");
-        countIndex.classList.add("index");
-        countIndex.textContent = count;
-        letter.appendChild(countIndex);
-    }
-
-    processGuess(row, guess) {
+    processExactMatches(row, guess) {
         for (let i = 0; i < this.length; i++) {
             // v kontextu pozice
             const currentGuessLetter = guess[i];
@@ -223,7 +206,6 @@ class Game {
             const currentLetterElement = row.children[i];
             const currentKeyElement = this.findKeyElement(currentGuessLetter);
 
-            // exact
             if (currentGuessLetter === currentTargetLetter) {
                 this.changeOutline(currentLetterElement, "exact");
                 if (!currentKeyElement.processed) this.changeOutline(currentKeyElement, "exact");
@@ -232,8 +214,15 @@ class Game {
                 currentLetterElement.processed = true;
                 currentLetterElement.isExact = true;
             }
+        }
+    }
 
-            // inexact
+    processInexactMatches(row, guess) {
+        for (let i = 0; i < this.length; i++) {
+            const currentGuessLetter = guess[i];
+            const currentLetterElement = row.children[i];
+            const currentKeyElement = this.findKeyElement(currentGuessLetter);
+
             // pokud není již zpracovaný (není již zelený nebo žlutý) a je ve slově které hádáme
             if (!currentLetterElement.processed && this.word.includes(currentGuessLetter)) {
                 // již zpracovaná stejná písmena
@@ -247,29 +236,63 @@ class Game {
 
                 currentLetterElement.processed = true;
             };
+        };
+    }
 
-            // incorrect
+    processIncorrectLetters(row, guess) {
+        for (let i = 0; i < this.length; i++) {
+            const currentGuessLetter = guess[i];
+            const currentLetterElement = row.children[i];
+            const currentKeyElement = this.findKeyElement(currentGuessLetter);
+
             if (!currentLetterElement.processed) {
                 this.changeOutline(currentLetterElement, "transparent");
                 if (!currentKeyElement.processed) this.changeOutline(currentKeyElement, "incorrect");
                 currentKeyElement.processed = true;
                 currentLetterElement.isExact = false;
             }
+        };
+    }
 
-            // indexes
-            let countTarget = this.countOccurrences(this.word, currentLetterElement.textContent);
-            const inTarget = this.countOccurrences(this.word, currentLetterElement.textContent);
-            const inGuess = this.countOccurrences(guess, currentLetterElement.textContent);
+    updateDuplicateLetters(row, guess) {
+        for (let i = 0; i < this.length; i++) {
+            const currentLetterElement = row.children[i];
 
-            if (inTarget > 1 && inGuess > 1) {
-                if (currentLetterElement.isExact) {
-                    countTarget -= (inGuess);
-                } else {
-                    countTarget -= (inGuess - 1);
-                }
+            let countInTarget = this.countOccurrences(this.word, currentLetterElement.textContent);
+            const countInGuess = this.countOccurrences(guess, currentLetterElement.textContent);
+
+            // pokud je počet 1 tak nemá smysl počítat duplikáty + eliminujeme písmena červená
+            if (countInTarget > 1 && countInGuess > 1) {
+                // pokud je na správný pozici, nepočítá se do finálního počtu, tedy se zahrnuje do rozdílu
+                countInTarget -= currentLetterElement.isExact ? (countInGuess) : (countInGuess - 1);
             }
+            // přidáme jen pokud finální index není 0 nebo 1 (nemá smysl)
+            if (countInTarget > 1) this.addCountIndex(currentLetterElement, countInTarget);
+        };
+    }
 
-            if (countTarget > 1) this.addCountIndex(currentLetterElement, countTarget);
+    addCountIndex(letter, count) {
+        const countIndex = document.createElement("div");
+        countIndex.classList.add("index");
+        countIndex.textContent = count;
+        letter.appendChild(countIndex);
+    }
+
+    removeSingleCountIndices(row) {
+        for (let letter of row.children) {
+            const indexElement = letter.querySelector(".index");
+            if (indexElement && indexElement.textContent == "1") {
+                letter.removeChild(indexElement);
+            }
+        }
+    }
+
+    moveToNextRow(guess) {
+        this.position.row++;
+        this.position.letter = 0;
+        if (this.word === guess || this.position.row === Game.tries) {
+            this.end = true;
+            toggleWindow("open", this.word === guess ? "win" : "lose");
         }
     }
 }
