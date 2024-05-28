@@ -1,28 +1,12 @@
 #window-win {
-    background-image: url("/files/yippie.gif");
+    background: url("/files/yippie.gif");
     background-size: cover;
     background-position: center;
-}
-
-#window-win > h1 {
     text-align: center;
 }
 
-#image-win {
+#window-win > button {
+    width: 150px;
+    background-color: var(--overlay);
     border-radius: 10px;
-    width: 50%;
-    height: 100px;
-    object-fit: cover;
-}
-
-#window-win > menu {
-    text-align: center;
-    padding: 0;
-}
-
-#window-win > menu > button {
-    border-radius: 5px;
-    width: 100px;
-    background-color: var(--primary);
-    border: none;
 }

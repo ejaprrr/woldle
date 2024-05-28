@@ -1,0 +1,70 @@
+/* wrapper který je přes celý viewport a má v sobě vycentrované okno */
+#window-wrapper {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /* centrování */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* aby se dalo klikat na věci za tím, když je neviditelný */
+    background-color: transparent;
+    pointer-events: none;
+    /* kvůli #date, který má `position: absolute;` též */
+    z-index: 1;
+    /* animace */
+    transition: background-color 0.5s ease, backdrop-filter 0.5s ease;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+/* animace */
+#window-wrapper.show {
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+
+/* okno o šířce 90% šířky, maximálně 600px */
+#window {
+    max-width: 600px;
+    width: 90%;
+    border-radius: 10px;
+    background-color: transparent;
+    transition: background-color 0.25s ease;
+    /* kvůli background-color a border-radius */
+    overflow: hidden;
+}
+
+#window.show {
+    pointer-events: all;
+    background-color: var(--secondary);
+}
+
+/* náhrada za content-visibility, který na některých prohlížečích není podporován */
+#window > * {
+    display: none;
+}
+
+#window.show > nav, #window.show > main.show {
+    display: block;
+}
+
+#window > nav {
+    width: 100%;
+    height: 40px;
+    background-color: var(--overlay);
+}
+
+#close {
+   margin: 5px;
+}
+
+#window > main {
+    padding: calc(2 * var(--margin));
+}
+
+#window > main > * {
+    margin-top: var(--margin);
+}

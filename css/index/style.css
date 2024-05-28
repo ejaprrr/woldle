@@ -1,5 +1,7 @@
+/* responsivita */
 @media (max-width: 320px) {
     html {
+        /* příliš malá obrazovka */
         display: none;
     }
 }
@@ -43,16 +45,15 @@
     .letter {
         width: 52px;
     }
-    #wrapper {
-        max-width: 800px;
-    }
     
 }
 
+/* při hádání jsou lépe čitelná velká písmena */
 #keyboard, #game {
     text-transform: uppercase;
 }
 
+/* animace ikonek */
 #settings, #close, #refresh, #info {
     transition: transform 0.5s ease;
 }
@@ -65,6 +66,22 @@
     transform: scale(110%);
 }
 
-body > main {
-    display: flex;
+/* barvy a zvýraznění */
+.incorrect {
+    outline: solid var(--incorrect);
+    filter: var(--glow-incorrect);
+}
+
+.inexact {
+    outline: solid var(--inexact);
+    filter: var(--glow-inexact);
+}
+
+.exact {
+    outline: solid var(--exact);
+    filter: var(--glow-exact);
+}
+
+.exact, .inexact, .incorrect {
+    will-change: filter;
 }

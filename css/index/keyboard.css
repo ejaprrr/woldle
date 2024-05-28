@@ -1,25 +1,23 @@
 #keyboard {
     width: 100%;
-    height: 100%;
 }
 
 .line {
     display: flex;
     gap: 10px;
     margin-block: 10px;
-    height: 15%;
 }
 
 .key {
-    line-height: 200%;
+    flex: 1;
+    cursor: pointer;
     outline: solid var(--secondary);
     border-radius: 5px;
     text-align: center;
-    flex: 1;
+    line-height: 200%;
     -webkit-backdrop-filter: var(--brightness);
     backdrop-filter: var(--brightness);
     transition: transform 0.25s ease, outline 0.25s ease;
-    cursor: pointer;
 }
 
 #backspace, #enter {

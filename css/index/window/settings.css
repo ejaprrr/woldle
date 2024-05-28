@@ -1,51 +1,43 @@
 #themes, #length {
+    /* vyzobrazení vedle sebe */
     display: flex;
     gap: 10px;
-    padding: 5px;
 }
 
-.theme, .number {
+.number, .theme {
     flex: 1;
+    cursor: pointer;
+    border-radius: 10px;
+    
+    height: 50px;
+    line-height: 50px;
+    font-size: 28px;
+    margin-block: 5px;
+
+    transition:
+        height 0.5s ease, 
+        margin-block 0.5s ease, 
+        line-height 0.5s ease, 
+        font-size 0.5s ease;
+}
+
+/* animace */
+.theme:hover, .number:hover {
+    height: 60px;
+    line-height: 60px;
+    margin-block: 0px;
+    font-size: 34px;
+
 }
 
 .theme {
-    height: 50px;
     border: var(--outline) solid;
     filter: var(--shadow);
+    /* oprava pro některé prohlížeče */
     will-change: filter;
 }
 
 .number {
-    outline: var(--outline) solid;
+    border: var(--outline) solid;
     text-align: center;
-    font-size: 28px;
-}
-
-
-.theme:hover, .number:hover {
-    transform: scaleY(110%);
-}
-
-.number, .theme {
-    cursor: pointer;
-    border-radius: 10px;
-    transition: transform 0.5s ease;
-}
-
-.incorrect {
-    outline: solid var(--incorrect);
-    filter: var(--glow-incorrect);
-    will-change: filter;
-}
-
-.inexact {
-    outline: solid var(--inexact);
-    filter: var(--glow-inexact);
-    will-change: filter;
-}
-
-.exact {
-    outline: solid var(--exact);
-    filter: var(--glow-exact);
-    will-change: filter;
 }
