@@ -172,6 +172,8 @@
         document.getElementById("settings").onclick = () => toggleWindow("open", "settings");
         document.getElementById("refresh").onclick = () => window.gameInstance.reset();
         document.getElementById("close").onclick = () => toggleWindow("close");
+        // modes
+        // TODO: pokus se ten daily mode zobrazit mezi klavesnici a game (viz wordly.org) (mozna vsechny tri)
         document.getElementById("random").onclick = () => window.gameInstance.setMode("random");
         document.getElementById("daily").onclick = () => window.gameInstance.setMode("daily");
         document.getElementById("custom").onclick = () => window.gameInstance.setMode("custom");
