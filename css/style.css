@@ -21,9 +21,16 @@ svg {
 }
 
 h1 {
-    font-size: 1.5em;
+    font-size: 24px;
     text-transform: uppercase;
     font-style: italic;
+    filter: var(--shadow);
+    will-change: filter;
+}
+
+h2 {
+    text-transform: uppercase;
+    font-size: 20px;
     filter: var(--shadow);
     will-change: filter;
 }
@@ -41,7 +48,7 @@ nav {
     display: flex;
     align-items: center;
     height: 100%;
-    gap: 10px;
+    gap: 20px;
 }
 
 nav > * {

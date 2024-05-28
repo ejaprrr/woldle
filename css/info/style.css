@@ -7,13 +7,16 @@
 
 main *, main {
     display:block;
+}
+
+main * {
     margin-left: 10px;
 }
+
 main span {
-    font-weight: bold;
     font-size: 22px;
 }
-ul {
-    font-size: 16px;
-    height: 40;
+
+li, p {
+    line-height: 30px;
 }
