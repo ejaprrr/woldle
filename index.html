@@ -134,6 +134,14 @@
                         </svg>
                     </div>
                 </div>
+                <div id="modes-wrapper">
+                    <h1>módy</h1>
+                    <div id="modes">
+                        <div class="mode" id="random"><span>slovo</span> náhodné</div>
+                        <div class="mode" id="daily"><span>slovo</span> dne</div>
+                        <div class="mode" id="custom"><span>slovo</span> vlastní</div>
+                    </div>
+                </div>
             </main>
             <main id="content-win">
                 <h1>Vyhrál jsi! 🎉</h1>
@@ -164,6 +172,9 @@
         document.getElementById("settings").onclick = () => toggleWindow("open", "settings");
         document.getElementById("refresh").onclick = () => window.gameInstance.reset();
         document.getElementById("close").onclick = () => toggleWindow("close");
+        document.getElementById("random").onclick = () => window.gameInstance.setMode("random");
+        document.getElementById("daily").onclick = () => window.gameInstance.setMode("daily");
+        document.getElementById("custom").onclick = () => window.gameInstance.setMode("custom");
         Array.from(document.getElementsByClassName("again")).forEach((element) => {
             element.onclick = () => {window.gameInstance.reset(); toggleWindow('close')};
         });

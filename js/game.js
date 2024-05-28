@@ -16,6 +16,13 @@ class Game {
         this.end = false; // konec hry?
         this.rowElements = [];
         this.length = parseInt(localStorage.getItem("length")) || 5; // délka je v základu 5 pokud se nenajde preference uživatele
+        this.mode = localStorage.getItem("mode") || "random";
+    }
+
+    setMode(mode) {
+        localStorage.setItem("mode", mode);
+        this.mode = mode;
+        this.reset();
     }
 
     async init() {
@@ -25,7 +32,14 @@ class Game {
         await this.loadDictionary();
         await this.loadTargets();
 
-        this.word = this.getSecret();
+        switch (this.mode) {
+            case "random":
+                this.word = this.getSecret();
+                break;
+            case "daily":
+                this.word = this.getSecret(document.getElementById("time"));
+                break;
+        }
 
         // klikání na klávesnici
         Game.keys.forEach((key) => {
@@ -65,13 +79,20 @@ class Game {
             delete key.processed;
         })
 
-        this.word = this.getSecret();
+        switch (this.mode) {
+            case "random":
+                this.word = this.getSecret();
+                break;
+            case "daily":
+                this.word = this.getSecret(document.getElementById("time"));
+                break;
+        }
     }
 
     // získání tajného slova
-    getSecret() {
+    getSecret(seed = null) {
         const uniformTargets = Array.from(this.targets).filter((x) => x.length == this.length);
-        const secret = uniformTargets[Math.floor(Math.random() * uniformTargets.length)];
+        const secret = uniformTargets[Math.floor((seed ? mulberry32(seed) : Math.random()) * uniformTargets.length)];
         console.log(secret);
         return secret;
     }
