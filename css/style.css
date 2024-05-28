@@ -51,7 +51,6 @@ nav > * {
 body > main {
     height: calc(100dvh - 70px - 50px);
     width: 100%;
-    display: flex;
     justify-content: center;
     overflow-y: auto;
 }
