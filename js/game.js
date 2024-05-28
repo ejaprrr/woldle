@@ -173,7 +173,8 @@ class Game {
                 this.processIncorrectLetters(row, guess, wrongColor);
                 this.updateDuplicateLetters(row, guess);
                 const x = row.style.gap;
-                this.animateElement(row, "gap", "15px", x, 500);
+                console.log(row.style);
+                this.animateElement(row, "gap", "5px", x, 500);
 
                 this.moveToNextRow(guess);
             } else {

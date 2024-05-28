@@ -1,41 +1,33 @@
-#themes {
+#themes, #length {
     display: flex;
-    gap: 20px;
+    gap: 10px;
+    padding: 5px;
+}
+
+.theme, .number {
+    flex: 1;
 }
 
 .theme {
-    flex: 1;
-    width: 50px;
     height: 50px;
-}
-
-#length {
-    display: flex;
-    gap: min(10px,3vw);
+    border: var(--outline) solid;
+    filter: var(--shadow);
+    will-change: filter;
 }
 
 .number {
-    flex: 1;
+    outline: var(--outline) solid;
     text-align: center;
-    font-size: min(28px, 10vw);
+    font-size: 28px;
 }
 
 
 .theme:hover, .number:hover {
-    transform: scale(110%);
-}
-
-.theme {
-    filter: var(--shadow);
-}
-
-#keyboard, #game {
-    text-transform: uppercase;
+    transform: scaleY(110%);
 }
 
 .number, .theme {
     cursor: pointer;
-    outline: var(--outline) solid;
     border-radius: 10px;
     transition: transform 0.5s ease;
 }
@@ -43,14 +35,17 @@
 .incorrect {
     outline: solid var(--incorrect);
     filter: var(--glow-incorrect);
+    will-change: filter;
 }
 
 .inexact {
     outline: solid var(--inexact);
     filter: var(--glow-inexact);
+    will-change: filter;
 }
 
 .exact {
     outline: solid var(--exact);
     filter: var(--glow-exact);
+    will-change: filter;
 }

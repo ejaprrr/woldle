@@ -12,6 +12,7 @@
 body {
     background: linear-gradient(-45deg, var(--primary), var(--secondary));
     height: 100dvh;
+    /* fix for shadows */
 }
 
 svg {
@@ -24,6 +25,7 @@ h1 {
     text-transform: uppercase;
     font-style: italic;
     filter: var(--shadow);
+    will-change: filter;
 }
 
 /* header */
@@ -73,6 +75,7 @@ footer {
     position: absolute;
     font-size: 35px;
     filter: opacity(25%);
+    will-change: filter;
     /* záporný margin */
     margin: calc(-1 * var(--margin));
 }
