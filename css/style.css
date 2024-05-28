@@ -35,6 +35,11 @@ h2 {
     will-change: filter;
 }
 
+
+li, p {
+    line-height: 30px;
+}
+
 /* header */
 
 header {
