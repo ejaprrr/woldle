@@ -44,6 +44,10 @@ button {
 
 /* header */
 
+#icon {
+    width: 50px;
+}
+
 header {
     height: 50px;
     padding: var(--padding);
@@ -58,7 +62,7 @@ nav {
     gap: 20px;
 }
 
-nav > * {
+nav * {
     height: 30px;
 }
 

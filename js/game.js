@@ -1,39 +1,35 @@
-// soubor, který definuje systém a operace hry
-
+// soubor (Object), který definuje systém a operace hry
 class Game {
     // základní elementy a definice
-
     static tries = 6;
-    static keysRegex = /[AÁBCČDĎEÉĚFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYÝZŽ]/g;
+    static keyFilter = /[a-záčďéěíňóřšťúůýž]/g;
 
-    static wrapper = document.getElementById("game");
+    // pro lehký přístup
+    static container = document.getElementById("game");
     static keys = Array.from(document.getElementsByClassName("key"));
     static backspace = document.getElementById("backspace");
     static enter = document.getElementById("enter");
 
     // inicializace a interní definice
     constructor() {
-        this.currentRow = 0;
-        this.currentLetter = 0;
-        this.gameEnd = false;
-        this.rows = [];
-        this.length = parseInt(localStorage.getItem("length")) || 5;
-        console.log(this.length)
-
-        this.init();
+        this.position = { row: 0, letter: 0 }; // pozice, na které se uživatel nachází
+        this.end = false; // konec hry?
+        this.rowElements = [];
+        this.length = parseInt(localStorage.getItem("length")) || 5; // délka je v základu 5 pokud se nenajde preference uživatele
     }
 
     async init() {
+        this.createGameEnvironment(); // vytvoření herních polí
+
+        // načtení zdrojů
         await this.loadDictionary();
         await this.loadTargets();
 
         this.word = this.getSecret();
 
-        this.createGameEnvironment();
-
+        // klikání na klávesnici
         Game.keys.forEach((key) => {
-            key.onclick = (event) => {
-
+            key.onclick = () => {
                 switch (key.textContent) {
                     case "↵":
                         this.confirm();
@@ -47,29 +43,35 @@ class Game {
                 }
             }
         })
+
+        // async
+        return this;
     }
 
-    changeLength(length) {
+    // restart hry popř. změna délky
+    reset(length = this.length) {
         localStorage.setItem("length", length);
-        this.currentRow = 0;
-        this.currentLetter = 0;
-        this.gameEnd = false;
-        this.rows = [];
+        this.length = length;
 
-        for (let key of Game.keys) {
+        this.position = { row: 0, letter: 0 };
+        this.end = false;
+        this.rowElements = [];
+
+        Game.container.innerHTML = "";
+        this.createGameEnvironment();
+
+        Game.keys.forEach((key) => {
             key.classList.remove("incorrect", "inexact", "exact");
             delete key.processed;
-        }
-        
-        Game.wrapper.innerHTML = "";
-        this.length = length;
+        })
+
         this.word = this.getSecret();
-        this.createGameEnvironment();
     }
 
+    // získání tajného slova
     getSecret() {
-        const filteredWords = Array.from(this.targets).filter((x) => x.length == this.length);
-        const secret = filteredWords[Math.floor(Math.random() * filteredWords.length)];
+        const uniformTargets = Array.from(this.targets).filter((x) => x.length == this.length);
+        const secret = uniformTargets[Math.floor(Math.random() * uniformTargets.length)];
         console.log(secret);
         return secret;
     }
@@ -80,6 +82,7 @@ class Game {
         this.dictionary = await response.json();
     }
 
+    // loading cílů
     async loadTargets() {
         const response = await fetch("files/targets.json");
         this.targets = await response.json();
@@ -88,167 +91,120 @@ class Game {
     // vytvoření herního prostředí
     createGameEnvironment() {
         for (let y = 0; y < Game.tries; y++) { // osa y
-            const row = document.createElement("div");
-            row.classList.add("row");
+            const rowElement = document.createElement("div");
+            rowElement.classList.add("row");
 
-            for (let x = 0; x < this.word.length; x++) { // osa x
-                const letter = document.createElement("div");
-                letter.classList.add("letter");
+            for (let x = 0; x < this.length; x++) { // osa x
+                const letterElement = document.createElement("div");
+                letterElement.classList.add("letter");
 
-                row.appendChild(letter);
+                rowElement.appendChild(letterElement);
             }
 
-            Game.wrapper.appendChild(row);
-            this.rows.push(row);
+            Game.container.appendChild(rowElement);
+            this.rowElements.push(rowElement);
         }
     }
 
     // animace 
-    animateElement(element, property, value, target, duration) {
-        element.style[property] = value;
-        setTimeout(() => element.style[property] = target, duration);
+    animatePress(element) {
+        element.style.transform = "scale(80%)";
+        setTimeout(() => element.style.transform = "scale(100%)", 250);
     }
-    
+
+    animateValidGuess(row) {
+        Array.from(row.children).forEach((letter, index) => {
+            setTimeout(() => letter.style.transform = "scale(120%)", index * 50);
+            setTimeout(() => letter.style.transform = "scale(100%)", 250 + index * 50);
+        })
+    }
+
+    animateInvalidGuess(row) {
+        for (let letter of row.children) {
+            letter.classList.add("incorrect");
+            setTimeout(() => letter.classList.remove("incorrect"), 250);
+        }
+    }
+
     // momentální písmeno
-    getCurrentLetter(position = this.currentLetter) {
-        return this.rows[this.currentRow].children[position];
+    getCurrentLetter() {
+        return this.rowElements[this.position.row].children[this.position.letter];
     }
 
     // najít klávesnicový ekvivalent písmena
-    findKeyElement(key) {
-        return Game.keys.find(x => x.textContent.toLowerCase() === key);
+    findKeyElement(target) {
+        return Game.keys.find((key) => key.textContent === target);
     }
 
     // získat obsah momentální řádky
     getCurrentGuess() {
-        return Array.from(this.rows[this.currentRow].children).map(x => x.textContent.toLowerCase()).join("");
+        return Array.from(this.rowElements[this.position.row].children).map((letter) => letter.textContent).join("");
     }
 
     // změnit outline
-    changeOutline(element, color) {
-        element.classList.add(`${color}`);
+    changeOutline(element, placement) {
+        element.classList.add(`${placement}`);
     }
 
     // počet výskytů
-    countOccurrences(str, char) {
-        return str.split(char).length - 1;
+    countOccurrences(origin, target) {
+        return origin.split(target).length - 1;
     }
 
     // psaní do hry
     write(letter) {
-        if (this.currentLetter < this.word.length && !this.gameEnd) {
+        if (!this.end && this.position.letter < this.length) {
             const letterElement = this.getCurrentLetter();
-            this.animateElement(letterElement, "transform", "scale(80%)", "scale(100%)", 250);
+            const keyElement = this.findKeyElement(letter);
+
             letterElement.textContent = letter;
-            this.currentLetter++;
-            const key = this.findKeyElement(letter.toLowerCase());
-            this.animateElement(key, "transform", "scale(80%)", "scale(100%)", 250);
+            this.position.letter++;
+
+            this.animatePress(letterElement);
+            this.animatePress(keyElement);
         }
     }
 
     // implementace backspace
     back() {
-        this.animateElement(Game.backspace, "transform", "scale(80%)", "scale(100%)", 250);
-        if (!this.gameEnd && this.currentLetter > 0) {
-            this.currentLetter--;
+        this.animatePress(Game.backspace);
+        if (!this.end && this.position.letter > 0) {
+            this.position.letter--;
+
             const letter = this.getCurrentLetter();
             letter.textContent = "";
         }
     }
 
+    moveToNextRow(guess) {
+        this.position.row++;
+        this.position.letter = 0;
+        if (this.word === guess || this.position.row === Game.tries) {
+            this.end = true;
+            toggleWindow("open", this.word === guess ? "win" : "lose");
+            for (let i = 0; i < (Math.random() * (5 + 1)); i++) {
+                setTimeout(() => { new Audio("files/yippie.mp3").play() }, Math.random() * 2000);
+            }
+        }
+    }
+
     // implementace enteru (potvrzení)
     confirm() {
-        this.animateElement(Game.enter, "transform", "scale(80%)", "scale(100%)", 250);
-        if (!this.gameEnd) {
-            const row = this.rows[this.currentRow];
+        this.animatePress(Game.enter);
+
+        if (!this.end) {
+            const row = this.rowElements[this.position.row];
             const guess = this.getCurrentGuess();
 
-            const wrongColor = "incorrect";
-            const rightColor = "exact";
-            const displacementColor = "inexact";
+            if (this.length === this.position.letter && this.dictionary.includes(guess)) {
+                this.processGuess(row, guess);
 
-            if (this.word.length === this.currentLetter && this.dictionary.includes(guess)) {
-                this.processExactMatches(row, guess, rightColor);
-                this.processInexactMatches(row, guess, displacementColor);
-                this.processIncorrectLetters(row, guess, wrongColor);
-                this.updateDuplicateLetters(row, guess);
-                const x = row.style.gap;
-                console.log(row.style);
-                this.animateElement(row, "gap", "5px", x, 500);
+                this.animateValidGuess(row);
 
                 this.moveToNextRow(guess);
             } else {
-                this.animateInvalidGuess(row, wrongColor);
+                this.animateInvalidGuess(row);
             }
-        }
-    }
-
-    processExactMatches(row, guess, rightColor) {
-        for (let i = 0; i < this.word.length; i++) {
-            const currentGuess = guess[i];
-            const currentTarget = this.word[i];
-            const current = row.children[i];
-            const key = this.findKeyElement(currentGuess);
-
-            if (currentGuess === currentTarget) {
-                this.changeOutline(current, rightColor);
-                if (!key.processed) this.changeOutline(key, rightColor);
-                
-                key.processed = true;
-                current.processed = true;
-                current.exact = true;
-            }
-        }
-    }
-
-    processInexactMatches(row, guess, displacementColor) {
-        for (let i = 0; i < this.word.length; i++) {
-            const currentGuess = guess[i];
-            const current = row.children[i];
-
-            const key = this.findKeyElement(currentGuess);
-
-            if (!current.processed && this.word.includes(currentGuess)) {
-                const processed = Array.from(row.children).filter((x) => x.processed && x.textContent.toLowerCase() == currentGuess).length;
-                if (processed < this.countOccurrences(this.word, currentGuess)) {
-                    this.changeOutline(current, displacementColor);
-                    if (!key.processed) this.changeOutline(key, displacementColor);
-                    key.processed = false;
-                }
-
-                current.exact = false;
-                current.processed = true;
-            };
-        };
-    }
-
-    processIncorrectLetters(row, guess, wrongColor) {
-        for (let letter of row.children) {
-            if (!letter.processed) {
-                const key = this.findKeyElement(letter.textContent.toLowerCase());
-                this.changeOutline(letter, "transparent");
-                if (!key.processed) this.changeOutline(key, wrongColor);
-                key.processed = true;
-                letter.exact = null;
-            }
-        }
-    }
-
-    updateDuplicateLetters(row, guess) {
-        for (let letter of row.children) {
-            let countTarget = this.countOccurrences(this.word, letter.textContent.toLowerCase());
-            const inTarget = this.countOccurrences(this.word, letter.textContent.toLowerCase());
-            const inGuess = this.countOccurrences(guess, letter.textContent.toLowerCase());
-
-            if (inTarget > 1 && inGuess > 1) {
-                if (letter.exact) {
-                    countTarget -= (inGuess);
-                } else {
-                    countTarget -= (inGuess - 1);
-                }
-            }
-
-            if (countTarget > 1) this.addCountIndex(letter, countTarget);
         }
     }
 
@@ -259,28 +215,61 @@ class Game {
         letter.appendChild(countIndex);
     }
 
-    removeSingleCountIndices(row) {
-        for (let letter of row.children) {
-            const indexElement = letter.querySelector(".index");
-            if (indexElement && indexElement.textContent == "1") {
-                letter.removeChild(indexElement);
+    processGuess(row, guess) {
+        for (let i = 0; i < this.length; i++) {
+            // v kontextu pozice
+            const currentGuessLetter = guess[i];
+            const currentTargetLetter = this.word[i];
+            const currentLetterElement = row.children[i];
+            const currentKeyElement = this.findKeyElement(currentGuessLetter);
+
+            // exact
+            if (currentGuessLetter === currentTargetLetter) {
+                this.changeOutline(currentLetterElement, "exact");
+                if (!currentKeyElement.processed) this.changeOutline(currentKeyElement, "exact");
+
+                currentKeyElement.processed = true;
+                currentLetterElement.processed = true;
+                currentLetterElement.isExact = true;
             }
-        }
-    }
 
-    moveToNextRow(guess) {
-        this.currentRow++;
-        this.currentLetter = 0;
-        if (this.word === guess || this.currentRow === Game.tries) {
-            this.gameEnd = true;
-            toggleWindow("open", this.word === guess ? "win" : "lose");
-        }
-    }
+            // inexact
+            // pokud není již zpracovaný (není již zelený nebo žlutý) a je ve slově které hádáme
+            if (!currentLetterElement.processed && this.word.includes(currentGuessLetter)) {
+                // již zpracovaná stejná písmena
+                const alreadyProcessedDuplicates = Array.from(row.children).filter((letter) => letter.processed && letter.textContent == currentGuessLetter);
+                // pokud jich je méně než počet stejných písmen v hádance
+                if (alreadyProcessedDuplicates.length < this.countOccurrences(this.word, currentGuessLetter)) {
+                    this.changeOutline(currentLetterElement, "inexact");
+                    if (!currentKeyElement.processed) this.changeOutline(currentKeyElement, "inexact");
+                    currentLetterElement.isExact = false;
+                }
 
-    animateInvalidGuess(row, wrongColor) {
-        for (let letter of row.children) {
-            letter.classList.add(wrongColor);
-            setTimeout(() => letter.classList.remove(wrongColor), 250);
+                currentLetterElement.processed = true;
+            };
+
+            // incorrect
+            if (!currentLetterElement.processed) {
+                this.changeOutline(currentLetterElement, "transparent");
+                if (!currentKeyElement.processed) this.changeOutline(currentKeyElement, "incorrect");
+                currentKeyElement.processed = true;
+                currentLetterElement.isExact = false;
+            }
+
+            // indexes
+            let countTarget = this.countOccurrences(this.word, currentLetterElement.textContent);
+            const inTarget = this.countOccurrences(this.word, currentLetterElement.textContent);
+            const inGuess = this.countOccurrences(guess, currentLetterElement.textContent);
+
+            if (inTarget > 1 && inGuess > 1) {
+                if (currentLetterElement.isExact) {
+                    countTarget -= (inGuess);
+                } else {
+                    countTarget -= (inGuess - 1);
+                }
+            }
+
+            if (countTarget > 1) this.addCountIndex(currentLetterElement, countTarget);
         }
     }
 }

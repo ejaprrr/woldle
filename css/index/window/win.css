@@ -1,11 +1,11 @@
-#window-win {
+#content-win {
     background: url("/files/yippie.gif");
     background-size: cover;
     background-position: center;
     text-align: center;
 }
 
-#window-win > button {
+#content-win > button {
     width: 150px;
     background-color: var(--overlay);
     border-radius: 10px;

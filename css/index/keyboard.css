@@ -17,7 +17,12 @@
     line-height: 200%;
     -webkit-backdrop-filter: var(--brightness);
     backdrop-filter: var(--brightness);
-    transition: transform 0.25s ease, outline 0.25s ease;
+    transition:
+        transform 0.25s ease,
+        outline 0.25s ease;
+    will-change:
+        transform,
+        outline;
 }
 
 #backspace, #enter {

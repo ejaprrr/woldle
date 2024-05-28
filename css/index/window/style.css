@@ -11,10 +11,15 @@
     /* aby se dalo klikat na věci za tím, když je neviditelný */
     background-color: transparent;
     pointer-events: none;
-    /* kvůli #date, který má `position: absolute;` též */
-    z-index: 1;
     /* animace */
-    transition: background-color 0.5s ease, backdrop-filter 0.5s ease;
+    transition:
+        background-color 0.5s ease, 
+        backdrop-filter 0.5s ease;
+
+    will-change: 
+        background-color,
+        backdrop-filter;
+
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
 }
@@ -33,6 +38,8 @@
     border-radius: 10px;
     background-color: transparent;
     transition: background-color 0.25s ease;
+
+    will-change: background-color;
     /* kvůli background-color a border-radius */
     overflow: hidden;
 }

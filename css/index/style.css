@@ -56,6 +56,7 @@
 /* animace ikonek */
 #settings, #close, #refresh, #info {
     transition: transform 0.5s ease;
+    will-change: transform;
 }
 
 #settings:hover, #close:hover, #refresh:hover {

@@ -6,6 +6,7 @@
     display: flex;
     justify-content: center;
     transition: gap 0.5s ease;
+    will-change: gap;
 }
 
 .letter {
@@ -16,6 +17,10 @@
     transition:
         outline .25s ease-out,
         transform 0.25s ease;
+    
+    will-change:
+        outline,
+        transform;
     -webkit-backdrop-filter: var(--brightness);
     backdrop-filter: var(--brightness);
 }

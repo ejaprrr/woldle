@@ -12,10 +12,13 @@ body > main {
 }
 
 /* zarovnat kontent obou wrapperů na střed a mezery mezi nimi */
-#game-wrapper, #keyboard-wrapper {
+#game-wrapper {
     /* centrování */
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#game-wrapper, #keyboard {
     margin-block-start: 20px;
 }
