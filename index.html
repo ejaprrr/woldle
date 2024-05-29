@@ -119,29 +119,28 @@
                 </div>
             </div>
             <article>
-                <h1>co je woldle?</h1>
-                <p>WOLDLE je zábávná hádací hra inspirovaná hrou wordle, kde je tvým úkolem uhádnout slovo pomocí hádání jiných slov.</p>
+                <h1>co je to Woldle?</h1>
+                <p>Woldle je zábávná hádací hra inspirovaná hrou Wordle, kde je tvým úkolem uhádnout slovo pomocí hádání slov jiných.</p>
                 <h1>jak hrát</h1>
-                <h2>uhádněte slovo na 6 pokusů</h2>
+                <h2>1. zadej první libovolné slovo</h2>
                 <ul>
-                    <li>každé slovo musí být validní</li>
-                    <li>barva políček se změní a ukáže jak blízko jste k uhádnutí slova</li>
+                    <li>slovo musí být validní</li>
+                    <li>barva políček se mění podle správnosti</li>
+                    <li>celkem budeš mít 6 pokusů</li>
                 </ul>
-                <h2>barvy</h2>
+                <h2>2. zjisti, jaká písmena slovo obsahuje</h2>
                 <ul>
-                    <li>pokud bude políčko zelené tak máte písmenko na správném místě</li>
-                    <li>pokud bude oranžové tak slovo obsahuje písmenko ale je na jiné pozici</li>
-                    <li>pokud se políčko nezbarví tak slovo písmenko neobsahuje</li>
-                    <!--tady bych možná udělal jednoduché ikonky/tvary s barvou a k tomu vysvětlivku-->
-                    <!--dobrý nápad je i s tím obrázkem, ale gif by byl geniální - normálně by to byl obrázek s tím slovem a s tou jednou barvou ale když na to najedeš, tak se ti spustí gif i jak to tam zadáváš a vyjede ti ta barva a dostaneš se k tomu obrázku -->
-                    <!--a nebo ještě lépe to udělat jako na https://wordly.org/, kde ten návod je pod tou hrou (bylo by to i hezčí) a tady by byli jen ti autoři-->
+                    <li><span style="color: var(--exact); filter: var(--glow-exact); line-height: 30px;">zelené</span> pole znamená, že máte písmenko na správném místě</li>
+                    <li><span style="color: var(--inexact); filter: var(--glow-inexact); line-height: 30px;">oranžové</span> pole značí, že ho slovo obsahuje ale na jiné pozici</li>
+                    <li><span style="filter: var(--shadow); line-height: 30px;">neobarvené</span> pole je písmenko, které slovo neobsahuje</li>
+                    <li>horní index ti říká, že tohle písmenko se ve slově oběvuje víckrát</li>
+                    <li>do oranžového indexu se nepočítají již zelená pole</li>
+                    <li>zbarveno je jen tolik polí stejných písmen, kolik se jich do slova vejde</li>
                 </ul>
-                <h2>počet</h2>
+                <h2>3. uhodni tajenku!</h2>
                 <ul>
-                    <li>A</li>
-                    <li>B</li>
-                    <li>C</li>
-                    <li>D</li>
+                    <li>nyní znáte některá písmena, jejich pozice a přesnost</li>
+                    <li>zkus vyřešit tajenku a vyhrát hru</li>
                 </ul>
             </article>
         </div>
