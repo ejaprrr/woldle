@@ -1,14 +1,37 @@
+const keydown = () => {
+    switch (event.key) {
+            case "Backspace":
+                window.gameInstance.back();
+                break;
+            
+            case "Enter":
+                window.gameInstance.confirm();
+                break;
+    }
+}
+
+const keypress = (event) => {
+    const { key } = event;
+
+    if (key.toLowerCase().match(Game.keyFilter) && key.length === 1) {
+        window.gameInstance.write(key);
+    }
+}
+
 const toggleWindow = (action, content = null) => {
     const windowWrapper = document.getElementById("window-wrapper");
     const window = document.getElementById("window");
     switch (action) {
         case "open":
+            document.onkeydown, document.onkeypress = () => {};
             windowWrapper.classList.add("show");
             window.classList.add("show");
             document.getElementById(`content-${content}`).classList.add("show");
             break;
 
         case "close":
+            document.onkeydown = keydown;
+            document.onkeypress = keypress;
             windowWrapper.classList.remove("show");
             window.classList.remove("show");
             document.querySelector(`#window > main.show`).classList.remove("show");
@@ -21,6 +44,11 @@ const changeTheme = (theme) => {
 
     document.body.className = "";
     document.body.classList.add(theme);
+
+    const otherOption = document.querySelector(".theme.selected-setting");
+    if (otherOption) otherOption.classList.remove("selected-setting");
+    console.log(theme, otherOption);
+    document.getElementById(theme).classList.add("selected-setting");
 }
 
 const time = () => {

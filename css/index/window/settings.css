@@ -28,59 +28,38 @@
 }
 
 .mode {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     flex: 1;
-    height: 50px;
-    border-radius: 10px;
-    border: var(--outline) solid;
-    /* oprava pro některé prohlížeče */
-    will-change: filter;
     text-align: center;
-    font-size: 22px;
-    line-height: 22px;
-    padding: 5px;
+    cursor: pointer;
+    border-radius: 10px;
+
+    border: var(--outline) solid;
+
+    height: 50px;
+    line-height: 50px;
     margin-block: 5px;
 
     transition:
-        height 0.5s ease, 
-        margin-block 0.5s ease, 
-        line-height 0.5s ease, 
-        font-size 0.5s ease;
+        height 0.5s ease,
+        margin-block 0.5s ease,
+        line-height 0.5s ease;
     
-    will-change:
-        height,
-        margin-block,
-        line-height,
-        font-size;
+    overflow: hidden;
 }
 
-.mode span {
-    font-style: italic;
-    width: 100%;
-    text-align: left;
+.mode > .mode-prefix {
+    display: inline-block;
+    max-width: 50px;
+    opacity: 100%;
+    transition: max-width 0.5s ease, opacity 0.5s ease;
+}
+
+.mode > .mode-title {
+    text-transform: uppercase;
+    font-size: 20px;
     filter: var(--shadow);
-    line-height: 14px;
-    font-size: 14px;
-}
 
-.mode:hover {
-    height: 60px;
-    margin-block: 0px;
-    font-size: 26px;
-    line-height: 26px;
-}
-
-/* animace */
-.theme:hover, .length-option:hover {
-    height: 60px;
-    line-height: 60px;
-    margin-block: 0px;
-    font-size: 34px;
-
+    transition: font-size 0.5s ease, width 0.5s ease, line-height 0.5s ease;
 }
 
 .theme {
@@ -93,4 +72,33 @@
 .length-option {
     border: var(--outline) solid;
     text-align: center;
+}
+
+/* animace */
+.theme:hover, .length-option:hover {
+    height: 60px;
+    line-height: 60px;
+    margin-block: 0px;
+    font-size: 34px;
+}
+
+.mode:hover {
+    height: 60px;
+    margin-block: 0px;
+}
+
+.mode:hover > .mode-prefix {
+    max-width: 0px;
+    opacity: 0%;
+}
+
+.mode:hover > .mode-title {
+    font-size: 24px;
+    line-height: 60px;
+}
+
+.selected-setting {
+    border: var(--exact) solid;
+    background-color: var(--overlay);
+    filter: var(--glow-exact);
 }

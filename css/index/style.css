@@ -54,12 +54,12 @@
 }
 
 /* animace ikonek */
-#settings, #close, #refresh, #info {
+#settings, #close, .refresh, #info {
     transition: transform 0.5s ease;
     will-change: transform;
 }
 
-#settings:hover, #close:hover, #refresh:hover {
+#settings:hover, #close:hover, .refresh:hover {
     transform: rotate(90deg);
 }
 
@@ -85,4 +85,15 @@
 
 .exact, .inexact, .incorrect {
     will-change: filter;
+}
+
+#mode-visual {
+    background-color: var(--overlay);
+    display: inline-block;
+    width: 150px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 20px;
+    margin: auto;
+    outline: solid var(--outline);
 }

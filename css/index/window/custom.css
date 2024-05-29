@@ -1,0 +1,25 @@
+#content-custom {
+    text-align: center;
+}
+
+#content-custom form {
+    display: flex;
+    gap: 20px;
+}
+
+#content-custom form > button {
+    width: 50px;
+    background-color: var(--overlay);
+    border-radius: 5px;
+    outline: var(--outline) solid;
+}
+
+#content-custom form > input {
+    flex: auto;
+    background-color: var(--overlay);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    padding-left: 20px;
+    outline: var(--outline) solid;
+}

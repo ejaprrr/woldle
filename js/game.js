@@ -17,17 +17,20 @@ class Game {
         this.rowElements = [];
         this.length = parseInt(localStorage.getItem("length")) || 5; // délka je v základu 5 pokud se nenajde preference uživatele
         this.mode = localStorage.getItem("mode") || "random";
+        document.getElementById("mode-visual").textContent = this.mode.replace("daily", "slovo dne").replace("random", "náhodné slovo").replace("custom", "vlastní slovo");
+        document.getElementById(this.mode).classList.add("selected-setting");
     }
 
     setMode(mode) {
-        localStorage.setItem("mode", mode);
+        if (mode != "custom") localStorage.setItem("mode", mode);
+        document.getElementById(this.mode).classList.remove("selected-setting");
         this.mode = mode;
+        document.getElementById("mode-visual").textContent = this.mode.replace("daily", "slovo dne").replace("random", "náhodné slovo").replace("custom", "vlastní slovo");
+        document.getElementById(this.mode).classList.add("selected-setting");
         this.reset();
     }
 
     async init() {
-        this.createGameEnvironment(); // vytvoření herních polí
-
         // načtení zdrojů
         await this.loadDictionary();
         await this.loadTargets();
@@ -39,7 +42,12 @@ class Game {
             case "daily":
                 this.word = this.getSecret(document.getElementById("time"));
                 break;
+            case "custom":
+                this.word = this.getSecret(null, document.querySelector("#content-custom form > input").value);
+                break;
         }
+
+        this.createGameEnvironment(); // vytvoření herních polí
 
         // klikání na klávesnici
         Game.keys.forEach((key) => {
@@ -58,21 +66,40 @@ class Game {
             }
         })
 
+        const lengthOptions = document.getElementById("length");
+        const targetLengths = this.targets.map(target => target.length);
+
+        const minLength = Math.min(...targetLengths);
+        const maxLength = Math.max(...targetLengths);
+        document.querySelector("#content-custom input").maxLength = maxLength;
+
+        for (let length = minLength; length <= maxLength; length++) {
+            const lengthOption = document.createElement("div");
+            
+            lengthOption.classList.add("length-option");
+            lengthOption.textContent = length;
+            if (length == this.length) lengthOption.classList.add("selected-setting");
+            lengthOption.onclick = () => window.gameInstance.reset(length);
+
+            lengthOptions.appendChild(lengthOption);
+        }
+
+
         // async
         return this;
     }
 
     // restart hry popř. změna délky
     reset(length = this.length) {
-        localStorage.setItem("length", length);
+        if (this.mode != "custom") localStorage.setItem("length", length);
+        Array.from(document.getElementsByClassName("length-option")).filter((lengthOption) => parseInt(lengthOption.textContent) == this.length)[0].classList.remove("selected-setting");
         this.length = length;
-
+        Array.from(document.getElementsByClassName("length-option")).filter((lengthOption) => parseInt(lengthOption.textContent) == this.length)[0].classList.add("selected-setting");
         this.position = { row: 0, letter: 0 };
         this.end = false;
         this.rowElements = [];
 
         Game.container.innerHTML = "";
-        this.createGameEnvironment();
 
         Game.keys.forEach((key) => {
             key.classList.remove("incorrect", "inexact", "exact");
@@ -86,13 +113,25 @@ class Game {
             case "daily":
                 this.word = this.getSecret(document.getElementById("time"));
                 break;
+            case "custom":
+                this.word = this.getSecret(null, document.querySelector("#content-custom form > input").value);
+                break;
         }
+
+        this.createGameEnvironment();
     }
 
     // získání tajného slova
-    getSecret(seed = null) {
-        const uniformTargets = Array.from(this.targets).filter((x) => x.length == this.length);
-        const secret = uniformTargets[Math.floor((seed ? mulberry32(seed) : Math.random()) * uniformTargets.length)];
+    getSecret(seed = null, custom = null) {
+        let secret;
+
+        if (custom != null) {
+            this.length = custom.length;
+            secret = custom;
+        } else {
+            const uniformTargets = Array.from(this.targets).filter((x) => x.length == this.length);
+            secret = uniformTargets[Math.floor((seed ? mulberry32(seed) : Math.random()) * uniformTargets.length)];
+        }
         console.log(secret);
         return secret;
     }
