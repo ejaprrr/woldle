@@ -40,7 +40,7 @@ class Game {
                 this.word = this.getSecret();
                 break;
             case "daily":
-                this.word = this.getSecret(document.getElementById("time"));
+                this.word = this.getSecret(this.hash(document.getElementById("time").textContent + this.hash(document.getElementById("year").textContent)));
                 break;
             case "custom":
                 this.word = this.getSecret(null, document.querySelector("#content-custom form > input").value);
@@ -89,6 +89,20 @@ class Game {
         return this;
     }
 
+    hash(string) {
+        let hash = 0;
+        
+        if (string.length == 0) return hash;
+    
+        for (let i = 0; i < string.length; i++) {
+            let char = string.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+        }
+    
+        return hash;
+    }
+
     // restart hry popř. změna délky
     reset(length = this.length) {
         if (this.mode != "custom") localStorage.setItem("length", length);
@@ -111,7 +125,7 @@ class Game {
                 this.word = this.getSecret();
                 break;
             case "daily":
-                this.word = this.getSecret(document.getElementById("time"));
+                this.word = this.getSecret(this.hash(document.getElementById("time").textContent + this.hash(document.getElementById("year").textContent)));
                 break;
             case "custom":
                 this.word = this.getSecret(null, document.querySelector("#content-custom form > input").value);
@@ -130,7 +144,7 @@ class Game {
             secret = custom;
         } else {
             const uniformTargets = Array.from(this.targets).filter((x) => x.length == this.length);
-            secret = uniformTargets[Math.floor((seed ? mulberry32(seed) : Math.random()) * uniformTargets.length)];
+            secret = uniformTargets[Math.floor((seed != null ? mulberry32(seed) : Math.random()) * uniformTargets.length)];
         }
         console.log(secret);
         return secret;
@@ -353,6 +367,9 @@ class Game {
         if (this.word === guess || this.position.row === Game.tries) {
             this.end = true;
             toggleWindow("open", this.word === guess ? "win" : "lose");
+            const information = document.createElement("div");
+            information.textContent = this.word === guess ? "výhra" : "prohra";
+            document.getElementById("info-wrapper").appendChild(information);
         }
     }
 }

@@ -39,15 +39,13 @@ const toggleWindow = (action, content = null) => {
     }
 }
 
-const changeTheme = (theme) => {
-    localStorage.setItem("theme", theme);
-
-    document.body.className = "";
-    document.body.classList.add(theme);
+const changeTheme = () => {
+    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+    localStorage.setItem("theme", document.body.className)
 
     const otherOption = document.querySelector(".theme.selected-setting");
     if (otherOption) otherOption.classList.remove("selected-setting");
-    console.log(theme, otherOption);
     document.getElementById(theme).classList.add("selected-setting");
 }
 

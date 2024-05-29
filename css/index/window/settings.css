@@ -1,10 +1,10 @@
-#themes, #length, #modes {
+#length, #modes {
     /* vyzobrazení vedle sebe */
     display: flex;
     gap: 10px;
 }
 
-.length-option, .theme {
+.length-option {
     flex: 1;
     cursor: pointer;
     border-radius: 10px;
@@ -13,6 +13,8 @@
     line-height: 50px;
     font-size: 28px;
     margin-block: 5px;
+
+    background-color: var(--overlay);
 
     transition:
         height 0.5s ease, 
@@ -34,6 +36,8 @@
     border-radius: 10px;
 
     border: var(--outline) solid;
+
+    background-color: var(--overlay);
 
     height: 50px;
     line-height: 50px;
@@ -57,16 +61,7 @@
 .mode > .mode-title {
     text-transform: uppercase;
     font-size: 20px;
-    filter: var(--shadow);
-
     transition: font-size 0.5s ease, width 0.5s ease, line-height 0.5s ease;
-}
-
-.theme {
-    border: var(--outline) solid;
-    filter: var(--shadow);
-    /* oprava pro některé prohlížeče */
-    will-change: filter;
 }
 
 .length-option {
@@ -75,7 +70,7 @@
 }
 
 /* animace */
-.theme:hover, .length-option:hover {
+.length-option:hover {
     height: 60px;
     line-height: 60px;
     margin-block: 0px;
@@ -98,7 +93,11 @@
 }
 
 .selected-setting {
-    border: var(--exact) solid;
+    border: #FFFF00 solid;
     background-color: var(--overlay);
     filter: var(--glow-exact);
+}
+
+#window h1 {
+    margin-left: 20px;
 }

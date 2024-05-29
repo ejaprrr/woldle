@@ -14,8 +14,39 @@ body > main {
 /* zarovnat kontent obou wrapperů na střed a mezery mezi nimi */
 #game-wrapper {
     /* centrování */
-    margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#info-wrapper {
+    display: flex;
+}
+
+section {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    gap: 20px;
+}
+
+section div {
+    background-color: var(--overlay);
+    display: inline-block;
+    padding-inline: 10px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 20px;
+    outline: solid var(--outline);
+}
+
+.spoiler {
+    line-height: 24px;
+    background-color: var(--tertiary);
+    user-select: none;
+}
+
+.spoiler:active {
+    background-color: transparent;
 }
