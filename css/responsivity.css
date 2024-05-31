@@ -1,0 +1,119 @@
+@media (max-width: 320px) {
+    /* příliš malá obrazovka */
+    html {
+        display: none;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 440px) {
+    .row {
+        height: 42px;
+        gap: 7px;
+        margin-block: 7px;
+    }
+    .letter {
+        width: 42px;
+        line-height: 42px;
+    }
+    .index {
+        line-height: 12px;
+        font-size: 12px;
+        margin: 2px;
+    }
+    #themes, #length, #modes {
+        gap: 5px;
+    }
+    .length-option {
+        font-size: 18px;
+        height: 30px;
+        line-height: 30px;
+    }
+    .length-option:hover {
+        font-size: 22px;
+        height: 40px;
+        line-height: 40px;
+    }
+    .mode > .mode-prefix {
+        max-height: 25px;
+        transition: max-height 0.5s ease, opacity 0.5s ease;
+    }
+    .mode > * { 
+        max-width: 100% !important;
+        display: block !important;
+        font-size: 15px !important;
+        line-height: 25px !important;
+    }
+
+    .mode:hover > .mode-prefix {
+        max-height: 17.5px;
+    }
+
+    #window h1 {
+        margin-left: 0px;
+        font-size: 22px;
+    }
+
+    article p {
+        text-align: justify;
+    }
+
+    
+}
+
+@media (min-width: 440px) and (max-width: 720px) {
+    .row {
+        height: 46px;
+        gap: 9px;
+        margin-block: 9px;
+    }
+    .letter {
+        width: 46px;
+        line-height: 46px;
+    }
+
+    #themes, #length, #modes {
+        gap: 5px;
+    }
+    .length-option {
+        font-size: 18px;
+        height: 30px;
+        line-height: 30px;
+    }
+    .length-option:hover {
+        font-size: 22px;
+        height: 40px;
+        line-height: 40px;
+    }
+    .mode > .mode-prefix {
+        max-height: 25px;
+        transition: max-height 0.5s ease, opacity 0.5s ease;
+    }
+    .mode > * { 
+        max-width: 100% !important;
+        display: block !important;
+        font-size: 15px !important;
+        line-height: 25px !important;
+    }
+
+    .mode:hover > .mode-prefix {
+        max-height: 17.5px;
+    }
+
+    #window h1 {
+        margin-left: 10px;
+        font-size: 22px;
+    }
+}
+
+@media (min-width: 720px) {
+    .row {
+        height: 48px;
+        gap: 11px;
+        margin-block: 11px;
+    }
+    .letter {
+        width: 48px;
+        line-height: 48px;
+    }
+    
+}

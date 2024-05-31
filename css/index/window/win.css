@@ -1,6 +1,22 @@
-#content-win {
-    background: url("/files/yippie.gif");
-    background-size: cover;
-    background-position: center;
+#content-win > h1 {
+    color: var(--exact);
+    filter: var(--glow-exact);
     text-align: center;
+}
+
+#content-win > h2 {
+    background: linear-gradient(to right, transparent, var(--overlay), transparent);
+    filter: var(--shadow);
+    color: var(--tertiary);
+    text-align: center;
+}
+
+#window:has(#content-win.show) {
+    background: url("/files/yippie.gif");
+    background-position: center;
+    background-size: cover;
+}
+
+#content-win {
+    backdrop-filter: blur(5px) var(--brightness);
 }

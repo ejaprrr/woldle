@@ -1,54 +1,27 @@
 #length, #modes {
-    /* vyzobrazení vedle sebe */
     display: flex;
     gap: 10px;
 }
 
-.length-option {
-    flex: 1;
+.length-option, .mode {
     cursor: pointer;
+    flex: 1;
     border-radius: 10px;
-    
     height: 50px;
-    line-height: 50px;
-    font-size: 28px;
-    margin-block: 5px;
-
+    border: var(--outline) solid;
+    text-align: center;
     background-color: var(--overlay);
+    line-height: 50px;
+    margin-block: 5px;
+}
 
-    transition:
-        height 0.5s ease, 
-        margin-block 0.5s ease, 
-        line-height 0.5s ease, 
-        font-size 0.5s ease;
-    
-    will-change:
-        height,
-        margin-block,
-        line-height,
-        font-size;
+.length-option {
+    font-size: 28px;
+    transition: height 0.5s ease, margin-block 0.5s ease, line-height 0.5s ease, font-size 0.5s ease;
 }
 
 .mode {
-    flex: 1;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 10px;
-
-    border: var(--outline) solid;
-
-    background-color: var(--overlay);
-
-    height: 50px;
-    line-height: 50px;
-    margin-block: 5px;
-
-    transition:
-        height 0.5s ease,
-        margin-block 0.5s ease,
-        line-height 0.5s ease;
-    
-    overflow: hidden;
+    transition: height 0.5s ease, margin-block 0.5s ease, line-height 0.5s ease;
 }
 
 .mode > .mode-prefix {
@@ -64,22 +37,14 @@
     transition: font-size 0.5s ease, width 0.5s ease, line-height 0.5s ease;
 }
 
-.length-option {
-    border: var(--outline) solid;
-    text-align: center;
-}
-
 /* animace */
-.length-option:hover {
+.length-option:hover, .mode:hover {
     height: 60px;
-    line-height: 60px;
     margin-block: 0px;
-    font-size: 34px;
 }
-
-.mode:hover {
-    height: 60px;
-    margin-block: 0px;
+.length-option:hover {
+    line-height: 60px;
+    font-size: 34px;
 }
 
 .mode:hover > .mode-prefix {
@@ -93,11 +58,7 @@
 }
 
 .selected-setting {
-    border: #FFFF00 solid;
+    border: var(--yellow) solid;
     background-color: var(--overlay);
-    filter: var(--glow-exact);
-}
-
-#window h1 {
-    margin-left: 20px;
+    filter: var(--glow-yellow);
 }

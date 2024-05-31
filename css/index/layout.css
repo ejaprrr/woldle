@@ -1,23 +1,11 @@
-/* lepší a hezčí zarovnání */
-body > main {
-    display: flex;
-}
-
 /* wrapper obklopuje hru a klávesnici, určuje hranice a pomáhá zarovnat */
 #wrapper {
-    width: 95%;
+    width: calc(100% - 40px);
     max-width: 600px;
+    margin: auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-/* zarovnat kontent obou wrapperů na střed a mezery mezi nimi */
-#game-wrapper {
-    /* centrování */
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 #info-wrapper {
@@ -27,42 +15,19 @@ body > main {
 section {
     width: 100%;
     display: flex;
-    align-items:center;
+    align-items: center;
     justify-content: right;
     gap: 20px;
 }
 
-section div {
+section > div {
     background-color: var(--overlay);
-    display: inline-block;
     padding-inline: 10px;
-    height: 24px;
     line-height: 24px;
-    text-align: center;
-    border-radius: 20px;
+    border-radius: 24px;
     outline: solid var(--outline);
-}
-
-article {
-    padding-block: 10px;
-}
-
-article > h1{
-    margin-left: 0px;
-}
-
-article > h2 {
-    padding-left: 10px;
-    margin-bottom: 0px;
 }
 
 article > p {
     margin-left: 20px;
-    line-height: normal;
-}
-
-li, li > span{
-    line-height: 1.5em;
-    font-size: 1em;
-    height: 1.5em;
 }

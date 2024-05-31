@@ -1,28 +1,17 @@
-#game {
-    max-width: 100%;
-}
-
 .row {
     display: flex;
     justify-content: center;
     transition: gap 0.5s ease;
-    will-change: gap;
 }
 
 .letter {
-    border-radius: 10px;
     outline: solid var(--secondary);
-    font-size: 28px;
+    border-radius: 7px;
     text-align: center;
-    transition:
-        outline .25s ease-out,
-        transform 0.25s ease;
-    
-    will-change:
-        outline,
-        transform;
-    -webkit-backdrop-filter: var(--brightness);
+    font-size: 28px;
     backdrop-filter: var(--brightness);
+    -webkit-backdrop-filter: var(--brightness);
+    transition: transform 0.25s ease, outline 0.25s ease;
 }
 
 .index {

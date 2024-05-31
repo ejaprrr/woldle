@@ -1,119 +1,107 @@
-/* responsivita */
-@media (max-width: 320px) {
-    html {
-        /* příliš malá obrazovka */
-        display: none;
-    }
+/* platí vždy */
+* {
+    margin: 0;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: var(--tertiary);
+    border: none;
 }
 
-@media (min-width: 320px) and (max-width: 440px) {
-    .row {
-        height: 42px;
-        gap: 7px;
-        margin-block: 7px;
-    }
-    .letter {
-        width: 42px;
-    }
-    .index {
-        line-height: 12px;
-        font-size: 12px;
-        margin: 2px;
-    }
-    #themes, #length, #modes {
-        gap: 5px;
-    }
-    .length-option {
-        font-size: 18px;
-        height: 30px;
-        line-height: 30px;
-    }
-    .length-option:hover {
-        font-size: 22px;
-        height: 40px;
-        line-height: 40px;
-    }
-    .mode > .mode-prefix {
-        max-height: 25px;
-        transition: max-height 0.5s ease, opacity 0.5s ease;
-    }
-    .mode > * { 
-        max-width: 100% !important;
-        display: block !important;
-        font-size: 15px !important;
-        line-height: 25px !important;
-    }
-
-    .mode:hover > .mode-prefix {
-        max-height: 17.5px;
-    }
-
-    #window h1 {
-        margin-left: 10px;
-        font-size: 22px;
-    }
-
-    article p {
-        text-align:justify;
-    }
-
-    
+body {
+    background: linear-gradient(-45deg, var(--primary), var(--secondary));
+    overflow: hidden;
 }
 
-@media (min-width: 440px) and (max-width: 720px) {
-    .row {
-        height: 46px;
-        gap: 9px;
-        margin-block: 9px;
-    }
-    .letter {
-        width: 46px;
-    }
-
-    #themes, #length, #modes {
-        gap: 5px;
-    }
-    .length-option {
-        font-size: 18px;
-        height: 30px;
-        line-height: 30px;
-    }
-    .length-option:hover {
-        font-size: 22px;
-        height: 40px;
-        line-height: 40px;
-    }
-    .mode > .mode-prefix {
-        max-height: 25px;
-        transition: max-height 0.5s ease, opacity 0.5s ease;
-    }
-    .mode > * { 
-        max-width: 100% !important;
-        display: block !important;
-        font-size: 15px !important;
-        line-height: 25px !important;
-    }
-
-    .mode:hover > .mode-prefix {
-        max-height: 17.5px;
-    }
-
-    #window h1 {
-        margin-left: 10px;
-        font-size: 22px;
-    }
+h1, h2 {
+    text-transform: uppercase;
+    filter: var(--shadow);
+    padding: 10px;
+    margin-block: 15px;
 }
 
-@media (min-width: 720px) {
-    .row {
-        height: 48px;
-        gap: 11px;
-        margin-block: 11px;
-    }
-    .letter {
-        width: 48px;
-    }
-    
+h1 {
+    font-style: italic;
+    background: linear-gradient(to right, var(--overlay), transparent);
+    border-radius: 50px;
+    font-size: 1.5em;
+    padding-left: 15px;
+}
+
+h2 {
+    font-size: 20px;
+    line-height: 20px;
+    margin-left: 10px;
+}
+
+header, footer {
+    height: 50px;
+    background-color: var(--overlay);
+}
+
+/* header */
+
+header {
+    padding: 10px;
+}
+
+header > * {
+    height: 100%;
+}
+
+nav {
+    float: right;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+svg {
+    height: 30px;
+}
+
+/* main */
+
+body > main {
+    height: calc(100dvh - 120px);
+    justify-content: center;
+    overflow-y: auto;
+}
+
+/* footer */
+
+footer {
+    line-height: 50px;
+}
+
+#time {
+    position: absolute;
+    overflow: hidden;
+}
+
+#year {
+    position: absolute;
+    margin: -15px;
+    font-size: 35px;
+    filter: opacity(25%);
+}
+
+#date {
+    margin: 15px;
+}
+
+/* scrollbar */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--outline);
+    border-radius: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--overlay);
 }
 
 /* při hádání jsou lépe čitelná velká písmena */
@@ -121,10 +109,24 @@
     text-transform: uppercase;
 }
 
-/* animace ikonek */
-#settings, #close, .refresh, #info {
+.option {
+    cursor: pointer;
+}
+
+#theme-toggle, .link {
     transition: transform 0.5s ease;
-    will-change: transform;
+}
+
+#theme-toggle > path {
+    fill: var(--tertiary);
+}
+
+#theme-toggle > circle, #surrender > path, .link > path {
+    stroke: var(--tertiary);
+}
+
+#settings, #close, #info, #surrender, .refresh {
+    transition: transform 0.5s ease;
     fill: var(--tertiary);
 }
 
@@ -132,20 +134,8 @@
     transform: rotate(90deg);
 }
 
-#info:hover, #theme-toggle:hover, #surrender:hover {
+#info:hover, #theme-toggle:hover, #surrender:hover, .link:hover {
     transform: scale(110%);
-}
-
-#theme-toggle, #surrender {
-    transition: transform 0.5s ease;
-}
-
-#theme-toggle > path, #surrender {
-    fill: var(--tertiary);
-}
-
-#theme-toggle > circle, #surrender {
-    stroke: var(--tertiary);
 }
 
 /* barvy a zvýraznění */
@@ -164,6 +154,7 @@
     filter: var(--glow-exact);
 }
 
-.exact, .inexact, .incorrect {
-    will-change: filter;
+.transparent {
+    outline: solid var(--outline);
+    filter: var(--shadow);
 }

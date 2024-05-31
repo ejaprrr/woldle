@@ -3,6 +3,7 @@
     --incorrect: #FF5151;
     --inexact: #FFAF51;
     --exact: #51FF77;
+    --yellow: #FFFF00;
 
     --margin: 15px;
     --padding: 10px;
@@ -19,6 +20,7 @@
     --glow-incorrect: drop-shadow(2px 4px 6px color-mix(in srgb, var(--incorrect) 40%, transparent));
     --glow-inexact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--inexact) 40%, transparent));
     --glow-exact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--exact) 40%, transparent));
+    --glow-yellow: drop-shadow(2px 4px 6px color-mix(in srgb, var(--yellow) 40%, transparent));
     --shadow: opacity(75%) drop-shadow(0px 0px 6px color-mix(in srgb, var(--tertiary) 40%, transparent));
 }
 
@@ -33,5 +35,6 @@
     --glow-incorrect: drop-shadow(2px 4px 6px color-mix(in srgb, var(--incorrect) 80%, transparent));
     --glow-inexact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--inexact) 80%, transparent));
     --glow-exact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--exact) 80%, transparent));
+    --glow-yellow: drop-shadow(2px 4px 6px color-mix(in srgb, var(--yellow) 40%, transparent));
     --shadow: opacity(75%) drop-shadow(0px 0px 6px color-mix(in srgb, var(--tertiary) 80%, transparent));
 }

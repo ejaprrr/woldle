@@ -46,7 +46,7 @@ const changeTheme = () => {
 
     const otherOption = document.querySelector(".theme.selected-setting");
     if (otherOption) otherOption.classList.remove("selected-setting");
-    document.getElementById(theme).classList.add("selected-setting");
+    if (otherOption) document.getElementById(theme).classList.add("selected-setting");
 }
 
 const time = () => {
