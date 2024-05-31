@@ -52,6 +52,12 @@
         margin-left: 10px;
         font-size: 22px;
     }
+
+    article p {
+        text-align:justify;
+    }
+
+    
 }
 
 @media (min-width: 440px) and (max-width: 720px) {

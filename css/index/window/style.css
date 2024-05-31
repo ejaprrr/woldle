@@ -68,8 +68,10 @@
    margin: 5px;
 }
 
+
 #window > main {
     padding: calc(2 * var(--margin));
+    padding-top: calc(40px + 2*var(--margin));
 }
 
 #window > main > * {
@@ -91,4 +93,14 @@
 
 main > p {
     filter: var(--shadow);
+}
+
+#window > * > h1{
+    background: linear-gradient(to top, var(--overlay), transparent);
+}
+
+#window > * > h2 {
+    background: linear-gradient(to right, transparent, var(--overlay), transparent);
+    filter: var(--glow-exact);
+    color: var(--exact);
 }

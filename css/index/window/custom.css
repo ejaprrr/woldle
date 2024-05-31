@@ -10,16 +10,22 @@
 #content-custom form > button {
     width: 50px;
     background-color: var(--overlay);
-    border-radius: 5px;
-    outline: var(--outline) solid;
+    border-radius: 10px;
+    filter: var(--shadow);
+    cursor: pointer;
+}
+
+#content-custom form > input:focus {
+    outline: none;
 }
 
 #content-custom form > input {
-    flex: auto;
-    background-color: var(--overlay);
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    text-transform: uppercase;
+    filter: var(--shadow);
+    will-change: filter;
     padding-left: 20px;
-    outline: var(--outline) solid;
+    border: none;
+    flex: auto;
+    background: linear-gradient(to right, var(--overlay), transparent);
+    border-radius: 50px;
 }

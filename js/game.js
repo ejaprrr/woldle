@@ -18,6 +18,7 @@ class Game {
         this.length = parseInt(localStorage.getItem("length")) || 5; // délka je v základu 5 pokud se nenajde preference uživatele
         this.mode = localStorage.getItem("mode") || "random";
         document.getElementById("mode-visual").textContent = this.mode.replace("daily", "slovo dne").replace("random", "náhodné slovo").replace("custom", "vlastní slovo");
+        this.surrendered = false;
         document.getElementById(this.mode).classList.add("selected-setting");
     }
 
@@ -71,7 +72,9 @@ class Game {
 
         const minLength = Math.min(...targetLengths);
         const maxLength = Math.max(...targetLengths);
+
         document.querySelector("#content-custom input").maxLength = maxLength;
+        document.querySelector("#content-custom input").minLength = minLength;
 
         for (let length = minLength; length <= maxLength; length++) {
             const lengthOption = document.createElement("div");
@@ -112,7 +115,8 @@ class Game {
         this.position = { row: 0, letter: 0 };
         this.end = false;
         this.rowElements = [];
-
+        Array.from(document.querySelectorAll("#tags > div:not(#mode-visual)")).forEach((tag) => tag.remove());
+        this.surrendered = false;
         Game.container.innerHTML = "";
 
         Game.keys.forEach((key) => {
@@ -241,8 +245,9 @@ class Game {
 
     // implementace backspace
     back() {
-        this.animatePress(Game.backspace);
         if (!this.end && this.position.letter > 0) {
+            this.animatePress(Game.backspace);
+            
             this.position.letter--;
 
             const letter = this.getCurrentLetter();
@@ -252,9 +257,9 @@ class Game {
 
     // implementace enteru (potvrzení)
     confirm() {
-        this.animatePress(Game.enter);
-
         if (!this.end) {
+            this.animatePress(Game.enter);
+
             const row = this.rowElements[this.position.row];
             const guess = this.getCurrentGuess();
 
@@ -361,15 +366,32 @@ class Game {
         }
     }
 
+    surrender() {
+        if (!this.end) {
+            this.endGame("lose");
+        }
+    }
+
+    endGame(state) {
+        this.end = true;
+        toggleWindow("open", state);
+        const information = document.createElement("div");
+        information.textContent = state == "win" ? "výhra" : "prohra";
+        Array.from(document.querySelectorAll(".slovo")).forEach((vis) => vis.textContent = this.word);
+        document.getElementById("tags").appendChild(information);
+    }
+
     moveToNextRow(guess) {
         this.position.row++;
         this.position.letter = 0;
-        if (this.word === guess || this.position.row === Game.tries) {
-            this.end = true;
-            toggleWindow("open", this.word === guess ? "win" : "lose");
-            const information = document.createElement("div");
-            information.textContent = this.word === guess ? "výhra" : "prohra";
-            document.getElementById("info-wrapper").appendChild(information);
+
+        if (this.position.row === Game.tries) {
+            this.lost = true;
+            this.endGame("lose")
+        } else if (this.word === guess) {
+            this.lost = false;
+            this.endGame("win");
         }
+
     }
 }

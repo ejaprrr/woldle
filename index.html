@@ -180,6 +180,7 @@
             </main>
             <main id="content-win">
                 <h1>Vyhrál jsi! 🎉</h1>
+                <h2 class="slovo"></h2>
                 <p>Blahopřejeme! 🥳</p>
                 <div class="svg-container">
                     <svg class="refresh" viewBox="0 0 50 50">
@@ -189,6 +190,7 @@
             </main>
             <main id="content-lose">
                 <h1>Prohrál jsi... 💔</h1>
+                <h2 class="slovo"></h2>
                 <p>Zkus to znovu! 💪</p>
                 <div class="svg-container">
                     <svg class="refresh" viewBox="0 0 50 50">
@@ -198,9 +200,10 @@
             </main>
             <main id="content-custom">
                 <h1>Pokus své kamarády!</h1>
-                <form action="javascript:window.gameInstance.setMode('custom');">
-                    <input type="text" placeholder="tvoje slovo...">
-                    <button type="submit" onclick="toggleWindow('close')">OK</button>
+                <p>Zadej své slovo a ujisti se, že je validní.</p>
+                <form action="javascript:void(0);">
+                    <input id="custom-word" type="text" placeholder="tvoje slovo..." pattern="[A-Za-zÁáČčĎďÉéĚěÍíŇňÓóŘřŠšŤťÚúŮůÝýŽž]+"  required>
+                    <button type="submit">OK</button>
                 </form>
             </main>
         </div>
@@ -217,6 +220,36 @@
         document.getElementById("close").onclick = () => toggleWindow("close");
         document.getElementById("theme-toggle").onclick = () => changeTheme();
         document.getElementById("surrender").onclick = () => window.gameInstance.surrender();
+
+        const input = document.querySelector("#custom-word");
+
+        // Clear custom validity when input value changes
+        input.addEventListener("input", (event) => {
+            input.setAttribute("valid", true);
+            input.setCustomValidity("");
+        });
+        input.addEventListener("invalid", () => {
+            if (event.target.validity.valueMissing) {
+                event.target.setCustomValidity("Nejdřív zadejte slovo.");
+            }
+        });
+        input.addEventListener('input', function (event) {
+            console.log("a");
+             if (event.target.validity.tooShort) {
+                event.target.setCustomValidity(`Minimální délka slova je ${event.target.minLength}`);
+            }
+        })
+
+        // Handle form submission
+        document.querySelector("form").addEventListener("submit", (event) => {
+            if (window.gameInstance.dictionary.includes(input.value.toLowerCase())) {
+                window.gameInstance.setMode('custom');
+                toggleWindow('close');
+            } else {
+                input.setCustomValidity("Slovo není validní.");
+                input.reportValidity();
+            }
+        });
         // modes
         // TODO: pokus se ten daily mode zobrazit mezi klavesnici a game (viz wordly.org) (mozna vsechny tri)
         document.getElementById("random").onclick = () => window.gameInstance.setMode("random");

@@ -11,7 +11,7 @@
 .dark {
     --primary: #070028;
     --secondary: #002652;
-    --tertiary: #D6D6D6;
+    --tertiary: #c1c4ff;
     --overlay: rgba(0, 0, 0, .25);
     --outline: rgba(255, 255, 255, .25);
     --brightness: brightness(80%);
@@ -24,8 +24,8 @@
 
 .light {
     --primary: #b9d6fb;
-    --secondary: #92c5ff;
-    --tertiary: #181818;
+    --secondary: #c1f1ff;
+    --tertiary: #003147;
     --overlay: rgba(255, 255, 255, .25);
     --outline: rgba(0, 0, 0, .25);
     --brightness: brightness(120%);

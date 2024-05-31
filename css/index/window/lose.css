@@ -4,3 +4,8 @@
     background-position: center;
     text-align: center;
 }
+
+#content-lose > h1 {
+    color: var(--incorrect);
+    filter: var(--glow-incorrect);
+}
