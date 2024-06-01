@@ -18,5 +18,6 @@
 }
 
 #content-lose {
+    background: linear-gradient(to bottom, transparent, var(--overlay));
     backdrop-filter: blur(5px) var(--brightness);
 }
