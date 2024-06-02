@@ -1,26 +1,28 @@
 #length, #modes {
     display: flex;
-    gap: 10px;
+    gap: var(--gap);
 }
 
 .length-option, .mode {
     cursor: pointer;
     flex: 1;
     border-radius: 10px;
-    height: 50px;
     border: var(--outline) solid;
     text-align: center;
     background-color: var(--overlay);
-    line-height: 50px;
     margin-block: 5px;
 }
 
 .length-option {
-    font-size: 28px;
+    font-size: var(--font-size);
+    height: var(--height);
+    line-height: var(--height);
     transition: height 0.5s ease, margin-block 0.5s ease, line-height 0.5s ease, font-size 0.5s ease;
 }
 
 .mode {
+    line-height: 50px;
+    height: 50px;
     transition: height 0.5s ease, margin-block 0.5s ease, line-height 0.5s ease;
 }
 
@@ -32,8 +34,9 @@
 }
 
 .mode > .mode-title {
+    font-weight: bold;
     text-transform: uppercase;
-    font-size: 20px;
+    font-size: var(--font-size);
     transition: font-size 0.5s ease, width 0.5s ease, line-height 0.5s ease;
 }
 
@@ -43,8 +46,9 @@
     margin-block: 0px;
 }
 .length-option:hover {
-    line-height: 60px;
-    font-size: 34px;
+    font-size: calc(var(--font-size) + var(--offset));
+    height: calc(var(--height) + 10px);
+    line-height: calc(var(--height) + 10px);
 }
 
 .mode:hover > .mode-prefix {
@@ -53,12 +57,13 @@
 }
 
 .mode:hover > .mode-title {
-    font-size: 24px;
-    line-height: 60px;
+    font-size: var(--font-size);
+    line-height: calc(var(--height) + 10px);
 }
 
 .selected-setting {
     border: var(--yellow) solid;
     background-color: var(--overlay);
     filter: var(--glow-yellow);
+    font-weight: bold;
 }

@@ -6,8 +6,9 @@
 
 .key {
     cursor: pointer;
+    font-weight: bold;
     flex: 1;
-    outline: solid var(--secondary);
+    outline: solid var(--outline);
     border-radius: 5px;
     text-align: center;
     line-height: 2em;

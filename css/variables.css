@@ -4,37 +4,34 @@
     --inexact: #FFAF51;
     --exact: #51FF77;
     --yellow: #FFFF00;
-
-    --margin: 15px;
-    --padding: 10px;
 }
 
 .dark {
     --primary: #070028;
-    --secondary: #002652;
-    --tertiary: #c1c4ff;
-    --overlay: rgba(0, 0, 0, .25);
-    --outline: rgba(255, 255, 255, .25);
+    --secondary: #1F3B73;
+    --tertiary: #B0C4DE;
+    --overlay: rgba(10, 1, 1, 0.25);
+    --outline: rgba(255, 255, 255, 0.25);
     --brightness: brightness(80%);
-
-    --glow-incorrect: drop-shadow(2px 4px 6px color-mix(in srgb, var(--incorrect) 40%, transparent));
-    --glow-inexact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--inexact) 40%, transparent));
-    --glow-exact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--exact) 40%, transparent));
-    --glow-yellow: drop-shadow(2px 4px 6px color-mix(in srgb, var(--yellow) 40%, transparent));
-    --shadow: opacity(75%) drop-shadow(0px 0px 6px color-mix(in srgb, var(--tertiary) 40%, transparent));
+    
+    --glow-incorrect: drop-shadow(2px 4px 6px color-mix(in srgb, var(--incorrect) 60%, transparent));
+    --glow-inexact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--inexact) 60%, transparent));
+    --glow-exact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--exact) 60%, transparent));
+    --glow-yellow: drop-shadow(2px 4px 6px color-mix(in srgb, var(--yellow) 60%, transparent));
+    --shadow: opacity(75%) drop-shadow(0px 0px 8px color-mix(in srgb, var(--tertiary) 60%, transparent));
 }
 
 .light {
-    --primary: #b9d6fb;
-    --secondary: #c1f1ff;
-    --tertiary: #003147;
-    --overlay: rgba(255, 255, 255, .25);
-    --outline: rgba(0, 0, 0, .25);
+    --primary: #a7c0f4;
+    --secondary: #A3B4D0;
+    --tertiary: #33475B;
+    --overlay: rgba(255, 255, 255, 0.25);
+    --outline: rgba(11, 8, 8, 0.25);
     --brightness: brightness(120%);
-
-    --glow-incorrect: drop-shadow(2px 4px 6px color-mix(in srgb, var(--incorrect) 80%, transparent));
-    --glow-inexact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--inexact) 80%, transparent));
-    --glow-exact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--exact) 80%, transparent));
-    --glow-yellow: drop-shadow(2px 4px 6px color-mix(in srgb, var(--yellow) 40%, transparent));
-    --shadow: opacity(75%) drop-shadow(0px 0px 6px color-mix(in srgb, var(--tertiary) 80%, transparent));
+    
+    --glow-incorrect: drop-shadow(2px 4px 6px color-mix(in srgb, var(--incorrect) 70%, transparent));
+    --glow-inexact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--inexact) 70%, transparent));
+    --glow-exact: drop-shadow(2px 4px 6px color-mix(in srgb, var(--exact) 70%, transparent));
+    --glow-yellow: drop-shadow(2px 4px 6px color-mix(in srgb, var(--yellow) 70%, transparent));
+    --shadow: opacity(75%) drop-shadow(0px 0px 8px color-mix(in srgb, var(--tertiary) 70%, transparent));
 }
