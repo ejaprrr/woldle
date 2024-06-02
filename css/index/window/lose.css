@@ -12,7 +12,7 @@
 }
 
 #window:has(#content-lose.show) {
-    background: url("/files/naur.gif");
+    background: url("/images/naur.gif");
     background-position: center;
     background-size: cover;
 }
