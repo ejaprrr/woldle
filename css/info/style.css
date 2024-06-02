@@ -1,3 +1,12 @@
 main * {
     margin-left: 10px;
 }
+
+#home {
+    transition: transform 0.5s ease;
+    fill: var(--tertiary);
+}
+
+#home:hover {
+    transform: scale(110%);
+}

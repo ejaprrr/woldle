@@ -1,0 +1,105 @@
+/* platí vždy */
+* {
+    margin: 0;
+    font-family: sans-serif;
+    color: var(--tertiary);
+    border: none;
+}
+
+body {
+    background: linear-gradient(-45deg, var(--primary), var(--secondary));
+    overflow: hidden;
+}
+
+h1, h2 {
+    text-transform: uppercase;
+    filter: var(--shadow);
+    padding: 10px;
+    margin-block: 15px;
+}
+
+h1 {
+    font-style: italic;
+    background: linear-gradient(to right, var(--overlay), transparent);
+    border-radius: 50px;
+    font-size: 1.5em;
+    padding-left: 15px;
+}
+
+h2 {
+    font-size: 20px;
+    line-height: 20px;
+    margin-left: 10px;
+}
+
+header, footer {
+    height: 50px;
+    background-color: var(--overlay);
+}
+
+/* header */
+
+header {
+    padding: 10px;
+}
+
+header > * {
+    height: 100%;
+}
+
+nav {
+    float: right;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+svg {
+    height: 30px;
+}
+
+/* main */
+
+body > main {
+    height: calc(100dvh - 120px);
+    justify-content: center;
+    overflow-y: auto;
+}
+
+/* footer */
+
+footer {
+    line-height: 50px;
+}
+
+#time {
+    position: absolute;
+    overflow: hidden;
+}
+
+#year {
+    position: absolute;
+    margin: -15px;
+    font-size: 35px;
+    filter: opacity(25%);
+}
+
+#date {
+    margin: 15px;
+    font-weight: bold;
+}
+
+/* scrollbar */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--outline);
+    border-radius: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--overlay);
+}
