@@ -17,7 +17,6 @@ class Game {
         this.rowElements = [];
         this.length = parseInt(localStorage.getItem("length")) || 5; // délka je v základu 5 pokud se nenajde preference uživatele
         this.mode = localStorage.getItem("mode") || "random";
-        document.getElementById("mode-visual").textContent = this.mode.replace("daily", "slovo dne").replace("random", "náhodné slovo").replace("custom", "vlastní slovo");
         this.surrendered = false;
         document.getElementById(this.mode).classList.add("selected-setting");
     }
@@ -48,7 +47,26 @@ class Game {
                 break;
         }
 
-        this.createGameEnvironment(); // vytvoření herních polí
+        const url = new URL(location.href);
+        if (url.searchParams.has("word")) {
+            let decodedWord;
+            try {
+                decodedWord = decodeURIComponent(escape(window.atob(url.searchParams.get("word"))));
+            } catch {
+                ;
+            }
+            if (decodedWord) {
+                console.log(decodedWord);
+                this.mode = "custom";
+                this.word = decodedWord;
+                this.length = this.word.length;
+                if (decodedWord == this.getSecret(this.hash(document.getElementById("time").textContent + this.hash(document.getElementById("year").textContent)))) {
+                    this.mode = "daily";
+                }
+            }
+        }
+        this.createGameEnvironment();
+        document.getElementById("mode-visual").textContent = this.mode.replace("daily", "slovo dne").replace("random", "náhodné slovo").replace("custom", "vlastní slovo");
 
         // klikání na klávesnici
         Game.keys.forEach((key) => {
@@ -130,9 +148,6 @@ class Game {
                 break;
             case "daily":
                 this.word = this.getSecret(this.hash(document.getElementById("time").textContent + this.hash(document.getElementById("year").textContent)));
-                break;
-            case "custom":
-                this.word = this.getSecret(null, document.querySelector("#content-custom form > input").value);
                 break;
         }
 

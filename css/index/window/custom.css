@@ -20,6 +20,8 @@
 }
 
 #content-custom form > input {
+    letter-spacing: 2px;
+    font-weight: bold;
     text-transform: uppercase;
     filter: var(--shadow);
     will-change: filter;
