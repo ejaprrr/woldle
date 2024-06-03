@@ -12,7 +12,7 @@
 }
 
 #window:has(#content-win.show) {
-    background: url("/images/yippie.gif");
+    background: url("images/yippie.gif");
     background-position: center;
     background-size: cover;
 }
