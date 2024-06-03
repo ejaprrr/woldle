@@ -62,7 +62,6 @@ svg {
 
 body > main {
     height: calc(100dvh - 120px);
-    justify-content: center;
     overflow-y: auto;
 }
 

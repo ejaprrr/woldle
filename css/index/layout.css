@@ -1,6 +1,6 @@
 /* wrapper obklopuje hru a klávesnici, určuje hranice a pomáhá zarovnat */
 #wrapper {
-    width: calc(100% - 40px);
+    width: calc(100% - 20px);
     max-width: 600px;
     margin: auto;
     display: flex;
