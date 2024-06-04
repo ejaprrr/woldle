@@ -2,6 +2,7 @@
 <html lang="cs">
 
 <head>
+    <!-- titulek -->
     <title>WOLDLE</title>
 
     <!-- meta -->
@@ -31,44 +32,44 @@
     <link rel="stylesheet" href="css/index/window/custom.css">
 
     <link rel="stylesheet" href="css/responsivity.css">
+
+    <!-- import Google ikonek (zakulacené) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
 </head>
 
 <body class="dark">
+    <!-- hlavička -->
     <header>
-        <img src="images/icon.png" alt="ikonka woldle" id="icon">
+        <!-- ikonka nalevo -->
+        <img id="icon" src="images/icon.png" alt="ikonka woldle">
+        <!-- navigace napravo -->
         <nav>
-            <svg id="info" class="option" viewBox="0 0 30 30" onclick="location.href='info.html'">
-                <path d="M15,3C8.373,3,3,8.373,3,15c0,6.627,5.373,12,12,12s12-5.373,12-12C27,8.373,21.627,3,15,3z M16,21h-2v-7h2V21z M15,11.5 c-0.828,0-1.5-0.672-1.5-1.5s0.672-1.5,1.5-1.5s1.5,0.672,1.5,1.5S15.828,11.5,15,11.5z"/>
-            </svg>
-            <svg id="settings" onclick="toggleWindow('open', 'settings')" class="option" viewBox="0 0 24 24">
-                <path d="M 10.490234 2 C 10.011234 2 9.6017656 2.3385938 9.5097656 2.8085938 L 9.1757812 4.5234375 C 8.3550224 4.8338012 7.5961042 5.2674041 6.9296875 5.8144531 L 5.2851562 5.2480469 C 4.8321563 5.0920469 4.33375 5.2793594 4.09375 5.6933594 L 2.5859375 8.3066406 C 2.3469375 8.7216406 2.4339219 9.2485 2.7949219 9.5625 L 4.1132812 10.708984 C 4.0447181 11.130337 4 11.559284 4 12 C 4 12.440716 4.0447181 12.869663 4.1132812 13.291016 L 2.7949219 14.4375 C 2.4339219 14.7515 2.3469375 15.278359 2.5859375 15.693359 L 4.09375 18.306641 C 4.33275 18.721641 4.8321562 18.908906 5.2851562 18.753906 L 6.9296875 18.1875 C 7.5958842 18.734206 8.3553934 19.166339 9.1757812 19.476562 L 9.5097656 21.191406 C 9.6017656 21.661406 10.011234 22 10.490234 22 L 13.509766 22 C 13.988766 22 14.398234 21.661406 14.490234 21.191406 L 14.824219 19.476562 C 15.644978 19.166199 16.403896 18.732596 17.070312 18.185547 L 18.714844 18.751953 C 19.167844 18.907953 19.66625 18.721641 19.90625 18.306641 L 21.414062 15.691406 C 21.653063 15.276406 21.566078 14.7515 21.205078 14.4375 L 19.886719 13.291016 C 19.955282 12.869663 20 12.440716 20 12 C 20 11.559284 19.955282 11.130337 19.886719 10.708984 L 21.205078 9.5625 C 21.566078 9.2485 21.653063 8.7216406 21.414062 8.3066406 L 19.90625 5.6933594 C 19.66725 5.2783594 19.167844 5.0910937 18.714844 5.2460938 L 17.070312 5.8125 C 16.404116 5.2657937 15.644607 4.8336609 14.824219 4.5234375 L 14.490234 2.8085938 C 14.398234 2.3385937 13.988766 2 13.509766 2 L 10.490234 2 z M 12 8 C 14.209 8 16 9.791 16 12 C 16 14.209 14.209 16 12 16 C 9.791 16 8 14.209 8 12 C 8 9.791 9.791 8 12 8 z"/>
-            </svg>
-            <svg id="theme-toggle" class="option" viewBox="0 0 100 100" fill="none" onclick="changeTheme();">
-                <path d="M50 10C60.6087 10 70.7828 14.2143 78.2843 21.7157C85.7857 29.2172 90 39.3913 90 50C90 60.6087 85.7857 70.7828 78.2843 78.2843C70.7828 85.7857 60.6087 90 50 90L50 50V10Z"/>
-                <circle cx="50" cy="50" r="35" stroke-width="10"/>
-            </svg>                                                  
+            <span id="info" class="material-symbols-rounded option">info</span>
+            <span id="settings" class="material-symbols-rounded option">settings</span>
+            <span id="theme-toggle" class="material-symbols-rounded option">contrast</span>                                            
         </nav>
     </header>
     <!-- hlavní kontent -->
     <main>
-        <div id="wrapper">
+        <!-- container určuje rozsah a polohu kontentu -->
+        <div id="container"> 
+            <!-- obsahuje hru -->
             <div id="game"></div>
-            <div id="info-wrapper">
+            <!-- obsahuje navigaci manipulace hry a specifické údaje -->
+            <div id="bar">
+                <!-- prvky navigace ve hře -->
                 <nav>
-                    <svg class="refresh option" viewBox="0 0 50 50" onclick="window.gameInstance.reset()">
-                        <path d="M 25 5 C 14.351563 5 5.632813 13.378906 5.054688 23.890625 C 5.007813 24.609375 5.347656 25.296875 5.949219 25.695313 C 6.550781 26.089844 7.320313 26.132813 7.960938 25.804688 C 8.601563 25.476563 9.019531 24.828125 9.046875 24.109375 C 9.511719 15.675781 16.441406 9 25 9 C 29.585938 9 33.699219 10.925781 36.609375 14 L 34 14 C 33.277344 13.988281 32.609375 14.367188 32.246094 14.992188 C 31.878906 15.613281 31.878906 16.386719 32.246094 17.007813 C 32.609375 17.632813 33.277344 18.011719 34 18 L 40.261719 18 C 40.488281 18.039063 40.71875 18.039063 40.949219 18 L 44 18 L 44 8 C 44.007813 7.460938 43.796875 6.941406 43.414063 6.558594 C 43.03125 6.175781 42.511719 5.964844 41.96875 5.972656 C 40.867188 5.988281 39.984375 6.894531 40 8 L 40 11.777344 C 36.332031 7.621094 30.964844 5 25 5 Z M 43.03125 23.972656 C 41.925781 23.925781 40.996094 24.785156 40.953125 25.890625 C 40.488281 34.324219 33.558594 41 25 41 C 20.414063 41 16.304688 39.074219 13.390625 36 L 16 36 C 16.722656 36.011719 17.390625 35.632813 17.753906 35.007813 C 18.121094 34.386719 18.121094 33.613281 17.753906 32.992188 C 17.390625 32.367188 16.722656 31.988281 16 32 L 9.71875 32 C 9.507813 31.96875 9.296875 31.96875 9.085938 32 L 6 32 L 6 42 C 5.988281 42.722656 6.367188 43.390625 6.992188 43.753906 C 7.613281 44.121094 8.386719 44.121094 9.007813 43.753906 C 9.632813 43.390625 10.011719 42.722656 10 42 L 10 38.222656 C 13.667969 42.378906 19.035156 45 25 45 C 35.648438 45 44.367188 36.621094 44.945313 26.109375 C 44.984375 25.570313 44.800781 25.039063 44.441406 24.636719 C 44.078125 24.234375 43.570313 23.996094 43.03125 23.972656 Z"/>
-                    </svg>
-                    <svg id="surrender" class="option" width="24" height="24" viewBox="0 0 200 200" fill="none" onclick="window.gameInstance.surrender()">
-                        <path d="M35 27V173" stroke-width="20" stroke-linecap="round"/>
-                        <path d="M44 30.0214V130.951C44 130.951 49.0385 125.428 66.6731 125.428C84.3077 125.428 98.9192 141.861 123.608 141.998C142.754 142.105 158.877 136.977 168.45 133.462C175 131.057 175 125.428 175 121.411V43.077C175 40.0642 173.488 33.5364 164.923 33.5364C152.831 33.5364 140.046 42.1639 123.608 42.0727C103.454 41.9609 96.4 25 66.1692 25C44 25 44 30.0214 44 30.0214Z"/>
-                    </svg>
+                    <span class="material-symbols-rounded option refresh" onclick="window.gameInstance.reset()">refresh</span>                                            
+                    <span id="surrender" class="material-symbols-rounded option" onclick="window.gameInstance.surrender()">flag</span>                                            
                 </nav>
+                <!-- momentální informace o hře -->
                 <section id="tags">
                     <div id="mode-visual"></div>
                 </section>
             </div>
+            <!-- klávesnice -->
             <div id="keyboard">
-                <div class="line">
+                <div class="keyboard-row">
                     <div class="key">ě</div>
                     <div class="key">š</div>
                     <div class="key">č</div>
@@ -83,7 +84,7 @@
                     <div class="key">ó</div>
                     <div class="key">ť</div>
                 </div>
-                <div class="line">
+                <div class="keyboard-row">
                     <div class="key">q</div>
                     <div class="key">w</div>
                     <div class="key">e</div>
@@ -96,7 +97,7 @@
                     <div class="key">p</div>
                     <div class="key">ú</div>
                 </div>
-                <div class="line">
+                <div class="keyboard-row">
                     <div class="key">a</div>
                     <div class="key">s</div>
                     <div class="key">d</div>
@@ -108,7 +109,7 @@
                     <div class="key">l</div>
                     <div class="key">ů</div>
                 </div>
-                <div class="line">
+                <div class="keyboard-row">
                     <div class="key" id="backspace">←</div>
                     <div class="key">z</div>
                     <div class="key">x</div>
@@ -120,6 +121,7 @@
                     <div class="key" id="enter">↵</div>
                 </div>
             </div>
+            <!-- informace o hře, jak hrát -->
             <article>
                 <h1>co je to Woldle?</h1>
                 <p>Woldle je zábávná hádací hra inspirovaná hrou Wordle, kde je tvým úkolem uhádnout slovo pomocí hádání slov jiných.</p>
@@ -147,20 +149,23 @@
             </article>
         </div>
     </main>
+    <!-- patička -->
     <footer>
         <div id="time">
+            <!-- rozdělené z estetických důvodů, position absolute -->
             <span id="year"></span>
             <span id="date"></span> 
         </div>
     </footer>
+    <!-- obsahuje podokno, je to tzv. overlay s absolutní pozicí -->
     <div id="window-wrapper">
         <div id="window">
             <nav>
-                <svg id="close" class="option" viewBox="0 0 30 30" onclick="toggleWindow('close')">
-                    <path d="M 7 4 C 6.744125 4 6.4879687 4.0974687 6.2929688 4.2929688 L 4.2929688 6.2929688 C 3.9019687 6.6839688 3.9019687 7.3170313 4.2929688 7.7070312 L 11.585938 15 L 4.2929688 22.292969 C 3.9019687 22.683969 3.9019687 23.317031 4.2929688 23.707031 L 6.2929688 25.707031 C 6.6839688 26.098031 7.3170313 26.098031 7.7070312 25.707031 L 15 18.414062 L 22.292969 25.707031 C 22.682969 26.098031 23.317031 26.098031 23.707031 25.707031 L 25.707031 23.707031 C 26.098031 23.316031 26.098031 22.682969 25.707031 22.292969 L 18.414062 15 L 25.707031 7.7070312 C 26.098031 7.3170312 26.098031 6.6829688 25.707031 6.2929688 L 23.707031 4.2929688 C 23.316031 3.9019687 22.682969 3.9019687 22.292969 4.2929688 L 15 11.585938 L 7.7070312 4.2929688 C 7.5115312 4.0974687 7.255875 4 7 4 z"/>
-                </svg>
+                <span id="close" class="material-symbols-rounded option" onclick="toggleWindow('close')">close</span>
             </nav>
+            <!-- kontent nastavení -->
             <main id="content-settings">
+                <!-- nastavení herního módu -->
                 <div id="modes-wrapper">
                     <h1>Herní módy</h1>
                     <div id="modes">
@@ -175,60 +180,62 @@
                         </div>
                     </div>
                 </div>
+                <!-- nastavení délky slova -->
                 <div id="length-wrapper">
                     <h1>Počet písmen</h1>
                     <div id="length"></div>
                 </div>
             </main>
+            <!-- kontent při výhře -->
             <main id="content-win">
                 <h1>Vyhrál jsi! 🎉</h1>
                 <h2 class="slovo"></h2>
                 <p>Blahopřejeme! 🥳</p>
                 <div id="menu">
-                    <svg class="refresh option" viewBox="0 0 50 50" onclick="window.gameInstance.reset(); toggleWindow('close')">
-                        <path d="M 25 5 C 14.351563 5 5.632813 13.378906 5.054688 23.890625 C 5.007813 24.609375 5.347656 25.296875 5.949219 25.695313 C 6.550781 26.089844 7.320313 26.132813 7.960938 25.804688 C 8.601563 25.476563 9.019531 24.828125 9.046875 24.109375 C 9.511719 15.675781 16.441406 9 25 9 C 29.585938 9 33.699219 10.925781 36.609375 14 L 34 14 C 33.277344 13.988281 32.609375 14.367188 32.246094 14.992188 C 31.878906 15.613281 31.878906 16.386719 32.246094 17.007813 C 32.609375 17.632813 33.277344 18.011719 34 18 L 40.261719 18 C 40.488281 18.039063 40.71875 18.039063 40.949219 18 L 44 18 L 44 8 C 44.007813 7.460938 43.796875 6.941406 43.414063 6.558594 C 43.03125 6.175781 42.511719 5.964844 41.96875 5.972656 C 40.867188 5.988281 39.984375 6.894531 40 8 L 40 11.777344 C 36.332031 7.621094 30.964844 5 25 5 Z M 43.03125 23.972656 C 41.925781 23.925781 40.996094 24.785156 40.953125 25.890625 C 40.488281 34.324219 33.558594 41 25 41 C 20.414063 41 16.304688 39.074219 13.390625 36 L 16 36 C 16.722656 36.011719 17.390625 35.632813 17.753906 35.007813 C 18.121094 34.386719 18.121094 33.613281 17.753906 32.992188 C 17.390625 32.367188 16.722656 31.988281 16 32 L 9.71875 32 C 9.507813 31.96875 9.296875 31.96875 9.085938 32 L 6 32 L 6 42 C 5.988281 42.722656 6.367188 43.390625 6.992188 43.753906 C 7.613281 44.121094 8.386719 44.121094 9.007813 43.753906 C 9.632813 43.390625 10.011719 42.722656 10 42 L 10 38.222656 C 13.667969 42.378906 19.035156 45 25 45 C 35.648438 45 44.367188 36.621094 44.945313 26.109375 C 44.984375 25.570313 44.800781 25.039063 44.441406 24.636719 C 44.078125 24.234375 43.570313 23.996094 43.03125 23.972656 Z"/>
-                    </svg>
-                    <svg class="link option" class="option" viewBox="0 0 24 24" fill="none" onclick="javascript:handleCopy(window.gameInstance.word);">
-                        <path id="Vector" d="M9.1718 14.8288L14.8287 9.17192M7.05086 11.293L5.63664 12.7072C4.07455 14.2693 4.07409 16.8022 5.63619 18.3643C7.19829 19.9264 9.7317 19.9259 11.2938 18.3638L12.7065 16.9498M11.2929 7.05L12.7071 5.63579C14.2692 4.07369 16.8016 4.07397 18.3637 5.63607C19.9258 7.19816 19.9257 9.73085 18.3636 11.2929L16.9501 12.7071" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <span class="material-symbols-rounded option refresh" onclick="window.gameInstance.reset(); toggleWindow('close')">refresh</span>
+                    <span class="material-symbols-rounded option link" onclick="handleCopy(window.gameInstance.word)">link</span>
                 </div>
             </main>
+            <!-- kontent při prohře -->
             <main id="content-lose">
                 <h1>Prohrál jsi... 💔</h1>
                 <h2 class="slovo"></h2>
                 <p>Zkus to znovu! 💪</p>
                 <div id="menu">
-                    <svg class="refresh option" viewBox="0 0 50 50" onclick="window.gameInstance.reset(); toggleWindow('close')">
-                        <path d="M 25 5 C 14.351563 5 5.632813 13.378906 5.054688 23.890625 C 5.007813 24.609375 5.347656 25.296875 5.949219 25.695313 C 6.550781 26.089844 7.320313 26.132813 7.960938 25.804688 C 8.601563 25.476563 9.019531 24.828125 9.046875 24.109375 C 9.511719 15.675781 16.441406 9 25 9 C 29.585938 9 33.699219 10.925781 36.609375 14 L 34 14 C 33.277344 13.988281 32.609375 14.367188 32.246094 14.992188 C 31.878906 15.613281 31.878906 16.386719 32.246094 17.007813 C 32.609375 17.632813 33.277344 18.011719 34 18 L 40.261719 18 C 40.488281 18.039063 40.71875 18.039063 40.949219 18 L 44 18 L 44 8 C 44.007813 7.460938 43.796875 6.941406 43.414063 6.558594 C 43.03125 6.175781 42.511719 5.964844 41.96875 5.972656 C 40.867188 5.988281 39.984375 6.894531 40 8 L 40 11.777344 C 36.332031 7.621094 30.964844 5 25 5 Z M 43.03125 23.972656 C 41.925781 23.925781 40.996094 24.785156 40.953125 25.890625 C 40.488281 34.324219 33.558594 41 25 41 C 20.414063 41 16.304688 39.074219 13.390625 36 L 16 36 C 16.722656 36.011719 17.390625 35.632813 17.753906 35.007813 C 18.121094 34.386719 18.121094 33.613281 17.753906 32.992188 C 17.390625 32.367188 16.722656 31.988281 16 32 L 9.71875 32 C 9.507813 31.96875 9.296875 31.96875 9.085938 32 L 6 32 L 6 42 C 5.988281 42.722656 6.367188 43.390625 6.992188 43.753906 C 7.613281 44.121094 8.386719 44.121094 9.007813 43.753906 C 9.632813 43.390625 10.011719 42.722656 10 42 L 10 38.222656 C 13.667969 42.378906 19.035156 45 25 45 C 35.648438 45 44.367188 36.621094 44.945313 26.109375 C 44.984375 25.570313 44.800781 25.039063 44.441406 24.636719 C 44.078125 24.234375 43.570313 23.996094 43.03125 23.972656 Z"/>
-                    </svg>
-                    <svg class="link option" viewBox="0 0 24 24" fill="none" onclick="javascript:handleCopy(window.gameInstance.word);">
-                        <path d="M9.1718 14.8288L14.8287 9.17192M7.05086 11.293L5.63664 12.7072C4.07455 14.2693 4.07409 16.8022 5.63619 18.3643C7.19829 19.9264 9.7317 19.9259 11.2938 18.3638L12.7065 16.9498M11.2929 7.05L12.7071 5.63579C14.2692 4.07369 16.8016 4.07397 18.3637 5.63607C19.9258 7.19816 19.9257 9.73085 18.3636 11.2929L16.9501 12.7071" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <span class="material-symbols-rounded option refresh" onclick="window.gameInstance.reset(); toggleWindow('close')">refresh</span>
+                    <span class="material-symbols-rounded option link" onclick="handleCopy(window.gameInstance.word)">link</span>
                 </div>
             </main>
+            <!-- kontent při vytváření vlastního slova -->
             <main id="content-custom">
                 <h1>Pokus své kamarády!</h1>
                 <p>Zadej své slovo a ujisti se, že je validní.</p>
+                <!-- user input -->
                 <form action="javascript:void(0);">
                     <input id="custom-word" type="text" placeholder="tvoje slovo..." pattern="[A-Za-zÁáČčĎďÉéĚěÍíŇňÓóŘřŠšŤťÚúŮůÝýŽž]+"  required>
                     <button type="submit">OK</button>
                     <button type="button" id="copy-link" onclick="javascript:handleCopy(document.getElementById('custom-word').value);">
-                        <svg class="link" viewBox="0 0 24 24" fill="none">
-                            <path d="M9.1718 14.8288L14.8287 9.17192M7.05086 11.293L5.63664 12.7072C4.07455 14.2693 4.07409 16.8022 5.63619 18.3643C7.19829 19.9264 9.7317 19.9259 11.2938 18.3638L12.7065 16.9498M11.2929 7.05L12.7071 5.63579C14.2692 4.07369 16.8016 4.07397 18.3637 5.63607C19.9258 7.19816 19.9257 9.73085 18.3636 11.2929L16.9501 12.7071" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        <span class="material-symbols-rounded option link" onclick="handleCopy(window.gameInstance.word)">link</span>
                     </button>
                 </form>
             </main>
         </div>
     </div>
 
+    <!-- loading javascriptu -->
     <script src="js/game.js"></script>
     <script src="js/script.js"></script>
     <script src="js/initialization.js"></script>
 
+    <!-- důležitá inicializace -->
     <script>
         document.onkeydown = keydown;
         document.onkeypress = keypress;
+
+        // onclick events
+        document.querySelector("#info").onclick = () => location.href = "info.html";
+        document.querySelector("#settings").onclick = () => toggleWindow("open", "settings");
+        document.querySelector("#theme-toggle").onclick = () => changeTheme();
 
         const input = document.querySelector("#custom-word");
 
@@ -247,12 +254,6 @@
                 input.reportValidity();
             }
         });
-
-        const handleCopy = (target) => {
-            let url = new URL(location.href.split("?")[0]);
-            url.searchParams.append("word", btoa(unescape(encodeURIComponent(target))));
-            navigator.clipboard.writeText(url.toString());
-        }
 
         Array.from(document.getElementsByClassName("again")).forEach((element) => {
             element.onclick = () => {window.gameInstance.reset(); toggleWindow('close')};

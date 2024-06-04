@@ -1,5 +1,5 @@
-/* wrapper obklopuje hru a klávesnici, určuje hranice a pomáhá zarovnat */
-#wrapper {
+/* container obklopuje hru a klávesnici, určuje hranice a pomáhá zarovnat */
+#container {
     width: calc(100% - 20px);
     max-width: 600px;
     margin: auto;
@@ -9,7 +9,7 @@
     padding-block: 20px;
 }
 
-#info-wrapper {
+#bar {
     display: flex;
 }
 

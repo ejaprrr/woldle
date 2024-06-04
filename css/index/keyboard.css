@@ -1,4 +1,4 @@
-.line {
+.keyboard-row {
     display: flex;
     gap: 7px;
     margin-block: 7px;

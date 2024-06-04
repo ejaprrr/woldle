@@ -13,9 +13,15 @@ const keydown = () => {
 const keypress = (event) => {
     const { key } = event;
 
-    if (key.toLowerCase().match(Game.keyFilter) && key.length === 1) {
+    if (key.toLowerCase().match(Game.allowed) && key.length === 1) {
         window.gameInstance.write(key);
     }
+}
+
+const handleCopy = (target) => {
+    let url = new URL(location.href.split("?")[0]);
+    url.searchParams.append("word", btoa(encodeURIComponent(target)));
+    navigator.clipboard.writeText(url.toString());
 }
 
 const toggleWindow = (action, content = null) => {
@@ -59,11 +65,3 @@ const time = () => {
     document.getElementById("year").textContent = date.getFullYear();
     document.getElementById("date").textContent = `${day}. ${months[month]}`;
 };
-
-const mulberry32 = (seed) => {
-    let t = seed += 0x6D2B79F5;
-    t = Math.imul(t ^ t >>> 15, t | 1);
-    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
-    return ((t ^ t >>> 14) >>> 0) / 4294967296;
-
-}
