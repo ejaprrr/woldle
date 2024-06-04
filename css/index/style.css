@@ -7,21 +7,8 @@
     cursor: pointer;
 }
 
-#theme-toggle, .link {
+#settings, #close, #info, #surrender, .refresh, #theme-toggle, .link {
     transition: transform 0.5s ease;
-}
-
-#theme-toggle > path {
-    fill: var(--tertiary);
-}
-
-#theme-toggle > circle, #surrender > path, .link > path {
-    stroke: var(--tertiary);
-}
-
-#settings, #close, #info, #surrender, .refresh {
-    transition: transform 0.5s ease;
-    fill: var(--tertiary);
 }
 
 #settings:hover, #close:hover, .refresh:hover {
@@ -51,4 +38,12 @@
 .transparent {
     outline: solid var(--outline);
     filter: var(--shadow);
+}
+
+.smaller {
+    transform: scale(90%);
+}
+
+.larger {
+    transform: scale(110%);
 }

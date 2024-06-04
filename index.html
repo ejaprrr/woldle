@@ -64,7 +64,7 @@
                 </nav>
                 <!-- momentální informace o hře -->
                 <section id="tags">
-                    <div id="mode-visual"></div>
+                    <div id="mode-tag"></div>
                 </section>
             </div>
             <!-- klávesnice -->
@@ -228,41 +228,7 @@
     <script src="js/initialization.js"></script>
 
     <!-- důležitá inicializace -->
-    <script>
-        document.onkeydown = keydown;
-        document.onkeypress = keypress;
-
-        // onclick events
-        document.querySelector("#info").onclick = () => location.href = "info.html";
-        document.querySelector("#settings").onclick = () => toggleWindow("open", "settings");
-        document.querySelector("#theme-toggle").onclick = () => changeTheme();
-
-        const input = document.querySelector("#custom-word");
-
-        // Clear custom validity when input value changes
-        input.addEventListener("input", (event) => {
-            input.setCustomValidity("");
-        });
-
-        // Handle form submission
-        document.querySelector("form").addEventListener("submit", (event) => {
-            if (window.gameInstance.dictionary.includes(input.value.toLowerCase())) {
-                window.gameInstance.setMode('custom');
-                toggleWindow('close');
-            } else {
-                input.setCustomValidity("Word is invalid.");
-                input.reportValidity();
-            }
-        });
-
-        Array.from(document.getElementsByClassName("again")).forEach((element) => {
-            element.onclick = () => {window.gameInstance.reset(); toggleWindow('close')};
-        });
-
-        window.onload = async () => {
-            window.gameInstance = await new Game().init();
-        }
-    </script>
+    <script src="js/index.js"></script>
 </body>
 
 </html>
