@@ -5,29 +5,37 @@ class Game {
     static keyFilter = /[a-záčďéěíňóřšťúůýž]/g;
 
     // pro lehký přístup
-    static container = document.getElementById("game");
-    static keys = Array.from(document.getElementsByClassName("key"));
-    static backspace = document.getElementById("backspace");
-    static enter = document.getElementById("enter");
+    static gameContainer = document.getElementById("game");
+    static keyboardKeys = Array.from(document.querySelectorAll(".key"));
+    static backspaceKey = document.getElementById("backspace");
+    static enterKey = document.getElementById("enter");
 
     // inicializace a interní definice
     constructor() {
-        this.position = { row: 0, letter: 0 }; // pozice, na které se uživatel nachází
-        this.end = false; // konec hry?
+        this.playerPosition = { row: 0, letter: 0 }; // pozice, na které se uživatel nachází
+        this.endOfGame = false; // konec hry?
         this.rowElements = [];
-        this.length = parseInt(localStorage.getItem("length")) || 5; // délka je v základu 5 pokud se nenajde preference uživatele
-        this.mode = localStorage.getItem("mode") || "random";
-        this.surrendered = false;
-        document.getElementById(this.mode).classList.add("selected-setting");
+        
+        this.wordLength = parseInt(localStorage.getItem("length")) || 5; // délka je v základu 5 pokud se nenajde preference uživatele
+        this.gameMode = localStorage.getItem("mode") || "random";
+    }
+    
+    surrender() {
+        this.endOfGame = true;
+        this.endGame("lose");
     }
 
     setMode(mode) {
-        if (mode != "custom") localStorage.setItem("mode", mode);
-        document.getElementById(this.mode).classList.remove("selected-setting");
-        this.mode = mode;
-        document.getElementById("mode-visual").textContent = this.mode.replace("daily", "slovo dne").replace("random", "náhodné slovo").replace("custom", "vlastní slovo");
-        document.getElementById(this.mode).classList.add("selected-setting");
+        this.gameMode = mode;
+        if (this.gameMode != "custom") localStorage.setItem("mode", mode);
+        this.setSettingToId(document.getElementById("modes"), this.gameMode)
+        document.getElementById("mode-visual").textContent = this.gameMode.replace("daily", "slovo dne").replace("random", "náhodné slovo").replace("custom", "vlastní slovo");
         this.reset();
+    }
+
+    setSettingToId(parent, idTarget) {
+        parent.querySelector(".selected-setting").classList.remove("selected-setting");
+        document.getElementById(idTarget).classList.add("selected-setting")
     }
 
     async init() {
@@ -35,15 +43,12 @@ class Game {
         await this.loadDictionary();
         await this.loadTargets();
 
-        switch (this.mode) {
+        switch (this.gameMode) {
             case "random":
                 this.word = this.getSecret();
                 break;
             case "daily":
                 this.word = this.getSecret(this.hash(document.getElementById("time").textContent + this.hash(document.getElementById("year").textContent)));
-                break;
-            case "custom":
-                this.word = this.getSecret(null, document.querySelector("#content-custom form > input").value);
                 break;
         }
 
@@ -57,19 +62,19 @@ class Game {
             }
             if (decodedWord) {
                 console.log(decodedWord);
-                this.mode = "custom";
+                this.gameMode = "custom";
                 this.word = decodedWord;
-                this.length = this.word.length;
+                this.wordLength = this.word.length;
                 if (decodedWord == this.getSecret(this.hash(document.getElementById("time").textContent + this.hash(document.getElementById("year").textContent)))) {
-                    this.mode = "daily";
+                    this.gameMode = "daily";
                 }
             }
         }
         this.createGameEnvironment();
-        document.getElementById("mode-visual").textContent = this.mode.replace("daily", "slovo dne").replace("random", "náhodné slovo").replace("custom", "vlastní slovo");
+        document.getElementById("mode-visual").textContent = this.gameMode.replace("daily", "slovo dne").replace("random", "náhodné slovo").replace("custom", "vlastní slovo");
 
         // klikání na klávesnici
-        Game.keys.forEach((key) => {
+        Game.keyboardKeys.forEach((key) => {
             key.onclick = () => {
                 switch (key.textContent) {
                     case "↵":
@@ -99,11 +104,13 @@ class Game {
             
             lengthOption.classList.add("length-option");
             lengthOption.textContent = length;
-            if (length == this.length) lengthOption.classList.add("selected-setting");
+            if (length == this.wordLength) lengthOption.classList.add("selected-setting");
             lengthOption.onclick = () => window.gameInstance.reset(length);
 
             lengthOptions.appendChild(lengthOption);
         }
+
+        document.getElementById(this.gameMode).classList.add("selected-setting");
 
 
         // async
@@ -124,32 +131,40 @@ class Game {
         return hash;
     }
 
+    setSetting(parent, value) {
+        parent.querySelector(".selected-setting").classList.remove("selected-setting");
+        Array.from(parent.children).find((child) => child.textContent == value).classList.add("selected-setting");
+    }
+
     // restart hry popř. změna délky
-    reset(length = this.length) {
-        if (this.mode != "custom") localStorage.setItem("length", length);
-        Array.from(document.getElementsByClassName("length-option")).filter((lengthOption) => parseInt(lengthOption.textContent) == this.length)[0].classList.remove("selected-setting");
-        this.length = length;
-        Array.from(document.getElementsByClassName("length-option")).filter((lengthOption) => parseInt(lengthOption.textContent) == this.length)[0].classList.add("selected-setting");
-        this.position = { row: 0, letter: 0 };
-        this.end = false;
+    reset(length = this.wordLength) {
+        if (this.gameMode != "custom") localStorage.setItem("length", length); // neukládáme custom mód
+        this.wordLength = length;
+        this.setSetting(document.getElementById("length"), parseInt(this.wordLength))
+        this.playerPosition = { row: 0, letter: 0 };
+        this.endOfGame = false;
         this.rowElements = [];
         Array.from(document.querySelectorAll("#tags > div:not(#mode-visual)")).forEach((tag) => tag.remove());
-        this.surrendered = false;
-        Game.container.innerHTML = "";
+        Game.gameContainer.innerHTML = "";
 
-        Game.keys.forEach((key) => {
+        Game.keyboardKeys.forEach((key) => {
             key.classList.remove("incorrect", "inexact", "exact");
             delete key.processed;
         })
 
-        switch (this.mode) {
+        switch (this.gameMode) {
             case "random":
                 this.word = this.getSecret();
                 break;
             case "daily":
                 this.word = this.getSecret(this.hash(document.getElementById("time").textContent + this.hash(document.getElementById("year").textContent)));
                 break;
+            case "custom":
+                this.word = document.getElementById("custom-word").value;
+                break;
         }
+
+        this.wordLength = this.word.length;
 
         this.createGameEnvironment();
     }
@@ -159,10 +174,10 @@ class Game {
         let secret;
 
         if (custom != null) {
-            this.length = custom.length;
+            this.wordLength = custom.length;
             secret = custom;
         } else {
-            const uniformTargets = Array.from(this.targets).filter((x) => x.length == this.length);
+            const uniformTargets = Array.from(this.targets).filter((x) => x.length == this.wordLength);
             secret = uniformTargets[Math.floor((seed != null ? mulberry32(seed) : Math.random()) * uniformTargets.length)];
         }
         console.log(secret);
@@ -187,14 +202,14 @@ class Game {
             const rowElement = document.createElement("div");
             rowElement.classList.add("row");
 
-            for (let x = 0; x < this.length; x++) { // osa x
+            for (let x = 0; x < this.wordLength; x++) { // osa x
                 const letterElement = document.createElement("div");
                 letterElement.classList.add("letter");
 
                 rowElement.appendChild(letterElement);
             }
 
-            Game.container.appendChild(rowElement);
+            Game.gameContainer.appendChild(rowElement);
             this.rowElements.push(rowElement);
         }
     }
@@ -221,17 +236,17 @@ class Game {
 
     // momentální písmeno
     getCurrentLetter() {
-        return this.rowElements[this.position.row].children[this.position.letter];
+        return this.rowElements[this.playerPosition.row].children[this.playerPosition.letter];
     }
 
     // najít klávesnicový ekvivalent písmena
     findKeyElement(target) {
-        return Game.keys.find((key) => key.textContent === target);
+        return Game.keyboardKeys.find((key) => key.textContent === target);
     }
 
     // získat obsah momentální řádky
     getCurrentGuess() {
-        return Array.from(this.rowElements[this.position.row].children).map((letter) => letter.textContent).join("");
+        return Array.from(this.rowElements[this.playerPosition.row].children).map((letter) => letter.textContent).join("");
     }
 
     // změnit outline
@@ -246,12 +261,12 @@ class Game {
 
     // psaní do hry
     write(letter) {
-        if (!this.end && this.position.letter < this.length) {
+        if (!this.endOfGame && this.playerPosition.letter < this.wordLength) {
             const letterElement = this.getCurrentLetter();
             const keyElement = this.findKeyElement(letter);
 
             letterElement.textContent = letter;
-            this.position.letter++;
+            this.playerPosition.letter++;
 
             this.animatePress(letterElement);
             this.animatePress(keyElement);
@@ -260,10 +275,10 @@ class Game {
 
     // implementace backspace
     back() {
-        if (!this.end && this.position.letter > 0) {
-            this.animatePress(Game.backspace);
+        if (!this.endOfGame && this.playerPosition.letter > 0) {
+            this.animatePress(Game.backspaceKey);
             
-            this.position.letter--;
+            this.playerPosition.letter--;
 
             const letter = this.getCurrentLetter();
             letter.textContent = "";
@@ -272,13 +287,13 @@ class Game {
 
     // implementace enteru (potvrzení)
     confirm() {
-        if (!this.end) {
-            this.animatePress(Game.enter);
+        if (!this.endOfGame) {
+            this.animatePress(Game.enterKey);
 
-            const row = this.rowElements[this.position.row];
+            const row = this.rowElements[this.playerPosition.row];
             const guess = this.getCurrentGuess();
 
-            if (this.length === this.position.letter && this.dictionary.includes(guess)) {
+            if (this.wordLength === this.playerPosition.letter && this.dictionary.includes(guess)) {
                 this.processExactMatches(row, guess);
                 this.processInexactMatches(row, guess);
                 this.processIncorrectLetters(row, guess);
@@ -293,7 +308,7 @@ class Game {
         }
     }
     processExactMatches(row, guess) {
-        for (let i = 0; i < this.length; i++) {
+        for (let i = 0; i < this.wordLength; i++) {
             // v kontextu pozice
             const currentGuessLetter = guess[i];
             const currentTargetLetter = this.word[i];
@@ -312,7 +327,7 @@ class Game {
     }
 
     processInexactMatches(row, guess) {
-        for (let i = 0; i < this.length; i++) {
+        for (let i = 0; i < this.wordLength; i++) {
             const currentGuessLetter = guess[i];
             const currentLetterElement = row.children[i];
             const currentKeyElement = this.findKeyElement(currentGuessLetter);
@@ -334,7 +349,7 @@ class Game {
     }
 
     processIncorrectLetters(row, guess) {
-        for (let i = 0; i < this.length; i++) {
+        for (let i = 0; i < this.wordLength; i++) {
             const currentGuessLetter = guess[i];
             const currentLetterElement = row.children[i];
             const currentKeyElement = this.findKeyElement(currentGuessLetter);
@@ -349,7 +364,7 @@ class Game {
     }
 
     updateDuplicateLetters(row, guess) {
-        for (let i = 0; i < this.length; i++) {
+        for (let i = 0; i < this.wordLength; i++) {
             const currentLetterElement = row.children[i];
 
             let countInTarget = this.countOccurrences(this.word, currentLetterElement.textContent);
@@ -361,34 +376,17 @@ class Game {
                 countInTarget -= currentLetterElement.isExact ? (countInGuess) : (countInGuess - 1);
             }
             // přidáme jen pokud finální index není 0 nebo 1 (nemá smysl)
-            if (countInTarget > 1) this.addCountIndex(currentLetterElement, countInTarget);
+            if (countInTarget > 1)  {
+                const countIndex = document.createElement("div");
+                countIndex.classList.add("index");
+                countIndex.textContent = countInTarget;
+                currentLetterElement.appendChild(countIndex);
+            };
         };
     }
 
-    addCountIndex(letter, count) {
-        const countIndex = document.createElement("div");
-        countIndex.classList.add("index");
-        countIndex.textContent = count;
-        letter.appendChild(countIndex);
-    }
-
-    removeSingleCountIndices(row) {
-        for (let letter of row.children) {
-            const indexElement = letter.querySelector(".index");
-            if (indexElement && indexElement.textContent == "1") {
-                letter.removeChild(indexElement);
-            }
-        }
-    }
-
-    surrender() {
-        if (!this.end) {
-            this.endGame("lose");
-        }
-    }
-
     endGame(state) {
-        this.end = true;
+        this.endOfGame = true;
         toggleWindow("open", state);
         const information = document.createElement("div");
         information.textContent = state == "win" ? "výhra" : "prohra";
@@ -397,16 +395,13 @@ class Game {
     }
 
     moveToNextRow(guess) {
-        this.position.row++;
-        this.position.letter = 0;
+        this.playerPosition.row++;
+        this.playerPosition.letter = 0;
 
-        if (this.position.row === Game.tries) {
-            this.lost = true;
+        if (this.playerPosition.row === Game.tries) {
             this.endGame("lose")
         } else if (this.word === guess) {
-            this.lost = false;
             this.endGame("win");
         }
-
     }
 }
