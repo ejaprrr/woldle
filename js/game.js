@@ -54,14 +54,15 @@ class Game {
         if (searchParams.has("word")) {
             try {
                 this.word = decodeURIComponent(atob(searchParams.get("word")));
-                this.mode = this.word == daily ? "daily" : "custom";
                 this.length = this.word.length;
             } catch (error) {
                 console.error("Failed to decode the word search parameter:", error);
             }
-        } else {
+        }
+        if (!this.dictionary.includes(this.word)) {
             this.word = this.mode === "daily" ? daily : random;
         }
+        this.mode = this.word == daily ? "daily" : this.word == random ? "random" : "custom";
     }
 
     createGameEnvironment() {
