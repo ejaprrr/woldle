@@ -31,6 +31,20 @@ class Game {
         await this.loadFile("targets");
 
         this.setWord();
+        const { searchParams } = new URL(location.href);
+        if (searchParams.has("word") ) {
+            try {
+                const decodedWord = decodeURIComponent(atob(searchParams.get("word")));
+                if (this.dictionary.includes(decodedWord)) {
+                    this.length = decodedWord.length;
+                    this.mode = decodedWord == this.word && this.mode == "daily" ? this.mode : "custom";
+                    this.word = decodedWord;
+                }
+
+            } catch (error) {
+                console.error("Failed to decode the word search parameter:", error);
+            }
+        }
         this.createGameEnvironment();
         this.setupLengthOptions();
         this.setModeTag();
@@ -48,21 +62,18 @@ class Game {
     }
 
     setWord() {
-        const { searchParams } = new URL(location.href);
         const { random, daily } = this.getSecrets();
 
-        if (searchParams.has("word")) {
-            try {
-                this.word = decodeURIComponent(atob(searchParams.get("word")));
-                this.length = this.word.length;
-            } catch (error) {
-                console.error("Failed to decode the word search parameter:", error);
-            }
+        if (this.mode == "random") {
+            this.word = random;
+        } else if (this.mode == "daily") {
+            this.word = daily;
+        }  else if (this.mode == "custom") {
+            this.word = document.querySelector("#custom-word").value;
         }
-        if (!this.dictionary.includes(this.word)) {
-            this.word = this.mode === "daily" ? daily : random;
-        }
-        this.mode = this.word == daily ? "daily" : this.word == random ? "random" : "custom";
+
+        this.length = this.word.length;
+        this.mode = this.word == daily ? "daily" : "random";
     }
 
     createGameEnvironment() {
@@ -106,15 +117,17 @@ class Game {
 
     reset(length = this.length) {
         this.length = length;
+
+        this.changeSetting(document.querySelector("#length"), this.length);
         this.initGameSettings();
 
-        if (this.mode !== "custom") localStorage.setItem("length", length);
+        if (this.mode !== "custom") localStorage.setItem("length", this.length);
 
         this.resetKeys();
         this.setWord();
         Game.container.replaceChildren();
         this.createGameEnvironment();
-        this.changeSetting(document.getElementById("length"), this.length);
+
         document.getElementById("tags").replaceChildren(document.querySelector("#mode-tag"));
     }
 
