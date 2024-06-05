@@ -4,7 +4,6 @@ main * {
 
 #home {
     transition: transform 0.5s ease;
-    fill: var(--tertiary);
 }
 
 #home:hover {

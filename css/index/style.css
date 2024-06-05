@@ -3,10 +3,6 @@
     text-transform: uppercase;
 }
 
-.option {
-    cursor: pointer;
-}
-
 #settings, #close, #info, #surrender, .refresh, #theme-toggle, .link {
     transition: transform 0.5s ease;
 }

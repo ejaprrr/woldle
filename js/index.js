@@ -4,6 +4,7 @@ document.onkeydown = keydown;
 document.onkeypress = keypress;
 
 // onclick events
+document.querySelector("#surrender").onclick = () => window.gameInstance.surrender();;
 document.querySelector("#info").onclick = () => location.href = "info.html";
 document.querySelector("#settings").onclick = () => toggleWindow("open", "settings");
 document.querySelector("#theme-toggle").onclick = () => changeTheme();

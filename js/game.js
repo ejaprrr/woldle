@@ -28,8 +28,8 @@ class Game {
     }
 
     async init() {
-        await this.loadDictionary();
-        await this.loadTargets();
+        await this.loadFile("dictionary");
+        await this.loadFile("targets");
 
         this.setWord();
         this.createGameEnvironment();
@@ -38,21 +38,12 @@ class Game {
         return this;
     }
 
-    async loadDictionary() {
+    async loadFile(file) {
         try {
-            const response = await fetch("files/dictionary.json");
-            this.dictionary = await response.json();
+            const response = await fetch(`files/${file}.json`);
+            this[file] = await response.json();
         } catch (error) {
-            console.error("Failed to load dictionary:", error);
-        }
-    }
-
-    async loadTargets() {
-        try {
-            const response = await fetch("files/targets.json");
-            this.targets = await response.json();
-        } catch (error) {
-            console.error("Failed to load targets:", error);
+            console.error(`Failed to load ${file}:`, error)
         }
     }
 
@@ -65,8 +56,8 @@ class Game {
                 this.word = decodeURIComponent(atob(searchParams.get("word")));
                 this.mode = this.word === daily ? "daily" : "custom";
                 this.length = this.word.length;
-            } catch {
-                console.error("Failed to decode the word.");
+            } catch (error) {
+                console.error("Failed to decode the word search parameter:", error);
             }
         } else {
             this.word = this.mode === "daily" ? daily : random;

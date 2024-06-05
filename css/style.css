@@ -114,3 +114,7 @@ footer {
 span {
     font-weight: bold;
 }
+
+.option {
+    cursor: pointer;
+}
