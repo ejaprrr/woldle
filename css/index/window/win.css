@@ -1,10 +1,10 @@
-#content-win > h1 {
+#content-win > h1, #content-win > h2 {
     color: var(--exact);
     filter: var(--glow-exact);
     text-align: center;
 }
 
-#content-win > h2 {
+#content-win > h3 {
     background: linear-gradient(to right, transparent, var(--overlay), transparent);
     filter: var(--shadow);
     color: var(--tertiary);

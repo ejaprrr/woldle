@@ -1,10 +1,10 @@
-#content-lose > h1 {
+#content-lose > h1,  #content-lose > h2 {
     color: var(--incorrect);
     filter: var(--glow-incorrect);
     text-align: center;
 }
 
-#content-lose > h2 {
+#content-lose > h3 {
     background: linear-gradient(to right, transparent, var(--overlay), transparent);
     filter: var(--glow-exact);
     color: var(--exact);

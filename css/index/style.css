@@ -12,7 +12,7 @@
 }
 
 #info:hover, #theme-toggle:hover, #surrender:hover, .link:hover {
-    transform: scale(110%);
+    transform: scale(1.1);
 }
 
 /* barvy a zvýraznění */
@@ -37,9 +37,9 @@
 }
 
 .smaller {
-    transform: scale(90%);
+    transform: scale(0.9);
 }
 
 .larger {
-    transform: scale(110%);
+    transform: scale(1.1);
 }

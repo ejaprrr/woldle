@@ -7,5 +7,5 @@ main * {
 }
 
 #home:hover {
-    transform: scale(110%);
+    transform: scale(1.1);
 }

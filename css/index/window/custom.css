@@ -35,7 +35,7 @@
 }
 
 #content-custom .link:hover {
-    transform: scale(100%);
+    transform: scale(1);
 }
 
 #content-custom .link {

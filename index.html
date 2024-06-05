@@ -125,14 +125,14 @@
             <section>
                 <h1>co je to Woldle?</h1>
                 <p>Woldle je zábávná hádací hra inspirovaná hrou Wordle, kde je tvým úkolem uhádnout slovo pomocí hádání slov jiných.</p>
-                <h1>jak hrát</h1>
-                <h2>1. zadej první libovolné slovo</h2>
+                <h2>jak hrát</h2>
+                <h3>1. zadej první libovolné slovo</h3>
                 <ul>
                     <li>slovo musí být <b>validní</b></li>
                     <li>barva políček se mění podle <b>správnosti</b></li>
                     <li>celkem budeš mít <b>6 pokusů</b></li>
                 </ul>
-                <h2>2. zjisti, jaká písmena slovo obsahuje</h2>
+                <h3>2. zjisti, jaká písmena slovo obsahuje</h3>
                 <ul>
                     <li><span style="color: var(--exact); filter: var(--glow-exact);">zelené</span> pole znamená, že máte písmenko na správném místě</li>
                     <li><span style="color: var(--inexact); filter: var(--glow-inexact);">oranžové</span> pole značí, že ho slovo obsahuje ale na jiné pozici</li>
@@ -141,7 +141,7 @@
                     <li>do oranžového indexu se nepočítají již zelená pole</li>
                     <li>zbarveno je jen tolik polí stejných písmen, kolik se jich do slova vejde</li>
                 </ul>
-                <h2>3. uhodni tajenku!</h2>
+                <h3>3. uhodni tajenku!</h3>
                 <ul>
                     <li>nyní znáte některá písmena, jejich pozice a přesnost</li>
                     <li>zkus vyřešit tajenku a vyhrát hru</li>
@@ -167,7 +167,7 @@
             <div id="content-settings">
                 <!-- nastavení herního módu -->
                 <div id="modes-wrapper">
-                    <h1>Herní módy</h1>
+                    <h2>Herní módy</h2>
                     <div id="modes">
                         <div class="mode" id="random" onclick="window.gameInstance.setMode(this.id)">
                             <span class="mode-prefix">slovo</span> <span class="mode-title">náhodné</span>
@@ -182,14 +182,14 @@
                 </div>
                 <!-- nastavení délky slova -->
                 <div id="length-wrapper">
-                    <h1>Počet písmen</h1>
+                    <h2>Počet písmen</h2>
                     <div id="length"></div>
                 </div>
             </div>
             <!-- kontent při výhře -->
             <div id="content-win">
-                <h1>Vyhrál jsi! 🎉</h1>
-                <h2 class="slovo">slovo</h2>
+                <h2>Vyhrál jsi! 🎉</h2>
+                <h3 class="slovo">slovo</h3>
                 <p>Blahopřejeme! 🥳</p>
                 <div class="menu">
                     <span class="material-symbols-rounded option refresh" onclick="window.gameInstance.reset(); toggleWindow('close')">refresh</span>
@@ -198,8 +198,8 @@
             </div>
             <!-- kontent při prohře -->
             <div id="content-lose">
-                <h1>Prohrál jsi... 💔</h1>
-                <h2 class="slovo">slovo</h2>
+                <h2>Prohrál jsi... 💔</h2>
+                <h3 class="slovo">slovo</h3>
                 <p>Zkus to znovu! 💪</p>
                 <div class="menu">
                     <span class="material-symbols-rounded option refresh" onclick="window.gameInstance.reset(); toggleWindow('close')">refresh</span>
@@ -208,7 +208,7 @@
             </div>
             <!-- kontent při vytváření vlastního slova -->
             <div id="content-custom">
-                <h1>Pokus své kamarády!</h1>
+                <h2>Pokus své kamarády!</h2>
                 <p>Zadej své slovo a ujisti se, že je validní.</p>
                 <!-- user input -->
                 <form action="javascript:void(0);">
