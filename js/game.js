@@ -11,7 +11,6 @@ class Game {
         this.mode = localStorage.getItem("mode") || "random";
 
         this.initGameSettings();
-        this.setModeTag();
     }
 
     initGameSettings() {
@@ -34,6 +33,7 @@ class Game {
         this.setWord();
         this.createGameEnvironment();
         this.setupLengthOptions();
+        this.setModeTag();
 
         return this;
     }
@@ -54,7 +54,7 @@ class Game {
         if (searchParams.has("word")) {
             try {
                 this.word = decodeURIComponent(atob(searchParams.get("word")));
-                this.mode = this.word === daily ? "daily" : "custom";
+                this.mode = this.word == daily ? "daily" : "custom";
                 this.length = this.word.length;
             } catch (error) {
                 console.error("Failed to decode the word search parameter:", error);
