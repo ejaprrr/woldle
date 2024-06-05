@@ -110,3 +110,7 @@ footer {
   'opsz' 0;
   font-size: 30px;
 }
+
+span {
+    font-weight: bold;
+}

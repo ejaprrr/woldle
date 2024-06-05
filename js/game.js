@@ -91,10 +91,10 @@ class Game {
 
     setupLengthOptions() {
         const lengthSettings = document.querySelector("#length");
-        const lengths = new Set(this.targets.map(target => target.length).sort((a, b) => a - b));
+        const lengths = [...new Set(this.targets.map(target => target.length).sort((a, b) => a - b))];
 
-        document.querySelector("#custom-word").maxLength = lengths[0];
-        document.querySelector("#custom-word").minLength = lengths[lengths.length - 1];
+        document.querySelector("#custom-word").maxLength = lengths[lengths.length - 1];
+        document.querySelector("#custom-word").minLength = lengths[0];
 
         lengths.forEach(length => {
             const lengthOption = document.createElement("div");
@@ -123,6 +123,7 @@ class Game {
         Game.container.replaceChildren();
         this.createGameEnvironment();
         this.changeSetting(document.getElementById("length"), this.length);
+        document.getElementById("tags").replaceChildren(document.querySelector("#mode-tag"));
     }
 
     resetKeys() {
