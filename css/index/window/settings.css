@@ -12,6 +12,7 @@
     border: var(--outline) solid;
     text-align: center;
     background-color: var(--overlay);
+    will-change: filter;
 }
 
 .length-option {
@@ -67,5 +68,4 @@
     background-color: var(--overlay);
     filter: var(--glow-yellow);
     font-weight: bold;
-    will-change: filter;
 }

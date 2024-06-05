@@ -15,6 +15,7 @@
     backdrop-filter: var(--brightness);
     -webkit-backdrop-filter: var(--brightness);
     transition: transform 0.25s ease, outline 0.25s ease;
+    will-change: filter;
 }
 
 #backspace, #enter {

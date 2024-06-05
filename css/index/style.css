@@ -43,7 +43,3 @@
 .larger {
     transform: scale(1.1);
 }
-
-.incorrect, .inexact, .exact, .transparent, .smaller, .larger {
-    will-change: filter;
-}
