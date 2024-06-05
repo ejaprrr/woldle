@@ -111,7 +111,7 @@ footer {
   font-size: 30px;
 }
 
-span {
+li > span {
     font-weight: bold;
 }
 
