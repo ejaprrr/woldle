@@ -45,5 +45,5 @@
 }
 
 .incorrect, .inexact, .exact, .transparent, .smaller, .larger {
-    will-change: auto;
+    will-change: filter;
 }

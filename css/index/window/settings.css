@@ -67,4 +67,5 @@
     background-color: var(--overlay);
     filter: var(--glow-yellow);
     font-weight: bold;
+    will-change: filter;
 }
