@@ -1,6 +1,9 @@
 main * {
     margin-left: 10px;
 }
+#wrapper {
+    width: 800px;
+}
 
 #home {
     transition: transform 0.5s ease;
@@ -8,4 +11,27 @@ main * {
 
 #home:hover {
     transform: scale(1.1);
+}
+main {
+    overflow: hidden;
+    justify-content: center;
+    display: flex;
+}
+
+main img {
+    width: 300px; /* Adjust as needed */
+    height: 200px;
+    object-fit: cover;
+    transition: opacity 1s ease-in-out;
+    border-radius: 10px;
+}
+#authors {
+    display: flex;
+    justify-content: space-between;
+}
+#about {
+    display: flex;
+}
+.author {
+    width: 500px;
 }
