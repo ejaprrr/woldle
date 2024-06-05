@@ -29,6 +29,6 @@
     filter: var(--shadow)
 }
 
-article > p {
+section > p {
     margin-left: 20px;
 }

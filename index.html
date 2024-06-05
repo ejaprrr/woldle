@@ -122,7 +122,7 @@
                 </div>
             </div>
             <!-- informace o hře, jak hrát -->
-            <article>
+            <section>
                 <h1>co je to Woldle?</h1>
                 <p>Woldle je zábávná hádací hra inspirovaná hrou Wordle, kde je tvým úkolem uhádnout slovo pomocí hádání slov jiných.</p>
                 <h1>jak hrát</h1>
@@ -146,7 +146,7 @@
                     <li>nyní znáte některá písmena, jejich pozice a přesnost</li>
                     <li>zkus vyřešit tajenku a vyhrát hru</li>
                 </ul>
-            </article>
+            </section>
         </div>
     </main>
     <!-- patička -->
@@ -189,9 +189,9 @@
             <!-- kontent při výhře -->
             <div id="content-win">
                 <h1>Vyhrál jsi! 🎉</h1>
-                <h2 class="slovo"></h2>
+                <h2 class="slovo">slovo</h2>
                 <p>Blahopřejeme! 🥳</p>
-                <div id="menu">
+                <div class="menu">
                     <span class="material-symbols-rounded option refresh" onclick="window.gameInstance.reset(); toggleWindow('close')">refresh</span>
                     <span class="material-symbols-rounded option link" onclick="handleCopy(window.gameInstance.word)">link</span>
                 </div>
@@ -199,9 +199,9 @@
             <!-- kontent při prohře -->
             <div id="content-lose">
                 <h1>Prohrál jsi... 💔</h1>
-                <h2 class="slovo"></h2>
+                <h2 class="slovo">slovo</h2>
                 <p>Zkus to znovu! 💪</p>
-                <div id="menu">
+                <div class="menu">
                     <span class="material-symbols-rounded option refresh" onclick="window.gameInstance.reset(); toggleWindow('close')">refresh</span>
                     <span class="material-symbols-rounded option link" onclick="handleCopy(window.gameInstance.word)">link</span>
                 </div>

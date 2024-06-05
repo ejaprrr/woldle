@@ -63,7 +63,7 @@
         font-size: 22px;
     }
 
-    article > p {
+    section > p {
         text-align: justify;
     }
 }
