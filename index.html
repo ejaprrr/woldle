@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="css/responsivity.css">
 
     <!-- import Google ikonek (zakulacené) -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
 </head>
 
 <body class="dark">
@@ -63,9 +63,9 @@
                     <span id="surrender" class="material-symbols-rounded option">flag</span>                                            
                 </nav>
                 <!-- momentální informace o hře -->
-                <section id="tags">
+                <div id="tags">
                     <div id="mode-tag"></div>
-                </section>
+                </div>
             </div>
             <!-- klávesnice -->
             <div id="keyboard">
@@ -164,7 +164,7 @@
                 <span id="close" class="material-symbols-rounded option" onclick="toggleWindow('close')">close</span>
             </nav>
             <!-- kontent nastavení -->
-            <main id="content-settings">
+            <div id="content-settings">
                 <!-- nastavení herního módu -->
                 <div id="modes-wrapper">
                     <h1>Herní módy</h1>
@@ -185,9 +185,9 @@
                     <h1>Počet písmen</h1>
                     <div id="length"></div>
                 </div>
-            </main>
+            </div>
             <!-- kontent při výhře -->
-            <main id="content-win">
+            <div id="content-win">
                 <h1>Vyhrál jsi! 🎉</h1>
                 <h2 class="slovo"></h2>
                 <p>Blahopřejeme! 🥳</p>
@@ -195,9 +195,9 @@
                     <span class="material-symbols-rounded option refresh" onclick="window.gameInstance.reset(); toggleWindow('close')">refresh</span>
                     <span class="material-symbols-rounded option link" onclick="handleCopy(window.gameInstance.word)">link</span>
                 </div>
-            </main>
+            </div>
             <!-- kontent při prohře -->
-            <main id="content-lose">
+            <div id="content-lose">
                 <h1>Prohrál jsi... 💔</h1>
                 <h2 class="slovo"></h2>
                 <p>Zkus to znovu! 💪</p>
@@ -205,9 +205,9 @@
                     <span class="material-symbols-rounded option refresh" onclick="window.gameInstance.reset(); toggleWindow('close')">refresh</span>
                     <span class="material-symbols-rounded option link" onclick="handleCopy(window.gameInstance.word)">link</span>
                 </div>
-            </main>
+            </div>
             <!-- kontent při vytváření vlastního slova -->
-            <main id="content-custom">
+            <div id="content-custom">
                 <h1>Pokus své kamarády!</h1>
                 <p>Zadej své slovo a ujisti se, že je validní.</p>
                 <!-- user input -->
@@ -218,7 +218,7 @@
                         <span class="material-symbols-rounded option link" onclick="handleCopy(window.gameInstance.word)">link</span>
                     </button>
                 </form>
-            </main>
+            </div>
         </div>
     </div>
 

@@ -40,7 +40,7 @@ const toggleWindow = (action, content = null) => {
             document.onkeypress = keypress;
             windowWrapper.classList.remove("show");
             window.classList.remove("show");
-            document.querySelector(`#window > main.show`).classList.remove("show");
+            document.querySelector(`#window > div.show`).classList.remove("show");
             break;
     }
 }

@@ -13,7 +13,7 @@
     display: flex;
 }
 
-section {
+#tags {
     width: 100%;
     display: flex;
     align-items: center;
@@ -21,7 +21,7 @@ section {
     gap: 20px;
 }
 
-section > div {
+#tags > div {
     background-color: var(--overlay);
     padding-inline: 10px;
     line-height: 24px;

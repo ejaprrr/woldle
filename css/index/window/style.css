@@ -44,7 +44,7 @@
     margin: 5px;
 }
 
-#window > main {
+#window > div {
     padding: 15px;
     margin-top: 40px;
 }
@@ -59,12 +59,12 @@
     background-color: var(--secondary);
 }
 
-#window.show > nav, #window > main.show {
+#window.show > nav, #window > div.show {
     display: block;
 }
 
 
-#window > main > .refresh, #window > main > .link {
+#window > div > .refresh, #window > div > .link {
     width: 30px;
     margin: auto;
 }
@@ -73,7 +73,7 @@
     margin-left: 15px;
 }
 
-#window > main > p {
+#window > div > p {
     text-align: center;
 }
 

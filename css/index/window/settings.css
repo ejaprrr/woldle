@@ -11,33 +11,33 @@
     text-align: center;
     background-color: var(--overlay);
     margin-block: 5px;
-    transition: height 0.5s ease-in-out, margin-block 0.5s ease-in-out, line-height 0.5s ease-in-out, font-size 0.5s ease-in-out;
 }
 
 .length-option {
     font-size: var(--font-size);
     height: var(--height);
     line-height: var(--height);
+    transition: height 0.5s ease, margin-block 0.5s ease, line-height 0.5s ease, font-size 0.5s ease;
 }
 
 .mode {
     line-height: 50px;
     height: 50px;
-    transition: height 0.5s ease-in-out, margin-block 0.5s ease-in-out, line-height 0.5s ease-in-out;
+    transition: height 0.5s ease, margin-block 0.5s ease, line-height 0.5s ease;
 }
 
 .mode > .mode-prefix {
     display: inline-block;
     max-width: 50px;
     opacity: 100%;
-    transition: max-width 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    transition: max-width 0.5s ease, opacity 0.5s ease;
 }
 
 .mode > .mode-title {
     font-weight: bold;
     text-transform: uppercase;
     font-size: var(--font-size);
-    transition: font-size 0.5s ease-in-out, width 0.5s ease-in-out, line-height 0.5s ease-in-out;
+    transition: font-size 0.5s ease, width 0.5s ease, line-height 0.5s ease;
 }
 
 /* animace */
@@ -66,13 +66,4 @@
     background-color: var(--overlay);
     filter: var(--glow-yellow);
     font-weight: bold;
-}
-
-/* Safari-specific adjustments */
-@media not all and (min-resolution:.001dpcm) {
-    @supports (-webkit-appearance:none) {
-        .length-option, .mode, .mode > .mode-prefix, .mode > .mode-title {
-            transition: height 0.5s ease-in-out, margin-block 0.5s ease-in-out, line-height 0.5s ease-in-out, font-size 0.5s ease-in-out;
-        }
-    }
 }
