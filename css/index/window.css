@@ -1,141 +1,7 @@
-#content-custom {
-    text-align: center;
-}
-
-#content-custom form {
-    margin-block: 15px;
-    display: flex;
-    gap: 20px;
-}
-
-#content-custom form > button {
-    width: 50px;
-    background-color: var(--overlay);
-    border-radius: 10px;
-    filter: var(--shadow);
-    cursor: pointer;
-    font-weight: bold;
-}
-
-#content-custom form > input:focus {
-    outline: none;
-}
-
-#content-custom form > input {
-    letter-spacing: 2px;
-    font-weight: bold;
-    text-transform: uppercase;
-    filter: var(--shadow);
-    will-change: filter;
-    padding-left: 20px;
-    border: none;
-    flex: auto;
-    background: linear-gradient(to right, var(--overlay), transparent);
-    border-radius: 50px;
-    line-height: 50px;
-}
-
-#content-custom .link:hover {
-    transform: scale(1);
-}
-
-#content-custom .link {
-    box-sizing: inherit;
-}
-
-#content-lose > h1,  #content-lose > h2 {
-    color: var(--incorrect);
-    filter: var(--glow-incorrect);
-    text-align: center;
-}
-
-#content-lose > h3 {
-    background: linear-gradient(to right, transparent, var(--overlay), transparent);
-    filter: var(--glow-exact);
-    color: var(--exact);
-    text-align: center;
-}
-
-#window:has(#content-lose.show) {
-    background: url("../../../images/naur.gif");
-    background-position: center;
-    background-size: cover;
-}
-
-#content-lose {
-    background: linear-gradient(to bottom, transparent, var(--overlay));
-    backdrop-filter: blur(5px) var(--brightness);
-}
-
-#length, #modes {
-    display: flex;
-    gap: var(--gap);
-    align-items: center;
-    height: 60px;
-}
-
-.length-option, .mode {
-    cursor: pointer;
-    flex: 1;
-    border-radius: 10px;
-    border: var(--outline) solid;
-    text-align: center;
-    background-color: var(--overlay);
-    will-change: filter;
-}
-
-.length-option {
-    font-size: var(--font-size);
-    height: var(--height);
-    line-height: var(--height);
-    transition: height 0.5s ease, margin-block 0.5s ease, line-height 0.5s ease, font-size 0.5s ease;
-}
-
-.mode {
-    line-height: 50px;
-    height: 50px;
-    transition: height 0.5s ease, margin-block 0.5s ease, line-height 0.5s ease;
-}
-
-.mode > .mode-prefix {
-    display: inline-block;
-    max-width: 50px;
-    opacity: 100%;
-    transition: max-width 0.5s ease, opacity 0.5s ease;
-}
-
-.mode > .mode-title {
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: var(--font-size);
-    transition: font-size 0.5s ease, width 0.5s ease, line-height 0.5s ease;
-}
-
-.length-option:hover, .mode:hover {
-    height: 60px;
-    margin-block: 0px;
-}
-
-.length-option:hover {
-    height: calc(var(--height) + 10px);
-    line-height: calc(var(--height) + 10px);
-}
-
-.mode:hover > .mode-prefix {
-    max-width: 0px;
-    opacity: 0%;
-}
-
-.mode:hover > .mode-title {
-    font-size: var(--font-size);
-    line-height: calc(var(--height) + 10px);
-}
-
-.selected-setting {
-    border: var(--yellow) solid;
-    background-color: var(--overlay);
-    filter: var(--glow-yellow);
-    font-weight: bold;
+/* Okno a jeho wrapper */
+#window-wrapper, #window {
+    background-color: transparent;
+    pointer-events: none;
 }
 
 #window-wrapper {
@@ -146,11 +12,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: transparent;
-    pointer-events: none;
-    transition: background-color 0.5s ease, backdrop-filter 0.5s ease;
-    -webkit-backdrop-filter: none;
     backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transition: background-color 0.5s ease, backdrop-filter 0.5s ease;
+}
+
+#window {
+    max-width: 600px;
+    width: calc(100% - 40px);
+    border-radius: 10px;
+    transition: background-color 0.25s ease;
+    overflow: hidden;
+}
+
+#window > * {
+    display: none;
+}
+
+#window h1, #window h2 {
+    margin-left: 15px;
 }
 
 #window-wrapper.show {
@@ -159,61 +39,150 @@
     backdrop-filter: blur(2px);
 }
 
-#window {
-    max-width: 600px;
-    width: calc(100% - 40px);
-    border-radius: 10px;
-    background-color: transparent;
-    transition: background-color 0.25s ease;
-    overflow: hidden;
+#window.show {
+    pointer-events: all;
+    background-color: var(--secondary);
 }
 
-#window > div > p {
-    font-weight: bold;
-}
+/* Navigace */
 
 #window > nav {
     width: 100%;
-    height: 40px;
+    height: 30px;
     background-color: var(--overlay);
     backdrop-filter: blur(20px) var(--brightness);
 }
 
 #window > nav > * {
-    margin: 5px;
+    margin: 3px;
 }
+
+/* Obsah okna */
 
 #window > div {
     padding: 15px;
-    margin-top: 40px;
 }
 
-#window > * {
-    display: none;
-}
-
-#window.show {
-    pointer-events: all;
-    background-color: var(--secondary);
+#window > div > p {
+    font-weight: bold;
+    text-align: center;
+    filter: var(--shadow);
 }
 
 #window.show > nav, #window > div.show {
     display: block;
 }
 
-#window > div > .refresh, #window > div > .link {
-    width: 30px;
-    margin: auto;
+/* Nastavení */
+
+#length, #modes {
+    display: flex;
+    gap: var(--gap);
+    align-items: center;
+    height: 60px;
 }
 
-#window h1, #window h2 {
-    margin-left: 15px;
+.mode {
+    height: 50px;
 }
 
-#window > div > p {
+.mode:hover {
+    height: 60px;
+}
+
+.length-option, .mode {
+    cursor: pointer;
+    flex: 1;
+    border-radius: 10px;
+    border: var(--outline) solid;
     text-align: center;
+    background-color: var(--overlay);
+    transition: height 0.5s ease, line-height 0.5s ease;
+    will-change: filter;
+    line-height: 50px;
 }
 
+.mode-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: line-height 0.5s ease;
+}
+
+.mode-prefix {
+    display: inline-block;
+    max-width: 50px;
+    opacity: 1;
+    transition: max-width 0.5s ease, opacity 0.5s ease;
+}
+
+.mode-title, .length-option {
+    font-size: var(--font-size);
+}
+
+.mode:hover .mode-title, .length-option:hover {
+    line-height: 60px;
+}
+
+.mode:hover .mode-prefix {
+    max-width: 0px;
+    opacity: 0;
+}
+
+.selected-setting {
+    border: var(--yellow) solid;
+    background-color: var(--overlay);
+    filter: var(--glow-yellow);
+    font-weight: bold;
+}
+
+/* Vlastní slovo */
+
+form {
+    margin-block: 15px;
+    display: flex;
+}
+
+form * {
+    font-weight: bold;
+}
+
+form input, form button {
+    filter: var(--shadow);
+}
+
+form input {
+    background: linear-gradient(to right, var(--overlay), transparent);
+    border: none;
+    border-radius: 50px;
+    letter-spacing: 2px;
+    padding-left: 20px;
+    text-transform: uppercase;
+    width: calc(100% - var(--gap) - 2 * 50px);
+    line-height: 50px;
+}
+
+form button {
+    cursor: pointer;
+    width: 50px;
+    background-color: var(--overlay);
+    border-radius: 10px;
+    transition: opacity 0.25s ease;
+}
+
+form input:focus {
+    outline: none;
+}
+
+form:invalid button {
+    opacity: 0.5;
+}
+
+#submit-container {
+    display: flex;
+    gap: var(--gap);
+}
+
+/* Výhra | Prohra */
 .menu {
     display: flex;
     justify-content: center;
@@ -221,28 +190,47 @@
     margin-block: 15px;
 }
 
-#content-win > h1, #content-win > h2 {
-    color: var(--exact);
-    filter: var(--glow-exact);
+#content-lose, #content-win {
     text-align: center;
+    background: linear-gradient(to bottom, transparent, var(--overlay));
+    backdrop-filter: blur(5px) var(--brightness);
 }
 
-#content-win > h3 {
-    background: linear-gradient(to right, transparent, var(--overlay), transparent);
-    filter: var(--shadow);
-    color: var(--tertiary);
-    text-align: center;
-}
-
-#window:has(#content-win.show) {
-    background: url("../../../images/yippie.gif");
+#window:has(#content-lose.show), #window:has(#content-win.show) {
     background-position: center;
     background-size: cover;
 }
 
-#content-win {
-    background: linear-gradient(to bottom, transparent, var(--overlay));
-    backdrop-filter: blur(5px) var(--brightness);
+#content-lose > h3, #content-win > h3 {
+    background: linear-gradient(to right, transparent, var(--overlay), transparent);
+}
+
+#content-win > h1, #content-win > h2 {
+    color: var(--exact);
+    filter: var(--glow-exact);
+}
+
+#content-lose > h1,  #content-lose > h2 {
+    color: var(--incorrect);
+    filter: var(--glow-incorrect);
+}
+
+#content-win > h3 {
+    filter: var(--shadow);
+    color: var(--tertiary);
+}
+
+#content-lose > h3 {
+    filter: var(--glow-exact);
+    color: var(--exact);
+}
+
+#window:has(#content-win.show) {
+    background: url("../../../images/yippie.gif");
+}
+
+#window:has(#content-lose.show) {
+    background: url("../../../images/naur.gif");
 }
 
 @media screen and (min-width: 320px) and (max-width: 720px) {

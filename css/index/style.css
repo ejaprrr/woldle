@@ -3,7 +3,7 @@
     text-transform: uppercase;
 }
 
-#settings, #close, #info, #surrender, .refresh, #theme-toggle, .link {
+#settings, #close, #info, #surrender, #theme-toggle, .link, .refresh {
     transition: transform 0.5s ease;
 }
 
@@ -15,28 +15,23 @@
     transform: scale(1.1);
 }
 
-#close {
-    font-size: 30px;
-}
-
 /* barvy a zvýraznění */
 .incorrect {
-    outline: solid var(--incorrect);
+    --outline: var(--incorrect);
     filter: var(--glow-incorrect);
 }
 
 .inexact {
-    outline: solid var(--inexact);
+    --outline: var(--incorrect);
     filter: var(--glow-inexact);
 }
 
 .exact {
-    outline: solid var(--exact);
+    --outline: var(--exact);
     filter: var(--glow-exact);
 }
 
 .transparent {
-    outline: solid var(--outline);
     filter: var(--shadow);
 }
 

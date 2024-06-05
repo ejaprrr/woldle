@@ -20,11 +20,7 @@
     <link rel="stylesheet" href="css/style.css">
 
     <link rel="stylesheet" href="css/index/layout.css">
-    <link rel="stylesheet" href="css/index/game.css">
-    <link rel="stylesheet" href="css/index/keyboard.css">
-    
     <link rel="stylesheet" href="css/index/style.css">
-
     <link rel="stylesheet" href="css/index/window.css">
     <!-- import Google ikonek (zakulacené) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
@@ -210,11 +206,14 @@
                 <p>Zadej své slovo a ujisti se, že je validní.</p>
                 <!-- user input -->
                 <form action="javascript:void(0);">
-                    <input id="custom-word" type="text" placeholder="tvoje slovo..." pattern="[A-Za-zÁáČčĎďÉéĚěÍíŇňÓóŘřŠšŤťÚúŮůÝýŽž]+"  required>
-                    <button type="submit">OK</button>
-                    <button type="button" id="copy-link" onclick="javascript:handleCopy(document.getElementById('custom-word').value);">
-                        <span class="material-symbols-rounded link" onclick="handleCopy(window.gameInstance.word)">link</span>
-                    </button>
+                    <input id="custom-word" type="text" placeholder="tvoje slovo..." pattern="[A-Za-zÁáČčĎďÉéĚěÍíŇňÓóŘřŠšŤťÚúŮůÝýŽž]+" autocomplete="off" required>
+                    <div id="submit-container">
+                        <button type="submit">OK</button>
+                        <button type="button" id="copy-link" onclick="javascript:handleCopy(document.getElementById('custom-word').value);">
+                            <span class="material-symbols-rounded" onclick="handleCopy(window.gameInstance.word)">link</span>
+                        </button>
+                    </div>
+                    
                 </form>
             </div>
         </div>

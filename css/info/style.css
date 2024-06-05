@@ -1,8 +1,34 @@
-main * {
+main > * {
     margin-left: 10px;
 }
+
+main {
+    overflow: hidden;
+    justify-content: center;
+}
+
+img {
+    width: 300px; /* Adjust as needed */
+    height: 200px;
+    object-fit: cover;
+    transition: opacity 1s ease-in-out;
+    border-radius: 10px;
+}
+
+main, #author, #about {
+    display: flex;
+}
+
+.author {
+    width: 500px;
+}
+
 #wrapper {
     width: 800px;
+}
+
+#authors {
+    justify-content: space-between;
 }
 
 #home {
@@ -11,27 +37,4 @@ main * {
 
 #home:hover {
     transform: scale(1.1);
-}
-main {
-    overflow: hidden;
-    justify-content: center;
-    display: flex;
-}
-
-main img {
-    width: 300px; /* Adjust as needed */
-    height: 200px;
-    object-fit: cover;
-    transition: opacity 1s ease-in-out;
-    border-radius: 10px;
-}
-#authors {
-    display: flex;
-    justify-content: space-between;
-}
-#about {
-    display: flex;
-}
-.author {
-    width: 500px;
 }

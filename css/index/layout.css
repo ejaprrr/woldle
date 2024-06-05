@@ -38,3 +38,67 @@ section > p {
         text-align: justify;
     }
 }
+
+/* hra a klávesnice */
+
+.row, .keyboard-row {
+    display: flex;
+    gap: var(--gap);
+    margin-block: var(--gap);
+}
+
+.row {
+    justify-content: center;
+    transition: gap 0.5s ease;
+    height: var(--square);
+}
+
+.letter, .key {
+    outline: solid var(--outline);
+    text-align: center;
+    font-weight: bold;
+    backdrop-filter: var(--brightness);
+    -webkit-backdrop-filter: var(--brightness);
+    transition: transform 0.25s ease, outline 0.25s ease;
+    will-change: filter;
+}
+
+
+.letter {
+    border-radius: 7px;
+    font-size: calc(var(--font-size) + var(--offset));
+    width: var(--square);
+    line-height: var(--square);
+}
+
+.key {
+    cursor: pointer;
+    flex: 1;
+    border-radius: 5px;
+    line-height: 2em;
+}
+
+.index {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    margin: 4px;
+    line-height: calc(var(--square) / 4);
+    font-size: calc(var(--square) / 4);
+}
+
+@media screen and (min-width: 320px) {
+    .index {
+        margin: 2px;
+    }
+}
+
+@media screen and (min-width: 440px) {
+    .index {
+        margin: 4px;
+    }
+}
+
+#backspace, #enter {
+    flex: 2;
+}
