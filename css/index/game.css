@@ -29,3 +29,15 @@
     line-height: calc(var(--square) / 4);
     font-size: calc(var(--square) / 4);
 }
+
+@media screen and (min-width: 320px) {
+    .index {
+        margin: 2px;
+    }
+}
+
+@media screen and (min-width: 440px) {
+    .index {
+        margin: 4px;
+    }
+}

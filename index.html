@@ -25,14 +25,7 @@
     
     <link rel="stylesheet" href="css/index/style.css">
 
-    <link rel="stylesheet" href="css/index/window/style.css">
-    <link rel="stylesheet" href="css/index/window/settings.css">
-    <link rel="stylesheet" href="css/index/window/win.css">
-    <link rel="stylesheet" href="css/index/window/lose.css">
-    <link rel="stylesheet" href="css/index/window/custom.css">
-
-    <link rel="stylesheet" href="css/responsivity.css">
-
+    <link rel="stylesheet" href="css/index/window.css">
     <!-- import Google ikonek (zakulacené) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
 </head>
@@ -44,9 +37,9 @@
         <img id="icon" src="images/icon.png" alt="ikonka woldle">
         <!-- navigace napravo -->
         <nav>
-            <span id="info" class="material-symbols-rounded option">info</span>
-            <span id="settings" class="material-symbols-rounded option">settings</span>
-            <span id="theme-toggle" class="material-symbols-rounded option">contrast</span>                                            
+            <span id="info" class="material-symbols-rounded">info</span>
+            <span id="settings" class="material-symbols-rounded">settings</span>
+            <span id="theme-toggle" class="material-symbols-rounded">contrast</span>                                            
         </nav>
     </header>
     <!-- hlavní kontent -->
@@ -59,8 +52,8 @@
             <div id="bar">
                 <!-- prvky navigace ve hře -->
                 <nav>
-                    <span class="material-symbols-rounded option refresh" onclick="window.gameInstance.reset()">refresh</span>                                            
-                    <span id="surrender" class="material-symbols-rounded option">flag</span>                                            
+                    <span class="material-symbols-rounded refresh" onclick="window.gameInstance.reset()">refresh</span>                                            
+                    <span id="surrender" class="material-symbols-rounded">flag</span>                                            
                 </nav>
                 <!-- momentální informace o hře -->
                 <div id="tags">
@@ -133,14 +126,19 @@
                     <li>celkem budeš mít <b>6 pokusů</b></li>
                 </ul>
                 <h3>2. zjisti, jaká písmena slovo obsahuje</h3>
-                <ul>
-                    <li><span style="color: var(--exact); filter: var(--glow-exact);">zelené</span> pole znamená, že máte písmenko na správném místě</li>
-                    <li><span style="color: var(--inexact); filter: var(--glow-inexact);">oranžové</span> pole značí, že ho slovo obsahuje ale na jiné pozici</li>
-                    <li><span style="filter: var(--shadow);">neobarvené</span> pole je písmenko, které slovo neobsahuje</li>
-                    <li>horní index ti říká, že tohle písmenko se ve slově oběvuje víckrát</li>
-                    <li>do oranžového indexu se nepočítají již zelená pole</li>
-                    <li>zbarveno je jen tolik polí stejných písmen, kolik se jich do slova vejde</li>
-                </ul>
+                <dl>
+                    <dt>zelené pole</dt>
+                    <dd>máte písmenko na správném místě</dd>
+                    <dt>oranžové pole</dt>
+                    <dd>slovo obsahuje ale na jiné pozici</dd>
+                    <dt>zešedlé pole</dt>
+                    <dd>písmenko, které slovo neobsahuje</dd>
+                    <dt>horní index</dt>
+                    <dd>tohle písmenko se ve slově objevuje víckrát</dd>
+                    <dd>nad oranžovým polem se do něj nepočítají již pole zelená</dd>
+                    <dt>více stejných stejně zabarvených písmenek</dt>
+                    <dd>zbarveno je jen tolik polí stejných písmen, kolik se jich do slova vejde</dd>
+                </dl>
                 <h3>3. uhodni tajenku!</h3>
                 <ul>
                     <li>nyní znáte některá písmena, jejich pozice a přesnost</li>
@@ -161,7 +159,7 @@
     <div id="window-wrapper">
         <div id="window">
             <nav>
-                <span id="close" class="material-symbols-rounded option" onclick="toggleWindow('close')">close</span>
+                <span id="close" class="material-symbols-rounded" onclick="toggleWindow('close')">close</span>
             </nav>
             <!-- kontent nastavení -->
             <div id="content-settings">
@@ -192,8 +190,8 @@
                 <h3 class="slovo">slovo</h3>
                 <p>Blahopřejeme! 🥳</p>
                 <div class="menu">
-                    <span class="material-symbols-rounded option refresh" onclick="window.gameInstance.reset(); toggleWindow('close')">refresh</span>
-                    <span class="material-symbols-rounded option link" onclick="handleCopy(window.gameInstance.word)">link</span>
+                    <span class="material-symbols-rounded refresh" onclick="window.gameInstance.reset(); toggleWindow('close')">refresh</span>
+                    <span class="material-symbols-rounded link" onclick="handleCopy(window.gameInstance.word)">link</span>
                 </div>
             </div>
             <!-- kontent při prohře -->
@@ -202,8 +200,8 @@
                 <h3 class="slovo">slovo</h3>
                 <p>Zkus to znovu! 💪</p>
                 <div class="menu">
-                    <span class="material-symbols-rounded option refresh" onclick="window.gameInstance.reset(); toggleWindow('close')">refresh</span>
-                    <span class="material-symbols-rounded option link" onclick="handleCopy(window.gameInstance.word)">link</span>
+                    <span class="material-symbols-rounded refresh" onclick="window.gameInstance.reset(); toggleWindow('close')">refresh</span>
+                    <span class="material-symbols-rounded link" onclick="handleCopy(window.gameInstance.word)">link</span>
                 </div>
             </div>
             <!-- kontent při vytváření vlastního slova -->
@@ -215,7 +213,7 @@
                     <input id="custom-word" type="text" placeholder="tvoje slovo..." pattern="[A-Za-zÁáČčĎďÉéĚěÍíŇňÓóŘřŠšŤťÚúŮůÝýŽž]+"  required>
                     <button type="submit">OK</button>
                     <button type="button" id="copy-link" onclick="javascript:handleCopy(document.getElementById('custom-word').value);">
-                        <span class="material-symbols-rounded option link" onclick="handleCopy(window.gameInstance.word)">link</span>
+                        <span class="material-symbols-rounded link" onclick="handleCopy(window.gameInstance.word)">link</span>
                     </button>
                 </form>
             </div>

@@ -338,6 +338,7 @@ class Game {
         }
     }
 
+
     surrender() {
         if (!this.ended) this.endGame("lose");
     }
