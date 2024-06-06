@@ -3,7 +3,6 @@ main > * {
 }
 
 main {
-    overflow: hidden;
     justify-content: center;
 }
 
@@ -13,6 +12,7 @@ main {
 
 main, #authors, #about {
     display: flex;
+    gap: 15px;
 }
 
 #image {
@@ -24,11 +24,17 @@ main, #authors, #about {
 }
 
 #wrapper {
-    width: 800px;
+    max-width: 720px;
+    width: 90%;
 }
 
 #authors {
     justify-content: space-between;
+    padding-block-end: 10px;
+}
+
+#authors h3 {
+    margin-block: 0;
 }
 
 #home, #theme-toggle {
@@ -38,4 +44,20 @@ main, #authors, #about {
 
 #home:hover, #theme-toggle:hover {
     transform: scale(1.1);
+}
+
+
+@media screen and (max-width: 720px){
+    #authors, #about {
+        flex-direction: column;
+        justify-content: center;
+    }
+    #image {
+        width: 100%;
+    }
+
+    .author {
+        width: 100%;
+    }
+
 }
