@@ -67,12 +67,25 @@ main {
 }
 
 /* Seznam definic */
-dl {
-    list-style-type: disc;
-}
 dt {
     font-weight: bold;
+    margin-left: 25px;
 }
+
+dd {
+    margin-left: 40px;
+}
+
+dt ~ dd::before {
+    content: '\2212';
+    margin-right: 10px;
+}
+
+dt + dd::before {
+    content: '=';
+    margin-right: 10px;
+}
+
 /* Čas */
 #time {
     position: absolute;
