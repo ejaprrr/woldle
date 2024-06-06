@@ -5,7 +5,13 @@ main > * {
 main {
     justify-content: center;
 }
-
+p {
+    text-align: justify;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 .author {
     width: 500px;
 }

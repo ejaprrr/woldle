@@ -12,6 +12,6 @@ function rotateImage() {
     setTimeout(() => {
         imageElement.src = "images/" + images[currentIndex];
         imageElement.style.opacity = 1;
-    }, 1000);
+    }, 650);
 }
-setInterval(rotateImage, 3000); // Change image every 3 seconds
+setInterval(rotateImage, 4500); // Change image every 3 seconds
