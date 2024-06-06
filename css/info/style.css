@@ -25,7 +25,7 @@ main, #authors, #about {
     width: 300px;
     height: 200px;
     object-fit: cover;
-    transition: opacity 1s ease-in-out;
+    transition: opacity 0.5s ease;
     border-radius: 10px;
 }
 

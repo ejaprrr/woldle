@@ -1,7 +1,7 @@
 // onclick events
 document.querySelector("#home").onclick = () => location.href = "index.html";
 
-const images = ['skola1.jpg', 'budova.jpg', 'infis.jpg'];
+const images = ['invite.png', 'gameplay.png', 'victory.png'];
 let currentIndex = 0;
 
 function rotateImage() {
@@ -10,8 +10,8 @@ function rotateImage() {
     imageElement.style.opacity = 0;
 
     setTimeout(() => {
-        imageElement.src = "images/" + images[currentIndex];
+        imageElement.src = "images/slideshow/" + images[currentIndex];
         imageElement.style.opacity = 1;
-    }, 650);
+    }, 250);
 }
 setInterval(rotateImage, 4500); // Change image every 3 seconds
