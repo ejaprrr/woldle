@@ -54,3 +54,7 @@ const setDateTime = () => {
     document.getElementById("year").textContent = date.getFullYear();
     document.getElementById("date").textContent = `${day}. ${months[month]}`;
 };
+
+const countOccurrences = (origin, target) => {
+    return origin.split(target).length - 1;
+}

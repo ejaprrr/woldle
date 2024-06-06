@@ -6,7 +6,7 @@ document.onkeypress = handleKeypress;
 // onclick events
 document.querySelector("#info").onclick = () => location.href = "info.html";
 document.querySelector("#settings").onclick = () => toggleWindow("open", "settings");
-document.querySelector("#surrender").onclick = () => window.gameInstance.surrender();
+document.querySelector("#surrender").onclick = () => window.gameInstance.endGame("lose");
 document.querySelector("#close").onclick = () => toggleWindow("close");
 document.querySelector("#random").onclick = () => window.gameInstance.setMode("random");
 document.querySelector("#daily").onclick = () => window.gameInstance.setMode("daily");
