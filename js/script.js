@@ -1,47 +1,36 @@
-const keydown = () => {
-    switch (event.key) {
-            case "Backspace":
-                window.gameInstance.back();
-                break;
-            
-            case "Enter":
-                window.gameInstance.confirm();
-                break;
-    }
+const handleKeydown = (event) => {
+    if (event.key === "Backspace") window.gameInstance.back();
+    if (event.key === "Enter") window.gameInstance.confirm();
 }
 
-const keypress = (event) => {
-    const { key } = event;
+const handleKeypress = (event) => {
+    let { key } = event;
+    key = key.toLowerCase()
 
-    if (key.toLowerCase().match(Game.allowed) && key.length === 1) {
-        window.gameInstance.write(key);
-    }
+    if (key.length === 1 && key.match(Game.allowed)) window.gameInstance.write(key);
 }
 
 const handleCopy = (target) => {
     let url = new URL(location.href.split("?")[0]);
+
     url.searchParams.append("word", btoa(encodeURIComponent(target)));
     navigator.clipboard.writeText(url.toString());
 }
 
 const toggleWindow = (action, content = null) => {
-    const windowWrapper = document.getElementById("window-wrapper");
-    const window = document.getElementById("window");
-    switch (action) {
-        case "open":
-            document.onkeydown, document.onkeypress = () => {};
-            windowWrapper.classList.add("show");
-            window.classList.add("show");
-            document.getElementById(`content-${content}`).classList.add("show");
-            break;
+    const container = document.querySelector("#window-wrapper");
+    const window = document.querySelector("#window");
 
-        case "close":
-            document.onkeydown = keydown;
-            document.onkeypress = keypress;
-            windowWrapper.classList.remove("show");
-            window.classList.remove("show");
-            document.querySelector(`#window > div.show`).classList.remove("show");
-            break;
+    if (action === "open") {
+        document.onkeydown, document.onkeypress = () => {};
+
+        [container, window, document.querySelector(`#content-${content}`)].forEach((element) => element.classList.add("show"));
+    }
+    if (action === "close" && window.classList.contains("show")) {
+        document.onkeydown = handleKeydown;
+        document.onkeypress = handleKeypress;
+
+        [container, window, document.querySelector(`#window div.show`)].forEach((element) => element.classList.remove("show"));
     }
 }
 
@@ -55,7 +44,7 @@ const changeTheme = () => {
     if (otherOption) document.getElementById(theme).classList.add("selected-setting");
 }
 
-const time = () => {
+const setDateTime = () => {
     const date = new Date();
     const month = date.getMonth();
     const day = date.getDate();

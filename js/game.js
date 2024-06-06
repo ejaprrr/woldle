@@ -31,6 +31,7 @@ class Game {
         await this.loadFile("targets");
 
         this.setWord();
+        
         const { searchParams } = new URL(location.href);
         if (searchParams.has("word") ) {
             try {
@@ -66,14 +67,12 @@ class Game {
 
         if (this.mode == "random") {
             this.word = random;
-        } else if (this.mode == "daily") {
+            this.mode = "random";
+        } 
+        if (this.mode == "daily") {
             this.word = daily;
-        }  else if (this.mode == "custom") {
-            this.word = document.querySelector("#custom-word").value;
+            this.mode = "daily";
         }
-
-        this.length = this.word.length;
-        this.mode = this.word == daily ? "daily" : "random";
     }
 
     createGameEnvironment() {
@@ -121,10 +120,15 @@ class Game {
         this.changeSetting(document.querySelector("#length"), this.length);
         this.initGameSettings();
 
-        if (this.mode !== "custom") localStorage.setItem("length", this.length);
-
         this.resetKeys();
-        this.setWord();
+        if (this.mode !== "custom") {
+            localStorage.setItem("length", this.length);
+            this.setWord();
+        } else {
+            this.word = document.querySelector("#custom-word").value;
+            this.length = this.word.length;
+            this.mode = "custom";
+        }
         Game.container.replaceChildren();
         this.createGameEnvironment();
 

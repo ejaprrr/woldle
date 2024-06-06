@@ -1,21 +1,28 @@
 window.onload = async () => window.gameInstance = await new Game().init();
 
-document.onkeydown = keydown;
-document.onkeypress = keypress;
+document.onkeydown = handleKeydown;
+document.onkeypress = handleKeypress;
 
 // onclick events
-document.querySelector("#surrender").onclick = () => window.gameInstance.surrender();;
 document.querySelector("#info").onclick = () => location.href = "info.html";
 document.querySelector("#settings").onclick = () => toggleWindow("open", "settings");
-document.querySelector("#theme-toggle").onclick = () => changeTheme();
+document.querySelector("#surrender").onclick = () => window.gameInstance.surrender();
+document.querySelector("#close").onclick = () => toggleWindow("close");
+document.querySelector("#random").onclick = () => window.gameInstance.setMode("random");
+document.querySelector("#daily").onclick = () => window.gameInstance.setMode("daily");
+document.querySelector("#custom").onclick = () => { toggleWindow("close"); toggleWindow("open", "custom") };
+document.querySelector("#copy-link").onclick = () => handleCopy(document.querySelector("#custom-word").value);
+
+Array.from(document.querySelectorAll(".refresh")).forEach((element) => element.onclick = () => {window.gameInstance.reset(); toggleWindow("close")});
+Array.from(document.querySelectorAll(".copy-word")).forEach((element) => element.onclick = () => handleCopy(window.gameInstance.word));
 
 const input = document.querySelector("#custom-word");
 
-input.addEventListener("input", (event) => {
+input.addEventListener("input", () => {
     input.setCustomValidity("");
 })
 
-document.querySelector("form").addEventListener("submit", (event) => {
+document.querySelector("form").addEventListener("submit", () => {
     if (window.gameInstance.dictionary.includes(input.value.toLowerCase())) {
         window.gameInstance.setMode('custom');
         toggleWindow('close');

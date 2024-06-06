@@ -48,7 +48,7 @@
             <div id="bar">
                 <!-- prvky navigace ve hře -->
                 <nav>
-                    <span class="material-symbols-rounded refresh" onclick="window.gameInstance.reset()">refresh</span>                                            
+                    <span class="material-symbols-rounded refresh">refresh</span>                                            
                     <span id="surrender" class="material-symbols-rounded">flag</span>                                            
                 </nav>
                 <!-- momentální informace o hře -->
@@ -154,7 +154,7 @@
     <div id="window-wrapper">
         <div id="window">
             <nav>
-                <span id="close" class="material-symbols-rounded" onclick="toggleWindow('close')">close</span>
+                <span id="close" class="material-symbols-rounded">close</span>
             </nav>
             <!-- kontent nastavení -->
             <div id="content-settings">
@@ -162,13 +162,13 @@
                 <div id="modes-wrapper">
                     <h2>Herní módy</h2>
                     <div id="modes">
-                        <div class="mode" id="random" onclick="window.gameInstance.setMode(this.id)">
+                        <div class="mode" id="random">
                             <span class="mode-prefix">slovo</span> <span class="mode-title">náhodné</span>
                         </div>
-                        <div class="mode" id="daily" onclick="window.gameInstance.setMode(this.id)">
+                        <div class="mode" id="daily">
                             <span class="mode-prefix">slovo</span> <span class="mode-title">dne</span>
                         </div>
-                        <div class="mode" id="custom" onclick="toggleWindow('close'); toggleWindow('open', 'custom');">
+                        <div class="mode" id="custom">
                             <span class="mode-prefix">slovo</span> <span class="mode-title">vlastní</span>
                         </div>
                     </div>
@@ -185,8 +185,8 @@
                 <h3 class="slovo">slovo</h3>
                 <p>Blahopřejeme! 🥳</p>
                 <div class="menu">
-                    <span class="material-symbols-rounded refresh" onclick="window.gameInstance.reset(); toggleWindow('close')">refresh</span>
-                    <span class="material-symbols-rounded link" onclick="handleCopy(window.gameInstance.word)">link</span>
+                    <span class="material-symbols-rounded refresh">refresh</span>
+                    <span class="material-symbols-rounded link copy-word">link</span>
                 </div>
             </div>
             <!-- kontent při prohře -->
@@ -195,8 +195,8 @@
                 <h3 class="slovo">slovo</h3>
                 <p>Zkus to znovu! 💪</p>
                 <div class="menu">
-                    <span class="material-symbols-rounded refresh" onclick="window.gameInstance.reset(); toggleWindow('close')">refresh</span>
-                    <span class="material-symbols-rounded link" onclick="handleCopy(window.gameInstance.word)">link</span>
+                    <span class="material-symbols-rounded refresh">refresh</span>
+                    <span class="material-symbols-rounded link copy-word">link</span>
                 </div>
             </div>
             <!-- kontent při vytváření vlastního slova -->
@@ -204,12 +204,12 @@
                 <h2>Pokus své kamarády!</h2>
                 <p>Zadej své slovo a ujisti se, že je validní.</p>
                 <!-- user input -->
-                <form action="javascript:void(0);">
+                <form action="javascript:window.gameInstance.reset();">
                     <input id="custom-word" type="text" placeholder="tvoje slovo..." pattern="[A-Za-zÁáČčĎďÉéĚěÍíŇňÓóŘřŠšŤťÚúŮůÝýŽž]+" autocomplete="off" required>
                     <div id="submit-container">
                         <button type="submit">OK</button>
-                        <button type="button" id="copy-link" onclick="javascript:handleCopy(document.getElementById('custom-word').value);">
-                            <span class="material-symbols-rounded" onclick="handleCopy(window.gameInstance.word)">link</span>
+                        <button type="button" id="copy-link">
+                            <span class="material-symbols-rounded copy-word">link</span>
                         </button>
                     </div>
                     
@@ -219,12 +219,12 @@
     </div>
 
     <!-- loading javascriptu -->
-    <script src="js/game.js"></script>
     <script src="js/script.js"></script>
     <script src="js/initialization.js"></script>
 
     <!-- důležitá inicializace -->
     <script src="js/index.js"></script>
+    <script src="js/game.js"></script>
 </body>
 
 </html>

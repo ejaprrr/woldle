@@ -22,7 +22,7 @@
 }
 
 .inexact {
-    --outline: var(--incorrect);
+    --outline: var(--inexact);
     filter: var(--glow-inexact);
 }
 

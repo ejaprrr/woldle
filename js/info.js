@@ -1,6 +1,5 @@
 // onclick events
 document.querySelector("#home").onclick = () => location.href = "index.html";
-document.querySelector("#theme-toggle").onclick = () => changeTheme();
 
 const images = ['skola1.jpg', 'budova.jpg', 'infis.jpg'];
 let currentIndex = 0;
