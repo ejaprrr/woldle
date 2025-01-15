@@ -1,2 +1,2 @@
 # woldle
-WORDLE z LIDLU
+projekt na WEB, 1. ročník :D
